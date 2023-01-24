@@ -48,22 +48,33 @@ vec2 slicer::square::get_vert(unsigned int vert_index) const
     }
 }
 
-
+/*
 double a_fun(const vec3& p)
 {
     return p.x*p.x + p.y*p.y + p.z*p.z - 1;
-}
-bool inside(const vec3& p)
-{
-    return a_fun(p)<0;
 }
 
 interval t_fun(const interval& X, const interval& Y, double h)
 {
     return X*X + Y*Y + interval(h-0.01,h+0.01)*interval(h-0.01,h+0.01) - interval(1,1); 
 }
+*/
+double a_fun(const vec3& p)
+{
+    return 8*(pow(p.x,4)+pow(p.y,4)+pow(p.z,4))-8*(pow(p.x,2)+pow(p.y,2)+pow(p.z,2)) +3;
+}
 
 
+interval t_fun(const interval& X, const interval& Y, double h)
+{
+    interval tm(h,h);
+    return interval(8,8)*(X*X*X*X+Y*Y*Y*Y+tm*tm*tm*tm)-interval(8,8)*(X*X+Y*Y+tm*tm) +interval(3,3); 
+}
+
+bool inside(const vec3& p)
+{
+    return a_fun(p)<0;
+}
 
 slicer::slicer(std::function<interval(const interval&, const interval&, double h)> f_interval) : frep_interval(f_interval)
 {
