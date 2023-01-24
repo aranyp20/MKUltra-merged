@@ -67,8 +67,8 @@ double a_fun(const vec3& p)
 
 interval t_fun(const interval& X, const interval& Y, double h)
 {
-    interval tm(h,h);
-    return interval(8,8)*(X*X*X*X+Y*Y*Y*Y+tm*tm*tm*tm)-interval(8,8)*(X*X+Y*Y+tm*tm) +interval(3,3); 
+    interval tm(h);
+    return interval(8)*(i_pow(X,4)+i_pow(Y,4)+i_pow(tm,4))-interval(8)*(X*X+Y*Y+tm*tm) +interval(3); 
 }
 
 bool inside(const vec3& p)
@@ -92,7 +92,7 @@ void slicer::print(const std::vector<section>& v) const
     std::ofstream writer(outputfile);
 
     writer<<"# vtk DataFile Version 2.0"<<std::endl;
-    writer<<"Alma2"<<std::endl;
+    writer<<"Alma3"<<std::endl;
     writer<<"ASCII"<<std::endl;
     writer<<"DATASET POLYDATA"<<std::endl;
     writer<<"POINTS "<<v.size()<<" float"<<std::endl;
@@ -164,7 +164,6 @@ vec2 slicer::calc_surfacepoint(const section& se, double h) const
         ip = vec2(se.p2);
         op = vec2(se.p1);
     }else{
-        //std::cout<<"2 pont ugyanott"<<std::endl;
         throw std::exception();
     }
 

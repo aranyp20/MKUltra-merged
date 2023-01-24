@@ -8,7 +8,6 @@
 #include "basics.h"
 
 class slicer{
-public:
 
 
     struct square{
