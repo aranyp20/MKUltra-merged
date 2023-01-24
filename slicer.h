@@ -44,6 +44,9 @@ public:
     bool rejection_test(const square&, double h) const;
     std::vector<section> generate_contour(const std::vector<square>& unrejecteds, double h) const;
     std::vector<section> generate_sections(const std::pair<unsigned int, unsigned int>&) const;
+    vec2 calc_surfacepoint(const section&, double h) const;
+
+    void print(const std::vector<section>&) const;
 public:
 
     slicer(std::function<interval(const interval&, const interval&, double h)> f_interval);

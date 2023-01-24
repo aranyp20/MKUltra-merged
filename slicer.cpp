@@ -1,3 +1,4 @@
+#include <bits/stdc++.h>
 #include "slicer.h"
 
 std::map<std::vector<bool>,std::vector<std::pair<unsigned int, unsigned int>>> slicer::LUT::table = {
@@ -16,7 +17,7 @@ std::map<std::vector<bool>,std::vector<std::pair<unsigned int, unsigned int>>> s
     {{true,true,false,false},{{1,3}}},
     {{true,true,false,true},{{1,2}}},
     {{true,true,true,false},{{2,3}}},
-    {{true,true,true,true},{{}}}
+    {{true,true,true,true},{}}
 };
 
 std::vector<std::pair<unsigned int,unsigned int>> slicer::LUT::find_intersectables(const std::vector<bool>& s)
@@ -50,16 +51,16 @@ vec2 slicer::square::get_vert(unsigned int vert_index) const
 
 double a_fun(const vec3& p)
 {
-    return p.x*p.x + p.y*p.y - 1;
+    return p.x*p.x + p.y*p.y + p.z*p.z - 1;
 }
 bool inside(const vec3& p)
 {
-    return a_fun(p)<=0;
+    return a_fun(p)<0;
 }
 
 interval t_fun(const interval& X, const interval& Y, double h)
 {
-    return X*X + Y*Y - interval(1,1); 
+    return X*X + Y*Y + interval(h-0.01,h+0.01)*interval(h-0.01,h+0.01) - interval(1,1); 
 }
 
 
@@ -74,11 +75,28 @@ slicer::square::square(vec2 _start, double _size): start(_start), size(_size)
 
 }
 
+void slicer::print(const std::vector<section>& v) const
+{
+    std::string outputfile("result.vtk");
+    std::ofstream writer(outputfile);
+
+    writer<<"# vtk DataFile Version 2.0"<<std::endl;
+    writer<<"Alma2"<<std::endl;
+    writer<<"ASCII"<<std::endl;
+    writer<<"DATASET POLYDATA"<<std::endl;
+    writer<<"POINTS "<<v.size()<<" float"<<std::endl;
+
+    for(const auto& a : v){
+        writer<<a.p2.x<<" "<<a.p2.y<<" "<<0<<std::endl;
+    }
+
+}
+
 
 void slicer::slice(double h, unsigned int resolution) const
 {
     std::vector<square> leaves = rejection_testing(square(vec2(-1,-1),2),h,resolution);
-
+    print(generate_contour(leaves,h));
     
 }
 
@@ -125,6 +143,34 @@ std::vector<slicer::square> slicer::square::breakup(unsigned int count) const
 }
 
 
+vec2 slicer::calc_surfacepoint(const section& se, double h) const
+{
+    vec2 ip,op;
+    if(inside(vec3(se.p1.x,se.p1.y,h))&&!inside(vec3(se.p2.x,se.p2.y,h))){
+        ip = vec2(se.p1);
+        op = vec2(se.p2);
+    }else if(!inside(vec3(se.p1.x,se.p1.y,h))&&inside(vec3(se.p2.x,se.p2.y,h))){
+        ip = vec2(se.p2);
+        op = vec2(se.p1);
+    }else{
+        //std::cout<<"2 pont ugyanott"<<std::endl;
+        throw std::exception();
+    }
+
+    vec2 mid = (ip+op)/2;
+
+    for(int i=0;i<10;i++){
+        if(!inside(vec3(mid.x,mid.y,h))){
+            mid = (ip+mid)/2;
+            op = mid;
+        }else{
+            mid = (op+mid)/2;
+            ip=mid;
+        }
+    }
+
+    return mid;
+}
 
 
 std::vector<section> slicer::generate_contour(const std::vector<square>& unrejecteds, double h) const
@@ -140,8 +186,18 @@ std::vector<section> slicer::generate_contour(const std::vector<square>& unrejec
 
         std::vector<std::pair<unsigned int,unsigned int>> ids = LUT::find_intersectables(evaluated_verts);
         std::vector<std::pair<section,section>> ss;
-        std::vector<std::pair<vec2,vec2>> ps;
+        for(const auto& b : ids){
+            ss.push_back({a.get_section(b.first),a.get_section(b.second)});
+        }
+        std::vector<section> ps;
+        for(int i=0;i<ss.size();i++){
+            section temp = section(calc_surfacepoint(ss[i].first,h),calc_surfacepoint(ss[i].second,h));
+            if(temp.p1.x==0||temp.p2.x==0)std::cout<<ids[i].first<<" "<<ids[i].second<<std::endl;
+            ps.push_back(temp);
+        }
+        polyline.insert(polyline.end(),ps.begin(),ps.end());
     }
+    return polyline;
 }
 
 
@@ -153,7 +209,7 @@ int main()
 
     slicer slicer(t_fun);
 
-    //slicer.slice(0,3);
+    slicer.slice(0,5);
 
     return 0;
 }
