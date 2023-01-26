@@ -1,17 +1,7 @@
-#pragma once
+#include <algorithm>
+#include <iostream>
+#include <interval.h>
 
-
-struct interval
-{
-    double start;
-    double end;
-
-    interval(double,double);
-    explicit interval(double);
-
-    bool contains(double) const;
-
-};
 
 interval::interval(double _start,double _end) : start(std::min(_start,_end)), end(std::max(_start,_end))
 {
@@ -22,8 +12,6 @@ interval::interval(double both) : start(both), end(both)
 {
 
 }
-
-
 
 bool interval::contains(double val) const
 {

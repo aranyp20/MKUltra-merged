@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "slicer.h"
+#include <slicer.h>
 
 std::map<std::vector<bool>,std::vector<std::pair<unsigned int, unsigned int>>> slicer::LUT::table = {
     {{false,false,false,false},{}},

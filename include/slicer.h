@@ -4,8 +4,8 @@
 #include <vector>
 #include <map>
 
-#include "interval.h"
-#include "basics.h"
+#include <interval.h>
+#include <basics.h>
 
 class slicer{
 
