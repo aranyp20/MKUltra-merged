@@ -81,24 +81,24 @@ slicer::slicer(std::function<interval(const interval&, const interval&, double h
 
 }
 
-slicer::square::square(vec2 _start, double _size): start(_start), size(_size)
+slicer::square::square(const vec2& _start, double _size): start(_start), size(_size)
 {
 
 }
 
 void slicer::print(const std::vector<section>& v) const
 {
-    std::string outputfile("result.vtk");
+    std::string outputfile("result.obj");
     std::ofstream writer(outputfile);
 
-    writer<<"# vtk DataFile Version 2.0"<<std::endl;
-    writer<<"Alma3"<<std::endl;
-    writer<<"ASCII"<<std::endl;
-    writer<<"DATASET POLYDATA"<<std::endl;
-    writer<<"POINTS "<<v.size()<<" float"<<std::endl;
+    
 
     for(const auto& a : v){
-        writer<<a.p2.x<<" "<<a.p2.y<<" "<<0<<std::endl;
+        writer<<"v "<<a.p1.x<<" "<<a.p1.y<<" "<<0<<std::endl;
+        writer<<"v "<<a.p2.x<<" "<<a.p2.y<<" "<<0<<std::endl;  
+    }
+    for(int i=0;i<v.size();i++){
+        writer<<"l "<<i*2 +1<<" "<<i*2+2<<std::endl;
     }
 
 }

@@ -22,7 +22,7 @@ class slicer{
         vec2 start; //upper-left pos
         double size;
 
-        square(vec2,double);
+        square(const vec2&,double);
 
         std::vector<square> breakup(unsigned int count /*row and column count*/) const;
         section get_section(unsigned int side_index) const;
@@ -42,7 +42,7 @@ class slicer{
     std::vector<slicer::square> rejection_testing(const square&,double h,unsigned int resolution) const;
     bool rejection_test(const square&, double h) const;
     std::vector<section> generate_contour(const std::vector<square>& unrejecteds, double h) const;
-    std::vector<section> generate_sections(const std::pair<unsigned int, unsigned int>&) const;
+    //std::vector<section> generate_sections(const std::pair<unsigned int, unsigned int>&) const;
     vec2 calc_surfacepoint(const section&, double h) const;
 
     void print(const std::vector<section>&) const;
