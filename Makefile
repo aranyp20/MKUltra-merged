@@ -5,25 +5,25 @@ INCDIRS=. ./include/
 CC=g++
 OPT=-O0
 
-DEPFLAGS=-MP -MD
+#DEPFLAGS=-MP -MD
 
-CFLAGS=-g $(foreach D,$(INCDIRS),-I$(D)) $(OPT) $(DEPFLAGS)
+CFLAGS=-g $(foreach D,$(INCDIRS),-I$(D)) $(OPT) #$(DEPFLAGS)
 
 CFILES=$(foreach D,$(CODEDIRS),$(wildcard $(D)/*.cpp))
 
-OBJECTS=$(patsubst %.cpp,%.o,$(CFILES))
-DEPFILES=$(patsubst %.cpp,%.d,$(CFILES))
+OBJECTS=$(patsubst %.cpp,build-dir/%.o,$(CFILES))
+#DEPFILES=$(patsubst %.cpp,%.d,$(CFILES))
 
 all: $(BINARY)
 
 $(BINARY): $(OBJECTS)
 	$(CC) -o $@ $^
 
-%.o:%.cpp
+build-dir/%.o:%.cpp
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	rm -rf $(BINARY) $(OBJECTS) $(DEPFILES)
+	rm -rf $(BINARY) $(OBJECTS)
 
 
 

@@ -6,9 +6,12 @@
 
 #include <interval.h>
 #include <basics.h>
+#include <frep.hpp>
 
 class slicer{
 
+
+   
 
     struct square{
 
@@ -36,8 +39,8 @@ class slicer{
         static std::vector<std::pair<unsigned int,unsigned int>> find_intersectables(const std::vector<bool>&);
     };
     
-    std::function<interval(const interval&, const interval&, double h)> frep_interval;
-    
+    //std::function<interval(const interval&, const interval&, double h)> frep_interval;
+
 
     std::vector<slicer::square> rejection_testing(const square&,double h,unsigned int resolution) const;
     bool rejection_test(const square&, double h) const;
@@ -48,7 +51,8 @@ class slicer{
     void print(const std::vector<section>&) const;
 public:
 
-    slicer(std::function<interval(const interval&, const interval&, double h)> f_interval);
+    //slicer(std::function<interval(const interval&, const interval&, double h)> f_interval);
+    slicer();
     
     void slice(double h, unsigned int resolution) const;
 };

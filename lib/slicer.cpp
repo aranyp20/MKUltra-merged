@@ -1,6 +1,11 @@
 #include <bits/stdc++.h>
 #include <slicer.h>
 
+template <typename T>
+T fn(const T& x, const T& y, double h)  {return T(8)*(pow(x,4)+pow(y,4)+pow(T(h),4))-T(8)*(pow(x,2)+pow(y,2)+pow(T(h),2)) +T(3);}
+
+
+
 std::map<std::vector<bool>,std::vector<std::pair<unsigned int, unsigned int>>> slicer::LUT::table = {
     {{false,false,false,false},{}},
     {{false,false,false,true},{{2,3}}},
@@ -48,38 +53,23 @@ vec2 slicer::square::get_vert(unsigned int vert_index) const
     }
 }
 
-/*
-double a_fun(const vec3& p)
-{
-    return p.x*p.x + p.y*p.y + p.z*p.z - 1;
-}
-
-interval t_fun(const interval& X, const interval& Y, double h)
-{
-    return X*X + Y*Y + interval(h-0.01,h+0.01)*interval(h-0.01,h+0.01) - interval(1,1); 
-}
-*/
-double a_fun(const vec3& p)
-{
-    return 8*(pow(p.x,4)+pow(p.y,4)+pow(p.z,4))-8*(pow(p.x,2)+pow(p.y,2)+pow(p.z,2)) +3;
-}
-
-
-interval t_fun(const interval& X, const interval& Y, double h)
-{
-    interval tm(h);
-    return interval(8)*(i_pow(X,4)+i_pow(Y,4)+i_pow(tm,4))-interval(8)*(X*X+Y*Y+tm*tm) +interval(3); 
-}
 
 bool inside(const vec3& p)
 {
-    return a_fun(p)<0;
+    return fn(p.x,p.y,p.z)<0;
 }
 
+/*
 slicer::slicer(std::function<interval(const interval&, const interval&, double h)> f_interval) : frep_interval(f_interval)
 {
 
 }
+*/
+slicer::slicer()
+{
+
+}
+
 
 slicer::square::square(const vec2& _start, double _size): start(_start), size(_size)
 {
@@ -135,7 +125,8 @@ std::vector<slicer::square> slicer::rejection_testing(const slicer::square& s,do
 
 bool slicer::rejection_test(const square& s, double h) const
 {
-    return frep_interval(interval(s.start.x,s.start.x+s.size),interval(s.start.y,s.start.y+s.size),h).contains(0);
+    //return frep_interval(interval(s.start.x,s.start.x+s.size),interval(s.start.y,s.start.y+s.size),h).contains(0);
+    return fn(interval(s.start.x,s.start.x+s.size),interval(s.start.y,s.start.y+s.size),h).contains(0);
 }
 
 
@@ -217,7 +208,7 @@ std::vector<section> slicer::generate_contour(const std::vector<square>& unrejec
 int main()
 {
 
-    slicer slicer(t_fun);
+    slicer slicer;
 
     slicer.slice(0,5);
 

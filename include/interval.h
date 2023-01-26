@@ -1,6 +1,5 @@
 #pragma once
 
-#include <algorithm>
 
 struct interval
 {
@@ -12,11 +11,9 @@ struct interval
 
     bool contains(double) const;
 
-
-
 };
 
-interval i_pow(const interval& inter, unsigned int power);
+interval pow(const interval& inter, unsigned int power);
 interval operator+ (const interval& left_side, const interval& right_side);
 interval operator- (const interval& left_side, const interval& right_side);
 interval operator* (const interval& left_side, const interval& right_side);
