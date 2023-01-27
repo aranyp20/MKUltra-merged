@@ -1,3 +1,4 @@
+
 #include <bits/stdc++.h>
 #include <slicer.h>
 
@@ -62,7 +63,6 @@ bool inside(const vec3& p)
 /*
 slicer::slicer(std::function<interval(const interval&, const interval&, double h)> f_interval) : frep_interval(f_interval)
 {
-
 }
 */
 slicer::slicer()
@@ -173,17 +173,26 @@ vec2 slicer::calc_surfacepoint(const section& se, double h) const
     return mid;
 }
 
+std::vector<bool> slicer::evaluate_verts(const square& s, double h) const
+{
+    std::vector<bool> result;
+
+    for(int i=0;i<4;i++){
+        vec2 tv = s.get_vert(i);
+        result.push_back(inside(vec3(tv.x,tv.y,h)));
+    }
+
+    return result;
+}
+
 
 std::vector<section> slicer::generate_contour(const std::vector<square>& unrejecteds, double h) const
 {
     std::vector<section> polyline;
 
     for(const auto& a : unrejecteds){
-        std::vector<bool> evaluated_verts;
-        for(int i=0;i<4;i++){
-            vec2 tv = a.get_vert(i);
-            evaluated_verts.push_back(inside(vec3(tv.x,tv.y,h)));
-        }
+        std::vector<bool> evaluated_verts = evaluate_verts(a,h);
+        
 
         std::vector<std::pair<unsigned int,unsigned int>> ids = LUT::find_intersectables(evaluated_verts);
         std::vector<std::pair<section,section>> ss;

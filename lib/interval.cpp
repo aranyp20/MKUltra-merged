@@ -19,26 +19,26 @@ bool interval::contains(double val) const
 }
 
 
-interval operator+ (const interval& left_side, const interval& right_side)
+interval operator+ (const interval& lhs, const interval& rhs)
 {
-    return interval(left_side.start+right_side.start,left_side.end+right_side.end);
+    return interval(lhs.start+rhs.start,lhs.end+rhs.end);
 }
 
-interval operator- (const interval& left_side, const interval& right_side)
+interval operator- (const interval& lhs, const interval& rhs)
 {
-    return interval(left_side.start-right_side.end,left_side.end-right_side.start);
+    return interval(lhs.start-rhs.end,lhs.end-rhs.start);
 }
 
-interval operator* (const interval& left_side, const interval& right_side)
+interval operator* (const interval& lhs, const interval& rhs)
 {
-    return interval(std::min({left_side.start*right_side.start,left_side.start*right_side.end,left_side.end*right_side.start,left_side.end*right_side.end}),std::max({left_side.start*right_side.start,left_side.start*right_side.end,left_side.end*right_side.start,left_side.end*right_side.end}));
+    return interval(std::min({lhs.start*rhs.start,lhs.start*rhs.end,lhs.end*rhs.start,lhs.end*rhs.end}),std::max({lhs.start*rhs.start,lhs.start*rhs.end,lhs.end*rhs.start,lhs.end*rhs.end}));
 }
 
-interval operator/ (const interval& left_side, const interval& right_side)
+interval operator/ (const interval& lhs, const interval& rhs)
 {
-    if(right_side.start==0 || right_side.end == 0) throw std::exception();
+    if(rhs.start==0 || rhs.end == 0) throw std::exception();
 
-    return interval(std::min({left_side.start/right_side.start,left_side.start/right_side.end,left_side.end/right_side.start,left_side.end/right_side.end}),std::max({left_side.start/right_side.start,left_side.start/right_side.end,left_side.end/right_side.start,left_side.end/right_side.end}));
+    return interval(std::min({lhs.start/rhs.start,lhs.start/rhs.end,lhs.end/rhs.start,lhs.end/rhs.end}),std::max({lhs.start/rhs.start,lhs.start/rhs.end,lhs.end/rhs.start,lhs.end/rhs.end}));
 }
 
 interval pow(const interval& inter, unsigned int power)

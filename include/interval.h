@@ -14,10 +14,10 @@ struct interval
 };
 
 interval pow(const interval& inter, unsigned int power);
-interval operator+ (const interval& left_side, const interval& right_side);
-interval operator- (const interval& left_side, const interval& right_side);
-interval operator* (const interval& left_side, const interval& right_side);
-interval operator/ (const interval& left_side, const interval& right_side);
+interval operator+ (const interval& lhs, const interval& rhs);
+interval operator- (const interval& lhs, const interval& rhs);
+interval operator* (const interval& lhs, const interval& rhs);
+interval operator/ (const interval& lhs, const interval& rhs);
 
 
 
