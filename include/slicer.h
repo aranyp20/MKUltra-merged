@@ -41,12 +41,28 @@ class slicer{
     
     //std::function<interval(const interval&, const interval&, double h)> frep_interval;
 
+    struct id_section{
+        section me;
+        unsigned int start_id;
+        unsigned int end_id;
+
+        id_section(const section&, unsigned int start_id, unsigned int end_id);
+    };
+
+    class section_indexer{
+    public:
+        std::vector<section> found;
+        bool same_section(const section&, const section&) const;
+        
+        unsigned int find_add_section(const section&);
+    };
 
     std::vector<slicer::square> rejection_testing(const square&,double h,unsigned int resolution) const;
     bool rejection_test(const square&, double h) const;
-    std::vector<section> generate_contour(const std::vector<square>& unrejecteds, double h) const;
+    std::vector<id_section> generate_contour(const std::vector<square>& unrejecteds, double h) const;
     std::vector<bool> evaluate_verts(const square&, double h) const;
     vec2 calc_surfacepoint(const section&, double h) const;
+    std::vector<std::vector<section>> organise_sections(const std::vector<id_section>&) const;
 
     void print(const std::vector<section>&) const;
 public:

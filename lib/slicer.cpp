@@ -97,7 +97,8 @@ void slicer::print(const std::vector<section>& v) const
 void slicer::slice(double h, unsigned int resolution) const
 {
     std::vector<square> leaves = rejection_testing(square(vec2(-1,-1),2),h,resolution);
-    print(generate_contour(leaves,h));
+    generate_contour(leaves,h);
+    //print(generate_contour(leaves,h));
     
 }
 
@@ -186,31 +187,69 @@ std::vector<bool> slicer::evaluate_verts(const square& s, double h) const
 }
 
 
-std::vector<section> slicer::generate_contour(const std::vector<square>& unrejecteds, double h) const
+std::vector<slicer::id_section> slicer::generate_contour(const std::vector<square>& unrejecteds, double h) const
 {
-    std::vector<section> polyline;
+    std::vector<id_section> polyline;
+
+    section_indexer section_indexer;
 
     for(const auto& a : unrejecteds){
         std::vector<bool> evaluated_verts = evaluate_verts(a,h);
         
 
         std::vector<std::pair<unsigned int,unsigned int>> ids = LUT::find_intersectables(evaluated_verts);
-        std::vector<std::pair<section,section>> ss;
+        std::vector<std::pair<section,section>> cutter_sections;
+        std::vector<std::pair<unsigned int, unsigned int>> section_indexes;
         for(const auto& b : ids){
-            ss.push_back({a.get_section(b.first),a.get_section(b.second)});
+            cutter_sections.push_back({a.get_section(b.first),a.get_section(b.second)});
+            section_indexes.push_back({section_indexer.find_add_section(a.get_section(b.first)),section_indexer.find_add_section(a.get_section(b.second))});
         }
-        std::vector<section> ps;
-        for(int i=0;i<ss.size();i++){
-            section temp = section(calc_surfacepoint(ss[i].first,h),calc_surfacepoint(ss[i].second,h));
-            if(temp.p1.x==0||temp.p2.x==0)std::cout<<ids[i].first<<" "<<ids[i].second<<std::endl;
+        std::vector<id_section> ps;
+        for(int i=0;i<cutter_sections.size();i++){
+            id_section temp = id_section(section(calc_surfacepoint(cutter_sections[i].first,h),calc_surfacepoint(cutter_sections[i].second,h)),section_indexes[i].first,section_indexes[i].second);
             ps.push_back(temp);
         }
         polyline.insert(polyline.end(),ps.begin(),ps.end());
     }
+
     return polyline;
 }
 
+int counter =0;
+unsigned int slicer::section_indexer::find_add_section(const section& s)
+{
+    for(int i=0;i<found.size();i++)
+    {
+        if(same_section(found[i],s)){
+            return i;
+        }
+    }
 
+    found.push_back(s);
+    return found.size()-1;
+}
+
+bool slicer::section_indexer::same_section(const section& s1, const section& s2) const
+{
+    double close_enough = s1.length()/10;
+
+    return (((s1.p1-s2.p1).length()<close_enough&&(s1.p2-s2.p2).length()<close_enough)||((s1.p2-s2.p1).length()<close_enough&&(s1.p1-s2.p2).length()<close_enough));
+}
+
+slicer::id_section::id_section(const section& s, unsigned int _start_id, unsigned int _end_id) : me(s), start_id(_start_id), end_id(_end_id)
+{
+
+}
+
+std::vector<std::vector<section>> slicer::organise_sections(const std::vector<id_section>& unorganised) const
+{
+    std::vector<std::vector<section>> result;
+
+
+
+
+    return result;
+}
 
 
 
