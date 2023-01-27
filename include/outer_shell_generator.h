@@ -8,11 +8,32 @@
 #include <basics.h>
 #include <frep.hpp>
 
-class slicer{
+struct id_section{
+    section me;
+    unsigned int id_a;
+    unsigned int id_b;
+    
+    id_section(const section&, unsigned int, unsigned int);
+
+    void swap();
+};
 
 
-   
+class section_organiser{
 
+    void find_attachment(std::vector<id_section>& from,std::vector<id_section>& current_string) const;
+    bool try_attach(std::vector<id_section>& from,std::vector<id_section>& current_string, bool to_end) const;
+    void attach(std::vector<id_section>& from,unsigned int what,std::vector<id_section>& current_string, bool to_end) const;
+    bool try_join_ends(std::vector<id_section>&) const;
+
+public:
+
+    std::vector<std::vector<section>> organise_sections(const std::vector<id_section>&) const;
+    
+};
+
+
+class outer_shell_generator{
     struct square{
 
         //       0
@@ -20,8 +41,6 @@ class slicer{
         //  3 |     | 1
         //    3-----2
         //       2
-
-
         vec2 start; //upper-left pos
         double size;
 
@@ -39,36 +58,26 @@ class slicer{
         static std::vector<std::pair<unsigned int,unsigned int>> find_intersectables(const std::vector<bool>&);
     };
     
-    //std::function<interval(const interval&, const interval&, double h)> frep_interval;
-
-    struct id_section{
-        section me;
-        unsigned int start_id;
-        unsigned int end_id;
-
-        id_section(const section&, unsigned int start_id, unsigned int end_id);
-    };
 
     class section_indexer{
-    public:
         std::vector<section> found;
         bool same_section(const section&, const section&) const;
+    public:
         
-        unsigned int find_add_section(const section&);
+        unsigned int PUT_section(const section&);
     };
 
-    std::vector<slicer::square> rejection_testing(const square&,double h,unsigned int resolution) const;
+    std::vector<outer_shell_generator::square> rejection_testing(const square&,double h,unsigned int resolution) const;
     bool rejection_test(const square&, double h) const;
     std::vector<id_section> generate_contour(const std::vector<square>& unrejecteds, double h) const;
     std::vector<bool> evaluate_verts(const square&, double h) const;
     vec2 calc_surfacepoint(const section&, double h) const;
-    std::vector<std::vector<section>> organise_sections(const std::vector<id_section>&) const;
 
-    void print(const std::vector<section>&) const;
+    section_organiser organiser;
+
 public:
 
-    //slicer(std::function<interval(const interval&, const interval&, double h)> f_interval);
-    slicer();
+    outer_shell_generator();
     
-    void slice(double h, unsigned int resolution) const;
+    std::vector<std::vector<section>> generate(double h, unsigned int resolution) const;
 };

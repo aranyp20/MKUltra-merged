@@ -1,13 +1,11 @@
-
-#include <bits/stdc++.h>
-#include <slicer.h>
+#include <outer_shell_generator.h>
 
 template <typename T>
 T fn(const T& x, const T& y, double h)  {return T(8)*(pow(x,4)+pow(y,4)+pow(T(h),4))-T(8)*(pow(x,2)+pow(y,2)+pow(T(h),2)) +T(3);}
 
 
 
-std::map<std::vector<bool>,std::vector<std::pair<unsigned int, unsigned int>>> slicer::LUT::table = {
+std::map<std::vector<bool>,std::vector<std::pair<unsigned int, unsigned int>>> outer_shell_generator::LUT::table = {
     {{false,false,false,false},{}},
     {{false,false,false,true},{{2,3}}},
     {{false,false,true,false},{{1,2}}},
@@ -26,12 +24,12 @@ std::map<std::vector<bool>,std::vector<std::pair<unsigned int, unsigned int>>> s
     {{true,true,true,true},{}}
 };
 
-std::vector<std::pair<unsigned int,unsigned int>> slicer::LUT::find_intersectables(const std::vector<bool>& s)
+std::vector<std::pair<unsigned int,unsigned int>> outer_shell_generator::LUT::find_intersectables(const std::vector<bool>& s)
 {
     return table[s];
 }
 
-section slicer::square::get_section(unsigned int side_index) const
+section outer_shell_generator::square::get_section(unsigned int side_index) const
 {
 
     switch(side_index){
@@ -43,7 +41,7 @@ section slicer::square::get_section(unsigned int side_index) const
     }
 }
 
-vec2 slicer::square::get_vert(unsigned int vert_index) const
+vec2 outer_shell_generator::square::get_vert(unsigned int vert_index) const
 {
     switch(vert_index){
         case 0: return vec2(start.x,start.y); break;
@@ -61,48 +59,32 @@ bool inside(const vec3& p)
 }
 
 /*
-slicer::slicer(std::function<interval(const interval&, const interval&, double h)> f_interval) : frep_interval(f_interval)
+outer_shell_generator::outer_shell_generator(std::function<interval(const interval&, const interval&, double h)> f_interval) : frep_interval(f_interval)
 {
 }
 */
-slicer::slicer()
+outer_shell_generator::outer_shell_generator()
 {
 
 }
 
 
-slicer::square::square(const vec2& _start, double _size): start(_start), size(_size)
+outer_shell_generator::square::square(const vec2& _start, double _size): start(_start), size(_size)
 {
 
 }
 
-void slicer::print(const std::vector<section>& v) const
-{
-    std::string outputfile("result.obj");
-    std::ofstream writer(outputfile);
-
-    
-
-    for(const auto& a : v){
-        writer<<"v "<<a.p1.x<<" "<<a.p1.y<<" "<<0<<std::endl;
-        writer<<"v "<<a.p2.x<<" "<<a.p2.y<<" "<<0<<std::endl;  
-    }
-    for(int i=0;i<v.size();i++){
-        writer<<"l "<<i*2 +1<<" "<<i*2+2<<std::endl;
-    }
-
-}
 
 
-void slicer::slice(double h, unsigned int resolution) const
+
+std::vector<std::vector<section>> outer_shell_generator::generate(double h, unsigned int resolution) const
 {
     std::vector<square> leaves = rejection_testing(square(vec2(-1,-1),2),h,resolution);
-    generate_contour(leaves,h);
-    //print(generate_contour(leaves,h));
+    return organiser.organise_sections(generate_contour(leaves,h));
     
 }
 
-std::vector<slicer::square> slicer::rejection_testing(const slicer::square& s,double h,unsigned int resolution) const
+std::vector<outer_shell_generator::square> outer_shell_generator::rejection_testing(const outer_shell_generator::square& s,double h,unsigned int resolution) const
 {
     resolution -= 1;
 
@@ -124,16 +106,15 @@ std::vector<slicer::square> slicer::rejection_testing(const slicer::square& s,do
 }
 
 
-bool slicer::rejection_test(const square& s, double h) const
+bool outer_shell_generator::rejection_test(const square& s, double h) const
 {
-    //return frep_interval(interval(s.start.x,s.start.x+s.size),interval(s.start.y,s.start.y+s.size),h).contains(0);
     return fn(interval(s.start.x,s.start.x+s.size),interval(s.start.y,s.start.y+s.size),h).contains(0);
 }
 
 
-std::vector<slicer::square> slicer::square::breakup(unsigned int count) const
+std::vector<outer_shell_generator::square> outer_shell_generator::square::breakup(unsigned int count) const
 {
-    std::vector<slicer::square> result;
+    std::vector<outer_shell_generator::square> result;
     double lit_size = size/count;
 
     for(int i = 0;i<count;i++){
@@ -146,7 +127,7 @@ std::vector<slicer::square> slicer::square::breakup(unsigned int count) const
 }
 
 
-vec2 slicer::calc_surfacepoint(const section& se, double h) const
+vec2 outer_shell_generator::calc_surfacepoint(const section& se, double h) const
 {
     vec2 ip,op;
     if(inside(vec3(se.p1.x,se.p1.y,h))&&!inside(vec3(se.p2.x,se.p2.y,h))){
@@ -174,7 +155,7 @@ vec2 slicer::calc_surfacepoint(const section& se, double h) const
     return mid;
 }
 
-std::vector<bool> slicer::evaluate_verts(const square& s, double h) const
+std::vector<bool> outer_shell_generator::evaluate_verts(const square& s, double h) const
 {
     std::vector<bool> result;
 
@@ -187,7 +168,7 @@ std::vector<bool> slicer::evaluate_verts(const square& s, double h) const
 }
 
 
-std::vector<slicer::id_section> slicer::generate_contour(const std::vector<square>& unrejecteds, double h) const
+std::vector<id_section> outer_shell_generator::generate_contour(const std::vector<square>& unrejecteds, double h) const
 {
     std::vector<id_section> polyline;
 
@@ -202,7 +183,7 @@ std::vector<slicer::id_section> slicer::generate_contour(const std::vector<squar
         std::vector<std::pair<unsigned int, unsigned int>> section_indexes;
         for(const auto& b : ids){
             cutter_sections.push_back({a.get_section(b.first),a.get_section(b.second)});
-            section_indexes.push_back({section_indexer.find_add_section(a.get_section(b.first)),section_indexer.find_add_section(a.get_section(b.second))});
+            section_indexes.push_back({section_indexer.PUT_section(a.get_section(b.first)),section_indexer.PUT_section(a.get_section(b.second))});
         }
         std::vector<id_section> ps;
         for(int i=0;i<cutter_sections.size();i++){
@@ -215,8 +196,7 @@ std::vector<slicer::id_section> slicer::generate_contour(const std::vector<squar
     return polyline;
 }
 
-int counter =0;
-unsigned int slicer::section_indexer::find_add_section(const section& s)
+unsigned int outer_shell_generator::section_indexer::PUT_section(const section& s)
 {
     for(int i=0;i<found.size();i++)
     {
@@ -229,36 +209,103 @@ unsigned int slicer::section_indexer::find_add_section(const section& s)
     return found.size()-1;
 }
 
-bool slicer::section_indexer::same_section(const section& s1, const section& s2) const
+bool outer_shell_generator::section_indexer::same_section(const section& s1, const section& s2) const
 {
     double close_enough = s1.length()/10;
 
     return (((s1.p1-s2.p1).length()<close_enough&&(s1.p2-s2.p2).length()<close_enough)||((s1.p2-s2.p1).length()<close_enough&&(s1.p1-s2.p2).length()<close_enough));
 }
 
-slicer::id_section::id_section(const section& s, unsigned int _start_id, unsigned int _end_id) : me(s), start_id(_start_id), end_id(_end_id)
+id_section::id_section(const section& s, unsigned int _id_a, unsigned int _id_b) : me(s), id_a(_id_a), id_b(_id_b)
 {
 
 }
 
-std::vector<std::vector<section>> slicer::organise_sections(const std::vector<id_section>& unorganised) const
+std::vector<std::vector<section>> section_organiser::organise_sections(const std::vector<id_section>& _unorganised) const
 {
     std::vector<std::vector<section>> result;
 
+    std::vector<id_section> unorganised(_unorganised);
 
+    while(!unorganised.empty()){
+        id_section string_start = unorganised.back();
+        unorganised.pop_back();
+        
+        std::vector<id_section> current_string;
+        current_string.push_back(string_start);
 
+        find_attachment(unorganised,current_string);
+
+        std::vector<section> tmp;
+        for(const auto& a : current_string){
+            tmp.push_back(a.me);
+        }
+        result.push_back(tmp);
+
+    }
+
+    std::cout<<result.size()<<std::endl;
 
     return result;
 }
 
-
-
-int main()
+void section_organiser::find_attachment(std::vector<id_section>& from,std::vector<id_section>& current_string) const
 {
 
-    slicer slicer;
+    while(try_attach(from,current_string, true));
+    if(try_join_ends(current_string))return;
+    while(try_attach(from,current_string, false));
 
-    slicer.slice(0,5);
-
-    return 0;
 }
+
+bool section_organiser::try_attach(std::vector<id_section>& from,std::vector<id_section>& current_string, bool to_end) const
+{
+    for(int i=0;i<from.size();i++){
+        if(to_end){
+            if(current_string.back().id_b==from[i].id_a){
+                attach(from,i,current_string,to_end);
+                return true;
+            }else if(current_string.back().id_b==from[i].id_b){
+                from[i].swap();
+                attach(from,i,current_string,to_end);
+                return true;
+            }
+        }else{
+            if(current_string[0].id_a==from[i].id_b){
+                attach(from,i,current_string,to_end);
+                return true;
+            }else if(current_string.back().id_b==from[i].id_b){
+                from[i].swap();
+                attach(from,i,current_string,to_end);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+void section_organiser::attach(std::vector<id_section>& from,unsigned int what,std::vector<id_section>& current_string, bool to_end) const
+{
+    if(to_end){
+        current_string.push_back(from[what]);
+        from.erase(from.begin() + what);
+    }else{
+ 
+        current_string.insert(current_string.begin(),from[what]);
+        from.erase(from.begin() + what);
+    }
+}
+
+bool section_organiser::try_join_ends(std::vector<id_section>& v) const
+{
+    return v.back().id_b == v[0].id_a;
+}
+
+
+void id_section::swap()
+{
+    std::swap(id_a, id_b);
+    me.swap_sides();
+}
+
+
