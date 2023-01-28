@@ -1,8 +1,5 @@
 #include <outer_shell_generator.h>
 
-template <typename T>
-T fn(const T& x, const T& y, double h)  {return T(8)*(pow(x,4)+pow(y,4)+pow(T(h),4))-T(8)*(pow(x,2)+pow(y,2)+pow(T(h),2)) +T(3);}
-
 
 
 std::map<std::vector<bool>,std::vector<std::pair<unsigned int, unsigned int>>> outer_shell_generator::LUT::table = {
@@ -58,11 +55,6 @@ bool inside(const vec3& p)
     return fn(p.x,p.y,p.z)<0;
 }
 
-/*
-outer_shell_generator::outer_shell_generator(std::function<interval(const interval&, const interval&, double h)> f_interval) : frep_interval(f_interval)
-{
-}
-*/
 outer_shell_generator::outer_shell_generator()
 {
 

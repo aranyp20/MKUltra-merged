@@ -11,31 +11,6 @@
 
 #define _USE_MATH_DEFINES
 
-////////////////////////////////VEC2/////////////////////////////////////////
-struct vec2 {
-	double x, y;
-	explicit vec2(double _x = 0, double _y = 0):x(_x),y(_y){}
-
-	vec2 operator*(double num) const { return vec2(x * num, y * num); }
-	vec2 operator/(double num) const { return vec2(x / num, y / num); }
-	vec2 operator-(const vec2& v) const { return vec2(x - v.x, y - v.y); }
-	vec2 operator+(const vec2& v) const { return vec2(x + v.x, y + v.y); }
-
-	inline void Rotate() { double a = y; y = -x; x = a; }
-	inline double length() const { return sqrt(x * x + y * y); }
-	inline void Normalize() {
-		vec2 newVec = vec2(x, y) / length();
-		x = newVec.x;
-		y = newVec.y;
-	}
-
-	
-};
-
-inline double dot(const vec2& v1, const vec2& v2) { return (v1.x * v2.x + v1.y * v2.y); }
-
-inline double angle(const vec2& v1, const vec2& v2){return acos(dot(v1,v2)/(v1.length()*v2.length()));}
-
 ////////////////////////////////VEC3/////////////////////////////////////////
 
 struct vec3 {
@@ -74,6 +49,35 @@ inline double dot(const vec3& v1, const vec3& v2) { return (v1.x * v2.x + v1.y *
 inline vec3 cross(const vec3& v1, const vec3& v2) {
 	return vec3(v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x);
 }
+
+
+
+////////////////////////////////VEC2/////////////////////////////////////////
+struct vec2 {
+	double x, y;
+	explicit vec2(double _x = 0, double _y = 0):x(_x),y(_y){}
+	explicit vec2(const vec3& v) : x(v.x), y(v.y){}
+
+	vec2 operator*(double num) const { return vec2(x * num, y * num); }
+	vec2 operator/(double num) const { return vec2(x / num, y / num); }
+	vec2 operator-(const vec2& v) const { return vec2(x - v.x, y - v.y); }
+	vec2 operator+(const vec2& v) const { return vec2(x + v.x, y + v.y); }
+
+	inline void Rotate() { double a = y; y = -x; x = a; }
+	inline double length() const { return sqrt(x * x + y * y); }
+	inline void Normalize() {
+		vec2 newVec = vec2(x, y) / length();
+		x = newVec.x;
+		y = newVec.y;
+	}
+
+	
+};
+
+inline double dot(const vec2& v1, const vec2& v2) { return (v1.x * v2.x + v1.y * v2.y); }
+
+inline double angle(const vec2& v1, const vec2& v2){return acos(dot(v1,v2)/(v1.length()*v2.length()));}
+
 
 ////////////////////////////////VEC4/////////////////////////////////////////
 
