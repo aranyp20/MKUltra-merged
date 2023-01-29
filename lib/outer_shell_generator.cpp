@@ -69,7 +69,7 @@ outer_shell_generator::square::square(const vec2& _start, double _size): start(_
 
 
 
-std::vector<std::vector<section>> outer_shell_generator::generate(double h, unsigned int resolution) const
+polylines outer_shell_generator::generate(double h, unsigned int resolution) const
 {
     std::vector<square> leaves = rejection_testing(square(vec2(-1,-1),2),h,resolution);
     return organiser.organise_sections(generate_contour(leaves,h));
@@ -213,9 +213,9 @@ id_section::id_section(const section& s, unsigned int _id_a, unsigned int _id_b)
 
 }
 
-std::vector<std::vector<section>> section_organiser::organise_sections(const std::vector<id_section>& _unorganised) const
+polylines section_organiser::organise_sections(const std::vector<id_section>& _unorganised) const
 {
-    std::vector<std::vector<section>> result;
+    polylines result;
 
     std::vector<id_section> unorganised(_unorganised);
 
@@ -232,11 +232,11 @@ std::vector<std::vector<section>> section_organiser::organise_sections(const std
         for(const auto& a : current_string){
             tmp.push_back(a.me);
         }
-        result.push_back(tmp);
+        result.data.push_back(serialize(tmp));
 
     }
 
-    std::cout<<result.size()<<std::endl;
+    std::cout<<result.data.size()<<std::endl;
 
     return result;
 }

@@ -5,7 +5,7 @@
 #include <map>
 
 #include <interval.h>
-#include <basics.h>
+#include <basics.hpp>
 #include <frep.hpp>
 
 struct id_section{
@@ -28,7 +28,7 @@ class section_organiser{
 
 public:
 
-    std::vector<std::vector<section>> organise_sections(const std::vector<id_section>&) const;
+    polylines organise_sections(const std::vector<id_section>&) const;
     
 };
 
@@ -79,5 +79,5 @@ public:
 
     outer_shell_generator();
     
-    std::vector<std::vector<section>> generate(double h, unsigned int resolution) const;
+    polylines generate(double h, unsigned int resolution) const;
 };
