@@ -40,10 +40,11 @@ template <typename T>
 struct data_table{
 
     std::vector<std::vector<T>> data;
-
+    //kell egy const valtozat 
     struct iterator{
         
         std::vector<std::vector<T>>& data;
+
 
         bool untouched = true;
 
@@ -67,6 +68,8 @@ struct data_table{
 
             return &(data[it_outer][it_inner]);
         }
+
+        
     
         iterator(std::vector<std::vector<T>>& _data) : data(_data) {}
 
@@ -80,30 +83,15 @@ struct data_table{
 
     iterator begin() {return data_table::iterator(data);}
 
+
     data_table(){}
-    data_table(const std::vector<std::vector<T>>& _data) : data(_data) {}
+    data_table(std::vector<std::vector<T>>& _data) : data(_data) {}
 };
 
 struct polylines : public data_table<vec2>{
 
     void print() const {
-        std::string outputfile("result.obj");
-        std::ofstream writer(outputfile);
-    
-        for(int j=0;j<data.size();j++){
-
-            for(const auto& a : data[j]){        
-                writer<<"v "<<a.x<<" "<<a.y<<" "<<0<<std::endl;
-            }
-        }
-
-        unsigned int counter = 0;
-        for(int j=0;j<data.size();j++){
-            for(int i=0;i<data[j].size()-1;i++){
-                writer<<"l "<<counter + i +1<<" "<<counter + i +2<<std::endl;
-            }
-            counter += data[j].size();
-        }
+        
 
     }
   
