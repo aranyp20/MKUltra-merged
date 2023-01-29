@@ -56,7 +56,7 @@ inline vec3 cross(const vec3& v1, const vec3& v2) {
 struct vec2 {
 	double x, y;
 	explicit vec2(double _x = 0, double _y = 0):x(_x),y(_y){}
-	explicit vec2(const vec3& v) : x(v.x), y(v.y){}
+	vec2(const vec3& v) : x(v.x), y(v.y){}
 
 	vec2 operator*(double num) const { return vec2(x * num, y * num); }
 	vec2 operator/(double num) const { return vec2(x / num, y / num); }

@@ -24,12 +24,12 @@ struct section{
 
 
 //ennek kell egy sectionstring osztaly ami az osszekotest is tarolja
-inline std::vector<vec2> serialize(const std::vector<section>& v){
-    std::vector<vec2> result;
+inline std::vector<vec3> serialize(const std::vector<section>& v, double h){
+    std::vector<vec3> result;
     for(const auto& a : v){
-        result.push_back(a.p1);
+        result.push_back(vec3(a.p1.x,a.p1.y,h));
     }
-    result.push_back(v.back().p2);
+    result.push_back(vec3(v.back().p2.x,v.back().p2.y,h));
 
     return result;
 }
@@ -49,11 +49,12 @@ struct data_table{
         bool untouched = true;
 
         bool has_next(){
-            if(data.empty() || (it_outer == data.size()-1 && it_inner == data[data.size()-1].size()-1))return false;
+            
+            if(data.empty() || (it_outer == data.size()-1 && it_inner == data[data.size()-1].size()))return false;
 
             if(untouched){untouched = false;return true;}
 
-            if(it_inner == data[data.size()-1].size()-1){
+            if(it_inner == data[it_outer].size()){
                 it_outer++;
                 it_inner = 0;
             }else{
@@ -88,7 +89,7 @@ struct data_table{
     data_table(std::vector<std::vector<T>>& _data) : data(_data) {}
 };
 
-struct polylines : public data_table<vec2>{
+struct polylines : public data_table<vec3>{
 
     void print() const {
         

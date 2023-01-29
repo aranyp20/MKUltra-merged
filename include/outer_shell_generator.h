@@ -28,7 +28,7 @@ class section_organiser{
 
 public:
 
-    polylines organise_sections(const std::vector<id_section>&) const;
+    polylines organise_sections(const std::vector<id_section>&, double h) const;
     
 };
 
