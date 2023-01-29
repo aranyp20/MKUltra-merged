@@ -45,8 +45,12 @@ struct data_table{
         
         std::vector<std::vector<T>>& data;
 
+        bool untouched = true;
+
         bool has_next(){
             if(data.empty() || (it_outer == data.size()-1 && it_inner == data[data.size()-1].size()-1))return false;
+
+            if(untouched){untouched = false;return true;}
 
             if(it_inner == data[data.size()-1].size()-1){
                 it_outer++;
@@ -74,7 +78,7 @@ struct data_table{
 
     };
 
-    iterator begin() const {return data_table::iterator(data);}
+    iterator begin() {return data_table::iterator(data);}
 
     data_table(){}
     data_table(const std::vector<std::vector<T>>& _data) : data(_data) {}
