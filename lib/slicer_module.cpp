@@ -4,6 +4,7 @@
 
 void print(const std::vector<polylines> &d)
 {
+    std::cout << "Printing..." << std::endl;
     std::string outputfile("result.obj");
     std::ofstream writer(outputfile);
 
@@ -33,6 +34,7 @@ void print(const std::vector<polylines> &d)
             counter += d[k].data[j].size();
         }
     }
+    std::cout << "Printing ended" << std::endl;
 }
 
 int main()
@@ -43,10 +45,27 @@ int main()
     inner_shell_generator inner_shell_generator;
 
     std::vector<polylines> all;
-    polylines p_outer = outer_shell_generator.generate(0, 3);
-    polylines p_inner = inner_shell_generator.generate_one(p_outer, 10);
-    all.push_back(p_outer);
-    all.push_back(p_inner);
+    for (int i = 0; i < 10; i++)
+    {
+        // std::pair<vec2, double> bounding_box = {vec2(-110, -110), 220};
+        std::pair<vec2, double> bounding_box = {vec2(-1.1, -1.1), 2.2};
+
+        // const double h = -110 + i * 22;
+        const double h = -1.1 + i * 0.22;
+
+        polylines p_outer = outer_shell_generator.generate(bounding_box, h, 5);
+
+        for (int j = 0; j < 3; j++)
+        {
+            // const double w = 3;
+            const double w = 0.01;
+
+            polylines p_inner = inner_shell_generator.generate_one(p_outer, w * (j + 1));
+            all.push_back(p_inner);
+        }
+
+        all.push_back(p_outer);
+    }
     print(all);
 
     return 0;
@@ -54,6 +73,6 @@ int main()
 
 /*
 const iterator
-bisection methodot atnezni, mert a resolution javitas gyanusan sokat javit
 polylines es sectionvector vegeinek osszekotese
+RBF kiertekelst optimalizalni
 */

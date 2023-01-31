@@ -16,6 +16,7 @@ std::vector<vec3> inner_shell_generator::generate_one_part(polylines &contour, u
 {
     std::vector<vec3> result;
 
+    int i = 0;
     for (const auto &a : contour.data[which_part])
     {
         vec3 pot_p = offset_p(a, w);
@@ -23,10 +24,9 @@ std::vector<vec3> inner_shell_generator::generate_one_part(polylines &contour, u
         {
             result.push_back(pot_p);
         }
+
+        i++;
     }
-
-    // if(!result.empty())result.push_back(result[0]);
-
     return result;
 }
 
@@ -40,13 +40,16 @@ vec3 inner_shell_generator::offset_p(const vec3 &p, double w) const
 
 bool inner_shell_generator::detect_intersection(const vec3 &of, polylines &contour, double w) const
 {
-    const double eps = 0.005;
+    // const double danger_zone = w * 0.9;
+    const double danger_zone = w * 0.99;
 
     polylines::iterator it = contour.begin();
     while (it.has_next())
     {
-        if ((of - (*(it.get_data()))).length() < w - eps)
+        if ((of - (*(it.get_data()))).length() < danger_zone)
+        {
             return true;
+        }
     }
 
     return false;
