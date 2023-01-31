@@ -1,6 +1,6 @@
 BINARY=prg
-CODEDIRS=. lib
-INCDIRS=. ./include/
+CODEDIRS=. lib RBF
+INCDIRS=. ./include/ ./RBF/
 
 CC=g++
 OPT=-O0
@@ -24,6 +24,4 @@ build-dir/%.o:%.cpp
 
 clean:
 	rm -rf $(BINARY) $(OBJECTS)
-
-
 

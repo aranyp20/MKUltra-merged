@@ -1,4 +1,6 @@
+#include <FunctionCreator.h>
 #include <slicer_module.h>
+
 
 
 
@@ -20,7 +22,6 @@ void print(const std::vector<polylines>& d)
     unsigned int counter = 0;
     for(int k=0;k<d.size();k++){
         for(int j=0;j<d[k].data.size();j++){
-            //C++ tul jo (castolni kell)
             for(int i=0;i<(int)(d[k].data[j].size()) -1 ;i++){
                 writer<<"l "<<counter + i +1<<" "<<counter + i +2<<std::endl;
             }
@@ -33,33 +34,23 @@ void print(const std::vector<polylines>& d)
 
 int main()
 {
-    /*
-    std::vector<double> v;
-    std::cout<<v.size()<<std::endl; //print: 0
-    std::cout<<v.size() -1<<std::endl; //print: ???
-    */
-
+    FunctionCreator fc;
+  
     outer_shell_generator outer_shell_generator;
     inner_shell_generator inner_shell_generator;
 
     std::vector<polylines> all;
-
-    for(int i=0;i<12;i++){
-        polylines p_outer = outer_shell_generator.generate(-1.1 + i*0.2,5);
-        polylines p_inner = inner_shell_generator.generate_one(p_outer,0.2,-1.1 + i*0.2);
-        all.push_back(p_outer);
-        all.push_back(p_inner);
-    }
-    
-
-    
+    polylines p_outer = outer_shell_generator.generate(0,3);
+    polylines p_inner = inner_shell_generator.generate_one(p_outer,10);
+    all.push_back(p_outer);
+    all.push_back(p_inner);
     print(all);
+
 
     return 0;
 }
 
 /*
 const iterator
-height is a mess
-
+bisection methodot atnezni, mert a resolution javitas gyanusan sokat javit
 */

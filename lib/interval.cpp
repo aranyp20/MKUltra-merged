@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <interval.h>
+#include <math.h>
 
 
 interval::interval(double _start,double _end) : start(std::min(_start,_end)), end(std::max(_start,_end))
@@ -50,3 +51,14 @@ interval pow(const interval& inter, unsigned int power)
     
     return tmp;
 }
+
+interval sqrt(const interval& inter)
+{
+    return interval(std::min(sqrt(inter.start),sqrt(inter.end)),std::max(sqrt(inter.start),sqrt(inter.end)));
+}
+
+double interval::length() const
+{
+    return 0;
+}
+

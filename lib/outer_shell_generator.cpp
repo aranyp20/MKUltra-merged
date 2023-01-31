@@ -52,7 +52,7 @@ vec2 outer_shell_generator::square::get_vert(unsigned int vert_index) const
 
 bool inside(const vec3& p)
 {
-    return fn(p.x,p.y,p.z)<0;
+    return fn_sima(p.x,p.y,p.z)<0;
 }
 
 outer_shell_generator::outer_shell_generator()
@@ -71,7 +71,7 @@ outer_shell_generator::square::square(const vec2& _start, double _size): start(_
 
 polylines outer_shell_generator::generate(double h, unsigned int resolution) const
 {
-    std::vector<square> leaves = rejection_testing(square(vec2(-1.1,-1.1),2.2),h,resolution);
+    std::vector<square> leaves = rejection_testing(square(vec2(-110,-110),220),h,resolution);
     return organiser.organise_sections(generate_contour(leaves,h),h);
     
 }
@@ -100,7 +100,7 @@ std::vector<outer_shell_generator::square> outer_shell_generator::rejection_test
 
 bool outer_shell_generator::rejection_test(const square& s, double h) const
 {
-    return fn(interval(s.start.x,s.start.x+s.size),interval(s.start.y,s.start.y+s.size),h).contains(0);
+    return fn_inter(interval(s.start.x,s.start.x+s.size),interval(s.start.y,s.start.y+s.size),h).contains(0);
 }
 
 

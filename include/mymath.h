@@ -17,7 +17,7 @@ struct vec3 {
 	
 	double x, y, z;
 
-	explicit vec3(double _x = 0, double _y = 0, double _z = 0) : x(_x), y(_y), z(_z) {}
+	vec3(double _x = 0, double _y = 0, double _z = 0) : x(_x), y(_y), z(_z) {}
 	
 	
 	vec3 operator*(double num) const { return vec3(x * num, y * num, z * num); }
@@ -26,7 +26,7 @@ struct vec3 {
 	vec3 operator-(const vec3& v) const { return vec3(x - v.x, y - v.y, z - v.z); }
 	vec3 operator*(const vec3& v) const { return vec3(x * v.x, y * v.y, z * v.z); }
 
-	inline double length() const { return sqrtf(x*x+y*y+z*z); }
+	inline double length() const { return sqrt(x*x+y*y+z*z); }
 
 	inline void normalize() { 
 		
@@ -50,12 +50,12 @@ inline vec3 cross(const vec3& v1, const vec3& v2) {
 	return vec3(v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x);
 }
 
-
+//inline double distance(const vec3& v1, const vec3& v2){return (v1-v2).length();}
 
 ////////////////////////////////VEC2/////////////////////////////////////////
 struct vec2 {
 	double x, y;
-	explicit vec2(double _x = 0, double _y = 0):x(_x),y(_y){}
+	vec2(double _x = 0, double _y = 0):x(_x),y(_y){}
 	vec2(const vec3& v) : x(v.x), y(v.y){}
 
 	vec2 operator*(double num) const { return vec2(x * num, y * num); }
@@ -77,6 +77,8 @@ struct vec2 {
 inline double dot(const vec2& v1, const vec2& v2) { return (v1.x * v2.x + v1.y * v2.y); }
 
 inline double angle(const vec2& v1, const vec2& v2){return acos(dot(v1,v2)/(v1.length()*v2.length()));}
+
+inline double distance(const vec2& v1, const vec2& v2){return (v1-v2).length();}
 
 
 ////////////////////////////////VEC4/////////////////////////////////////////
