@@ -10,7 +10,6 @@ void print(const std::vector<polylines> &d)
 
     for (int k = 0; k < d.size(); k++)
     {
-        // lehetne majd iteratorral
         for (int j = 0; j < d[k].data.size(); j++)
         {
 
@@ -53,12 +52,12 @@ int main()
         // const double h = -110 + i * 22;
         const double h = -1.1 + i * 0.22;
 
-        polylines p_outer = outer_shell_generator.generate(bounding_box, h, 5);
+        polylines p_outer = outer_shell_generator.generate(bounding_box, h, 4);
 
         for (int j = 0; j < 3; j++)
         {
             // const double w = 3;
-            const double w = 0.01;
+            const double w = 0.03;
 
             polylines p_inner = inner_shell_generator.generate_one(p_outer, w * (j + 1));
             all.push_back(p_inner);
@@ -73,6 +72,7 @@ int main()
 
 /*
 const iterator
+iterator jaitas: it->data
 polylines es sectionvector vegeinek osszekotese
 RBF kiertekelst optimalizalni
 */

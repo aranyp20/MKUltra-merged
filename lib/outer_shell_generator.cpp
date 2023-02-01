@@ -1,6 +1,6 @@
 #include <outer_shell_generator.h>
 
-std::map<std::vector<bool>, std::vector<std::pair<unsigned int, unsigned int>>> outer_shell_generator::LUT::table = {
+std::map<std::vector<bool>, std::vector<std::array<unsigned int, 2>>> outer_shell_generator::LUT::table = {
     {{false, false, false, false}, {}},
     {{false, false, false, true}, {{2, 3}}},
     {{false, false, true, false}, {{1, 2}}},
@@ -18,7 +18,7 @@ std::map<std::vector<bool>, std::vector<std::pair<unsigned int, unsigned int>>> 
     {{true, true, true, false}, {{2, 3}}},
     {{true, true, true, true}, {}}};
 
-std::vector<std::pair<unsigned int, unsigned int>> outer_shell_generator::LUT::find_intersectables(const std::vector<bool> &s)
+std::vector<std::array<unsigned int, 2>> outer_shell_generator::LUT::find_intersectables(const std::vector<bool> &s)
 {
     return table[s];
 }
@@ -82,6 +82,23 @@ polylines outer_shell_generator::generate(const std::pair<vec2, double> &boundin
     return organiser.organise_sections(generate_contour(leaves, h), h);
 }
 
+void outer_shell_generator::rejection_testing_square(std::vector<square> &leaves, const square &testable, double h, unsigned int resolution) const
+{
+    if (rejection_test(testable, h))
+    {
+        if (resolution == 0)
+        {
+
+            leaves.push_back(testable);
+        }
+        else
+        {
+            std::vector<square> childs_leaves = rejection_testing(testable, h, resolution);
+            leaves.insert(leaves.end(), childs_leaves.begin(), childs_leaves.end());
+        }
+    }
+}
+
 std::vector<outer_shell_generator::square> outer_shell_generator::rejection_testing(const outer_shell_generator::square &s, double h, unsigned int resolution) const
 {
     resolution -= 1;
@@ -91,19 +108,7 @@ std::vector<outer_shell_generator::square> outer_shell_generator::rejection_test
 
     for (int i = 0; i < brokeup.size(); i++)
     {
-        if (rejection_test(brokeup[i], h))
-        {
-            if (resolution == 0)
-            {
-
-                leaf_nodes.push_back(brokeup[i]);
-            }
-            else
-            {
-                std::vector<square> childs_leaves = rejection_testing(brokeup[i], h, resolution);
-                leaf_nodes.insert(leaf_nodes.end(), childs_leaves.begin(), childs_leaves.end());
-            }
-        }
+        rejection_testing_square(leaf_nodes, brokeup[i], h, resolution);
     }
 
     return leaf_nodes;
@@ -130,7 +135,7 @@ std::vector<outer_shell_generator::square> outer_shell_generator::square::breaku
     return result;
 }
 
-vec2 outer_shell_generator::calc_surfacepoint(const section &se, double h) const
+std::array<vec2, 2> outer_shell_generator::arrange_inside_outside_point(const section &se, double h) const
 {
     vec2 ip, op;
     if (inside(vec3(se.p1.x, se.p1.y, h)) && !inside(vec3(se.p2.x, se.p2.y, h)))
@@ -147,6 +152,13 @@ vec2 outer_shell_generator::calc_surfacepoint(const section &se, double h) const
     {
         throw std::exception();
     }
+    return std::array<vec2, 2>{ip, op};
+}
+
+vec2 outer_shell_generator::find_zero_value_point(const std::array<vec2, 2> &betweens, double h) const
+{
+    vec2 ip(betweens[0]);
+    vec2 op(betweens[1]);
 
     vec2 mid = (ip + op) / 2;
 
@@ -163,8 +175,13 @@ vec2 outer_shell_generator::calc_surfacepoint(const section &se, double h) const
             ip = mid;
         }
     }
-
     return mid;
+}
+
+vec2 outer_shell_generator::calc_surfacepoint(const section &se, double h) const
+{
+    std::array<vec2, 2> end_points = arrange_inside_outside_point(se, h);
+    return find_zero_value_point(end_points, h);
 }
 
 std::vector<bool> outer_shell_generator::evaluate_verts(const square &s, double h) const
@@ -180,34 +197,54 @@ std::vector<bool> outer_shell_generator::evaluate_verts(const square &s, double 
     return result;
 }
 
+std::vector<std::array<section, 2>> outer_shell_generator::find_sections_to_ids(const square &sq, const std::vector<std::array<unsigned int, 2>> &ids) const
+{
+    std::vector<std::array<section, 2>> result;
+    for (const auto &b : ids)
+    {
+        result.push_back({sq.get_section(b[0]), sq.get_section(b[1])});
+    }
+    return result;
+}
+
+std::vector<std::array<unsigned int, 2>> outer_shell_generator::find_section_indexes(const square &sq, section_indexer &indexer, const std::vector<std::array<unsigned int, 2>> ids) const
+{
+    std::vector<std::array<unsigned int, 2>> result;
+    for (const auto &b : ids)
+    {
+        result.push_back({indexer.PUT_section(sq.get_section(b[0])), indexer.PUT_section(sq.get_section(b[1]))});
+    }
+    return result;
+}
+
+void outer_shell_generator::square_to_idsections_for_contour(const square &sq, std::vector<id_section> &result, section_indexer &indexer, double h) const
+{
+    std::vector<bool> evaluated_verts = evaluate_verts(sq, h);
+    std::vector<std::array<unsigned int, 2>> ids = LUT::find_intersectables(evaluated_verts);
+    std::vector<std::array<section, 2>> cutter_sections = find_sections_to_ids(sq, ids);
+    std::vector<std::array<unsigned int, 2>> section_indexes = find_section_indexes(sq, indexer, ids);
+
+    std::vector<id_section> ps;
+    for (int i = 0; i < cutter_sections.size(); i++)
+    {
+        id_section temp = id_section(section(calc_surfacepoint(cutter_sections[i][0], h), calc_surfacepoint(cutter_sections[i][1], h)), section_indexes[i][0], section_indexes[i][1]);
+        ps.push_back(temp);
+    }
+    result.insert(result.end(), ps.begin(), ps.end());
+}
+
 std::vector<id_section> outer_shell_generator::generate_contour(const std::vector<square> &unrejecteds, double h) const
 {
-    std::vector<id_section> polyline;
+    std::vector<id_section> result;
 
     section_indexer section_indexer;
 
     for (const auto &a : unrejecteds)
     {
-        std::vector<bool> evaluated_verts = evaluate_verts(a, h);
-
-        std::vector<std::pair<unsigned int, unsigned int>> ids = LUT::find_intersectables(evaluated_verts);
-        std::vector<std::pair<section, section>> cutter_sections;
-        std::vector<std::pair<unsigned int, unsigned int>> section_indexes;
-        for (const auto &b : ids)
-        {
-            cutter_sections.push_back({a.get_section(b.first), a.get_section(b.second)});
-            section_indexes.push_back({section_indexer.PUT_section(a.get_section(b.first)), section_indexer.PUT_section(a.get_section(b.second))});
-        }
-        std::vector<id_section> ps;
-        for (int i = 0; i < cutter_sections.size(); i++)
-        {
-            id_section temp = id_section(section(calc_surfacepoint(cutter_sections[i].first, h), calc_surfacepoint(cutter_sections[i].second, h)), section_indexes[i].first, section_indexes[i].second);
-            ps.push_back(temp);
-        }
-        polyline.insert(polyline.end(), ps.begin(), ps.end());
+        square_to_idsections_for_contour(a, result, section_indexer, h);
     }
 
-    return polyline;
+    return result;
 }
 
 unsigned int outer_shell_generator::section_indexer::PUT_section(const section &s)
@@ -235,6 +272,29 @@ id_section::id_section(const section &s, unsigned int _id_a, unsigned int _id_b)
 {
 }
 
+void section_organiser::push_back_idsections(polylines &result, std::vector<id_section> &current_string, double h) const
+{
+    std::vector<section> tmp;
+    for (const auto &a : current_string)
+    {
+        tmp.push_back(a.me);
+    }
+    result.data.push_back(serialize(tmp, h));
+}
+
+void section_organiser::create_one_string(polylines &result, std::vector<id_section> &unorganised, double h) const
+{
+    id_section string_start = unorganised.back();
+    unorganised.pop_back();
+
+    std::vector<id_section> current_string;
+    current_string.push_back(string_start);
+
+    find_attachments(unorganised, current_string);
+
+    push_back_idsections(result, current_string, h); // ez lehetne polylinesban
+}
+
 polylines section_organiser::organise_sections(const std::vector<id_section> &_unorganised, double h) const
 {
     polylines result;
@@ -243,26 +303,13 @@ polylines section_organiser::organise_sections(const std::vector<id_section> &_u
 
     while (!unorganised.empty())
     {
-        id_section string_start = unorganised.back();
-        unorganised.pop_back();
-
-        std::vector<id_section> current_string;
-        current_string.push_back(string_start);
-
-        find_attachment(unorganised, current_string);
-
-        std::vector<section> tmp;
-        for (const auto &a : current_string)
-        {
-            tmp.push_back(a.me);
-        }
-        result.data.push_back(serialize(tmp, h));
+        create_one_string(result, unorganised, h);
     }
 
     return result;
 }
 
-void section_organiser::find_attachment(std::vector<id_section> &from, std::vector<id_section> &current_string) const
+void section_organiser::find_attachments(std::vector<id_section> &from, std::vector<id_section> &current_string) const
 {
 
     while (try_attach(from, current_string, true))
@@ -273,37 +320,51 @@ void section_organiser::find_attachment(std::vector<id_section> &from, std::vect
         ;
 }
 
+bool section_organiser::attach_to_end(std::vector<id_section> &from, std::vector<id_section> &current_string, unsigned int id) const
+{
+    if (current_string.back().id_b == from[id].id_a)
+    {
+        attach(from, id, current_string, true);
+        return true;
+    }
+    else if (current_string.back().id_b == from[id].id_b)
+    {
+        from[id].swap();
+        attach(from, id, current_string, true);
+        return true;
+    }
+    return false;
+}
+
+bool section_organiser::attach_to_front(std::vector<id_section> &from, std::vector<id_section> &current_string, unsigned int id) const
+{
+    if (current_string[0].id_a == from[id].id_b)
+    {
+        attach(from, id, current_string, false);
+        return true;
+    }
+    else if (current_string.back().id_b == from[id].id_b)
+    {
+        from[id].swap();
+        attach(from, id, current_string, false);
+        return true;
+    }
+    return false;
+}
+
 bool section_organiser::try_attach(std::vector<id_section> &from, std::vector<id_section> &current_string, bool to_end) const
 {
     for (int i = 0; i < from.size(); i++)
     {
         if (to_end)
         {
-            if (current_string.back().id_b == from[i].id_a)
-            {
-                attach(from, i, current_string, to_end);
+            if (attach_to_end(from, current_string, i))
                 return true;
-            }
-            else if (current_string.back().id_b == from[i].id_b)
-            {
-                from[i].swap();
-                attach(from, i, current_string, to_end);
-                return true;
-            }
         }
         else
         {
-            if (current_string[0].id_a == from[i].id_b)
-            {
-                attach(from, i, current_string, to_end);
+            if (attach_to_front(from, current_string, i))
                 return true;
-            }
-            else if (current_string.back().id_b == from[i].id_b)
-            {
-                from[i].swap();
-                attach(from, i, current_string, to_end);
-                return true;
-            }
         }
     }
     return false;
