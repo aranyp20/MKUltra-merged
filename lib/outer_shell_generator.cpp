@@ -79,7 +79,8 @@ outer_shell_generator::square::square(const vec2 &_start, double _size) : start(
 polylines outer_shell_generator::generate(const std::pair<vec2, double> &bounding_box, double h, unsigned int resolution) const
 {
     std::vector<square> leaves = rejection_testing(square(bounding_box.first, bounding_box.second), h, resolution);
-    return organiser.organise_sections(generate_contour(leaves, h), h);
+    auto res = organiser.organise_sections(generate_contour(leaves, h), h);
+    return res;
 }
 
 void outer_shell_generator::rejection_testing_square(std::vector<square> &leaves, const square &testable, double h, unsigned int resolution) const

@@ -22,8 +22,9 @@ inline vec3 fn_grad(const vec3 &p)
 inline double fn_sima(double x, double y, double h)
 {
 
+    // return FunctionCreator::Create(vec3(x, y, h));
     return 8 * (pow(x, 4) + pow(y, 4) + pow(h, 4)) - 8 * (pow(x, 2) + pow(y, 2) + pow(h, 2)) + 3;
-    //  return FunctionCreator::Create(vec3(x, y, h));
+
     double val = 8 * (pow(x, 4) + pow(y, 4) + pow(h, 4)) - 8 * (pow(x, 2) + pow(y, 2) + pow(h, 2)) + 3;
     val /= fn_grad(vec3(x, y, h)).length();
     return val + 0.1;

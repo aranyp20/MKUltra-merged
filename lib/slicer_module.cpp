@@ -44,7 +44,7 @@ int main()
     inner_shell_generator inner_shell_generator;
 
     std::vector<polylines> all;
-    for (int i = 0; i < 10; i++)
+    for (int i = 1; i < 2; i++)
     {
         // std::pair<vec2, double> bounding_box = {vec2(-110, -110), 220};
         std::pair<vec2, double> bounding_box = {vec2(-1.1, -1.1), 2.2};
@@ -57,7 +57,7 @@ int main()
         for (int j = 0; j < 3; j++)
         {
             // const double w = 3;
-            const double w = 0.03;
+            const double w = 0.09;
 
             polylines p_inner = inner_shell_generator.generate_one(p_outer, w * (j + 1));
             all.push_back(p_inner);
