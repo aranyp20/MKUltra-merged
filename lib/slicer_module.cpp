@@ -38,9 +38,8 @@ void print(const std::vector<polylines> &d)
 
 int main()
 {
-    // FunctionCreator fc;
 
-    frep_object *cutable_obj = new chmutov();
+    frep_object *cutable_obj = new RBF_surface();
 
     outer_shell_generator outer_shell_generator(cutable_obj);
     inner_shell_generator inner_shell_generator(cutable_obj);
@@ -48,18 +47,18 @@ int main()
     std::vector<polylines> all;
     for (int i = 0; i < 10; i++)
     {
-        // std::pair<vec2, double> bounding_box = {vec2(-110, -110), 220};
-        std::pair<vec2, double> bounding_box = {vec2(-1.1, -1.1), 2.2};
+         std::pair<vec2, double> bounding_box = {vec2(-110, -110), 220};
+        //std::pair<vec2, double> bounding_box = {vec2(-1.1, -1.1), 2.2};
 
-        // const double h = -110 + i * 22;
-        const double h = -1.1 + i * 0.22;
+         const double h = -110 + i * 22;
+        //const double h = -1.1 + i * 0.22;
 
-        polylines p_outer = outer_shell_generator.generate(bounding_box, h, 5);
+        polylines p_outer = outer_shell_generator.generate(bounding_box, h, 4);
 
         for (int j = 0; j < 3; j++)
         {
-            // const double w = 3;
-            const double w = 0.09;
+             const double w = 3;
+            //const double w = 0.09;
 
             polylines p_inner = inner_shell_generator.generate_one(p_outer, w * (j + 1));
             all.push_back(p_inner);
@@ -78,6 +77,8 @@ BUGS:
 inner shell generator utolso es nulladik pontja kozott levo szakasz
 
 TODO:
+functioncreater createje ne legyen static
+
 
 const iterator
 iterator jaitas: it->data

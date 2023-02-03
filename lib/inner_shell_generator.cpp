@@ -45,40 +45,43 @@ void handle_ending(std::vector<vec3> &current_string, vec3 &last_pos, bool &acti
     }
 }
 
+void inner_shell_generator::generate_one_point(polylines &result, polylines &contour, const vec3 &from, std::vector<vec3> &current_string, vec3 &last_pos, double w, bool &active) const
+{
+    vec3 pot_p = offset_p(from, w);
+    if (surface->inside(pot_p) && !detect_intersection(pot_p, contour, w))
+    {
+        point_was_good(pot_p, current_string, last_pos, active);
+    }
+    else if (surface->inside(pot_p))
+    {
+        point_was_bad(pot_p, current_string, last_pos, active, result);
+    }
+}
+
 polylines inner_shell_generator::generate_one_part(polylines &contour, unsigned int which_part, double w) const
 {
     polylines result;
 
     vec3 last_pos = offset_p(contour.data[which_part][0], w);
     std::vector<vec3> current_string;
+    bool last_section_good = false;
+    vec3 first_point = last_pos;
+    if (surface->inside(first_point) && !detect_intersection(first_point, contour, w))
+    {
+        last_section_good = true;
+        current_string.push_back(first_point);
+    }
     bool active = true;
-
     for (int i = 1; i < contour.data[which_part].size(); i++)
     {
-
-        vec3 pot_p = offset_p(contour.data[which_part][i], w);
-
-        if (surface->inside(pot_p) && !detect_intersection(pot_p, contour, w))
-        {
-            point_was_good(pot_p, current_string, last_pos, active);
-
-            if (i == contour.data[which_part].size() - 1)
-            {
-                if (!result.data.empty())
-                {
-                    // current_string.push_back(result.data[0][0]);
-                }
-                else if (!current_string.empty())
-                {
-                    // current_string.push_back(current_string[0]);
-                }
-            }
-        }
-        else if (surface->inside(pot_p))
-        {
-            point_was_bad(pot_p, current_string, last_pos, active, result);
-        }
+        generate_one_point(result, contour, contour.data[which_part][i], current_string, last_pos, w, active);
     }
+    if (last_section_good)
+    {
+
+        point_was_good(first_point, current_string, last_pos, active);
+    }
+
     handle_ending(current_string, last_pos, active, result);
 
     return result;
@@ -94,7 +97,6 @@ vec3 inner_shell_generator::offset_p(const vec3 &p, double w) const
 
 bool inner_shell_generator::detect_intersection(const vec3 &of, polylines &contour, double w) const
 {
-    // const double danger_zone = w * 0.9;
     const double danger_zone = w * 0.9;
 
     polylines::iterator it = contour.begin();
