@@ -1,5 +1,7 @@
 #include <inner_shell_generator.h>
 
+inner_shell_generator::inner_shell_generator(frep_object *_surface) : surface(_surface) {}
+
 polylines inner_shell_generator::generate_one(polylines &contour, double w) const
 {
     polylines result;
@@ -56,7 +58,7 @@ polylines inner_shell_generator::generate_one_part(polylines &contour, unsigned 
 
         vec3 pot_p = offset_p(contour.data[which_part][i], w);
 
-        if (inside(pot_p) && !detect_intersection(pot_p, contour, w))
+        if (surface->inside(pot_p) && !detect_intersection(pot_p, contour, w))
         {
             point_was_good(pot_p, current_string, last_pos, active);
 
@@ -72,7 +74,7 @@ polylines inner_shell_generator::generate_one_part(polylines &contour, unsigned 
                 }
             }
         }
-        else if (inside(pot_p))
+        else if (surface->inside(pot_p))
         {
             point_was_bad(pot_p, current_string, last_pos, active, result);
         }
@@ -84,7 +86,7 @@ polylines inner_shell_generator::generate_one_part(polylines &contour, unsigned 
 
 vec3 inner_shell_generator::offset_p(const vec3 &p, double w) const
 {
-    vec2 gradient(fn_grad(p));
+    vec2 gradient(surface->grad(p));
     gradient.Normalize();
     gradient = gradient * w;
     return p - vec3(gradient.x, gradient.y, 0);
@@ -93,7 +95,7 @@ vec3 inner_shell_generator::offset_p(const vec3 &p, double w) const
 bool inner_shell_generator::detect_intersection(const vec3 &of, polylines &contour, double w) const
 {
     // const double danger_zone = w * 0.9;
-    const double danger_zone = w * 0.8;
+    const double danger_zone = w * 0.9;
 
     polylines::iterator it = contour.begin();
     while (it.has_next())

@@ -38,13 +38,15 @@ void print(const std::vector<polylines> &d)
 
 int main()
 {
-    FunctionCreator fc;
+    // FunctionCreator fc;
 
-    outer_shell_generator outer_shell_generator;
-    inner_shell_generator inner_shell_generator;
+    frep_object *cutable_obj = new chmutov();
+
+    outer_shell_generator outer_shell_generator(cutable_obj);
+    inner_shell_generator inner_shell_generator(cutable_obj);
 
     std::vector<polylines> all;
-    for (int i = 1; i < 2; i++)
+    for (int i = 0; i < 10; i++)
     {
         // std::pair<vec2, double> bounding_box = {vec2(-110, -110), 220};
         std::pair<vec2, double> bounding_box = {vec2(-1.1, -1.1), 2.2};
@@ -52,7 +54,7 @@ int main()
         // const double h = -110 + i * 22;
         const double h = -1.1 + i * 0.22;
 
-        polylines p_outer = outer_shell_generator.generate(bounding_box, h, 4);
+        polylines p_outer = outer_shell_generator.generate(bounding_box, h, 5);
 
         for (int j = 0; j < 3; j++)
         {
@@ -71,6 +73,12 @@ int main()
 }
 
 /*
+BUGS:
+
+inner shell generator utolso es nulladik pontja kozott levo szakasz
+
+TODO:
+
 const iterator
 iterator jaitas: it->data
 polylines es sectionvector vegeinek osszekotese

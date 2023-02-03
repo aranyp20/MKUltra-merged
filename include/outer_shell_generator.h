@@ -36,6 +36,8 @@ public:
 
 class outer_shell_generator
 {
+    frep_object *surface;
+
     struct square
     {
 
@@ -87,7 +89,7 @@ class outer_shell_generator
     section_organiser organiser;
 
 public:
-    outer_shell_generator();
+    outer_shell_generator(frep_object *);
 
     polylines generate(const std::pair<vec2, double> &bounding_box, double h, unsigned int resolution) const;
 };

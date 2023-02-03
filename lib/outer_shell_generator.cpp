@@ -68,7 +68,7 @@ vec2 outer_shell_generator::square::get_vert(unsigned int vert_index) const
     }
 }
 
-outer_shell_generator::outer_shell_generator()
+outer_shell_generator::outer_shell_generator(frep_object *_surface) : surface(_surface)
 {
 }
 
@@ -117,7 +117,7 @@ std::vector<outer_shell_generator::square> outer_shell_generator::rejection_test
 
 bool outer_shell_generator::rejection_test(const square &s, double h) const
 {
-    return fn_inter(interval(s.start.x, s.start.x + s.size), interval(s.start.y, s.start.y + s.size), h).contains(0);
+    return surface->fn(interval(s.start.x, s.start.x + s.size), interval(s.start.y, s.start.y + s.size), h).contains(0);
 }
 
 std::vector<outer_shell_generator::square> outer_shell_generator::square::breakup(unsigned int count) const
@@ -139,12 +139,12 @@ std::vector<outer_shell_generator::square> outer_shell_generator::square::breaku
 std::array<vec2, 2> outer_shell_generator::arrange_inside_outside_point(const section &se, double h) const
 {
     vec2 ip, op;
-    if (inside(vec3(se.p1.x, se.p1.y, h)) && !inside(vec3(se.p2.x, se.p2.y, h)))
+    if (surface->inside(vec3(se.p1.x, se.p1.y, h)) && !surface->inside(vec3(se.p2.x, se.p2.y, h)))
     {
         ip = vec2(se.p1);
         op = vec2(se.p2);
     }
-    else if (!inside(vec3(se.p1.x, se.p1.y, h)) && inside(vec3(se.p2.x, se.p2.y, h)))
+    else if (!surface->inside(vec3(se.p1.x, se.p1.y, h)) && surface->inside(vec3(se.p2.x, se.p2.y, h)))
     {
         ip = vec2(se.p2);
         op = vec2(se.p1);
@@ -163,9 +163,9 @@ vec2 outer_shell_generator::find_zero_value_point(const std::array<vec2, 2> &bet
 
     vec2 mid = (ip + op) / 2;
 
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 3; i++)
     {
-        if (!inside(vec3(mid.x, mid.y, h)))
+        if (!surface->inside(vec3(mid.x, mid.y, h)))
         {
             mid = (ip + mid) / 2;
             op = mid;
@@ -192,7 +192,7 @@ std::vector<bool> outer_shell_generator::evaluate_verts(const square &s, double 
     for (int i = 0; i < 4; i++)
     {
         vec2 tv = s.get_vert(i);
-        result.push_back(inside(vec3(tv.x, tv.y, h)));
+        result.push_back(surface->inside(vec3(tv.x, tv.y, h)));
     }
 
     return result;
