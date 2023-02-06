@@ -1,26 +1,24 @@
 #pragma once
 
-
 struct interval
 {
     double start;
     double end;
 
-    interval(double,double);
+    interval(double, double);
     explicit interval(double);
 
     bool contains(double) const;
 
     double length() const;
-
 };
 
-interval pow(const interval& inter, unsigned int power);
-interval operator+ (const interval& lhs, const interval& rhs);
-interval operator- (const interval& lhs, const interval& rhs);
-interval operator* (const interval& lhs, const interval& rhs);
-interval operator/ (const interval& lhs, const interval& rhs);
+interval pow(const interval &inter, unsigned int power);
+interval operator+(const interval &lhs, const interval &rhs);
+interval operator-(const interval &lhs, const interval &rhs);
+interval operator*(const interval &lhs, const interval &rhs);
+interval operator/(const interval &lhs, const interval &rhs);
 
-interval sqrt(const interval& inter);
-
-
+interval sqrt(const interval &inter);
+interval sin(const interval &inter);
+interval cos(const interval &inter);
