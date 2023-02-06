@@ -1,6 +1,6 @@
 #pragma once
 
-#include <section_organiser.h>
+#include "section_organiser.h"
 #include <frep.hpp>
 
 class outer_shell_generator

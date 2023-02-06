@@ -1,6 +1,7 @@
 .vscode
-prg
 *.vtk
 *.obj
 *.o
 *.d
+build/
+dependencies/

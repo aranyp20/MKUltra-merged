@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <Eigen/Dense>
-#include <FunctionCreator.h>
+#include "FunctionCreator.h"
 
 FunctionCreator *FunctionCreator::activeEntity = NULL;
 
