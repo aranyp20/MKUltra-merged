@@ -10,7 +10,7 @@ FunctionCreator *FunctionCreator::activeEntity = NULL;
 FunctionCreator::FunctionCreator()
 {
 
-    NormalCreator n1("RBF/sphere.obj");
+    NormalCreator n1("../slicer/object/RBF/sphere.obj");
 
     FillNodes(n1);
 

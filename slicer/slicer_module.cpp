@@ -36,39 +36,46 @@ void print(const std::vector<polylines> &d)
     std::cout << "Printing ended" << std::endl;
 }
 
+slicer::slicer(frep_object *_cutable_obj, const bounding_box &_box) : cutable_obj(_cutable_obj), my_bounding_box(_box), outer_generator(outer_shell_generator(_cutable_obj)), inner_generator(inner_shell_generator(cutable_obj))
+{
+}
+
+slicer::bounding_box::bounding_box(const vec3 &_corner, double _width, double _height) : floor(std::pair<vec3, double>{_corner, _width}), height(_height)
+{
+}
+
+std::vector<polylines> slicer::slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance) const
+{
+    std::vector<polylines> level;
+    polylines outer = outer_generator.generate(my_bounding_box.floor, my_bounding_box.floor.first.z + h_per_max * my_bounding_box.height, 4);
+    level.push_back(outer);
+    for (int i = 1; i <= inner_shell_count; i++)
+    {
+        polylines inner = inner_generator.generate_one(outer, inner_shell_distance * i);
+        level.push_back(inner);
+    }
+    return level;
+}
+
+void slicer::create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance) const
+{
+    std::vector<polylines> result;
+    for (int i = 0; i < level_count; i++)
+    {
+        std::vector<polylines> level = slice(i / (double)level_count /*floor to one lvl below ceiling*/, inner_shell_count, inner_shell_distance);
+        result.insert(result.end(), level.begin(), level.end());
+    }
+    print(result);
+}
+
 int main()
 {
 
-    frep_object *cutable_obj = new gyroid();
+    frep_object *cutable_obj = new RBF_surface();
+    slicer::bounding_box bb(vec3(-110, -110, -110), 220, 220);
 
-    outer_shell_generator outer_shell_generator(cutable_obj);
-    inner_shell_generator inner_shell_generator(cutable_obj);
-
-    std::vector<polylines> all;
-    for (int i = 0; i < 10; i++)
-    {
-        std::pair<vec2, double> bounding_box = {vec2(-11, -11), 22};
-        // std::pair<vec2, double> bounding_box = {vec2(-110, -110), 220};
-        //  std::pair<vec2, double> bounding_box = {vec2(-1.1, -1.1), 2.2};
-
-        const double h = -11 + i * 2.2;
-        // const double h = -110 + i * 22;
-        //  const double h = -1.1 + i * 0.22;
-
-        polylines p_outer = outer_shell_generator.generate(bounding_box, h, 4);
-
-        for (int j = 2; j < 2; j++)
-        {
-            // const double w = 3;
-            const double w = 0.09;
-
-            polylines p_inner = inner_shell_generator.generate_one(p_outer, w * (j + 1));
-            all.push_back(p_inner);
-        }
-
-        all.push_back(p_outer);
-    }
-    print(all);
+    slicer slicer(cutable_obj, bb);
+    slicer.create_slices(10, 2, 3);
 
     return 0;
 }

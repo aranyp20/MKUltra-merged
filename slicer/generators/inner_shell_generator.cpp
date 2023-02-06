@@ -79,7 +79,7 @@ polylines inner_shell_generator::generate_one_part(polylines &contour, unsigned 
     if (last_section_good)
     {
 
-        point_was_good(first_point, current_string, last_pos, active);
+        // point_was_good(first_point, current_string, last_pos, active);
     }
 
     handle_ending(current_string, last_pos, active, result);

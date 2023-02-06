@@ -60,5 +60,5 @@ class outer_shell_generator
 public:
     outer_shell_generator(frep_object *);
 
-    polylines generate(const std::pair<vec2, double> &bounding_box, double h, unsigned int resolution) const;
+    polylines generate(const std::pair<vec2, double> &plane, double h, unsigned int resolution) const;
 };
