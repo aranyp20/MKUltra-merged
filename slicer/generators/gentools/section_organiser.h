@@ -4,8 +4,9 @@
 #include <vector>
 #include <map>
 
-#include <interval.h>
+#include "interval.h"
 #include "basics.hpp"
+#include "section.h"
 
 struct id_section
 {

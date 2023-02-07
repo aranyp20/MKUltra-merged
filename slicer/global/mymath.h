@@ -83,6 +83,12 @@ inline double angle(const vec2 &v1, const vec2 &v2) { return acos(dot(v1, v2) / 
 
 inline double distance(const vec2 &v1, const vec2 &v2) { return (v1 - v2).length(); }
 
+inline std::ostream &operator<<(std::ostream &os, const vec2 &v)
+{
+	os << v.x << " " << v.y << std::endl;
+	return os;
+}
+
 ////////////////////////////////VEC4/////////////////////////////////////////
 
 struct vec4
@@ -337,6 +343,11 @@ inline double factorial(const unsigned int n)
 	for (int i = 1; i <= n; ++i)
 		res *= i;
 	return res;
+}
+
+inline bool FE(double a, double b)
+{
+	return abs(a - b) < 0.000001;
 }
 
 #endif

@@ -4,6 +4,8 @@ plane::plane(const vec2 &_corner, double _size) : corner(_corner), size(_size)
 {
 }
 
+plane::plane(const std::pair<vec2, double> &d) : corner(d.first), size(d.second) {}
+
 vec2 plane::get_center() const
 {
     return vec2(corner.x + size / 2, corner.y + size / 2);

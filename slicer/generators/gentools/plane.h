@@ -11,6 +11,7 @@ class plane
 
 public:
     plane(const vec2 &, double);
+    plane(const std::pair<vec2, double> &);
 
     vec2 get_center() const;
     double get_diagonal_size() const;

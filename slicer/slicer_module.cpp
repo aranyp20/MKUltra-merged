@@ -36,7 +36,7 @@ void print(const std::vector<polylines> &d)
     std::cout << "Printing ended" << std::endl;
 }
 
-slicer::slicer(frep_object *_cutable_obj, const bounding_box &_box) : cutable_obj(_cutable_obj), my_bounding_box(_box), outer_generator(outer_shell_generator(_cutable_obj)), inner_generator(inner_shell_generator(cutable_obj))
+slicer::slicer(frep_object *_cutable_obj, const bounding_box &_box) : cutable_obj(_cutable_obj), my_bounding_box(_box), outer_generator(outer_shell_generator(_cutable_obj)), inner_generator(inner_shell_generator(cutable_obj)), inf_generator(infill_generator(cutable_obj))
 {
 }
 
@@ -46,6 +46,8 @@ slicer::bounding_box::bounding_box(const vec3 &_corner, double _width, double _h
 
 std::vector<polylines> slicer::slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance) const
 {
+    inf_generator.generate(std::pair<vec2, double>(my_bounding_box.floor), 0, 0, 0);
+
     std::vector<polylines> level;
     polylines outer = outer_generator.generate(my_bounding_box.floor, my_bounding_box.floor.first.z + h_per_max * my_bounding_box.height, 4);
     level.push_back(outer);

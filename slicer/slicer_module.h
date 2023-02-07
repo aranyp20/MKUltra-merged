@@ -1,7 +1,8 @@
 #pragma once
 
-#include <outer_shell_generator.h>
-#include <inner_shell_generator.h>
+#include "outer_shell_generator.h"
+#include "inner_shell_generator.h"
+#include "infill_generator.h"
 
 class slicer
 {
@@ -25,4 +26,5 @@ private:
 
     outer_shell_generator outer_generator;
     inner_shell_generator inner_generator;
+    infill_generator inf_generator;
 };
