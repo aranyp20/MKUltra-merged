@@ -87,9 +87,12 @@ BUGS:
 inner shell generator utolso es nulladik pontja kozott levo szakasz
 
 TODO:
+planet hasznalni mindenhol
 functioncreater createje ne legyen static
 
+2D forgato matrix
 
+squaret es planet valamennyire ossze lehetne vonni
 const iterator
 iterator jaitas: it->data
 polylines es sectionvector vegeinek osszekotese
