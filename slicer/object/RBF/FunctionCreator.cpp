@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
-#include <Eigen/Dense>
+#include <eigen3/Eigen/Dense>
 #include "FunctionCreator.h"
 
 FunctionCreator *FunctionCreator::activeEntity = NULL;

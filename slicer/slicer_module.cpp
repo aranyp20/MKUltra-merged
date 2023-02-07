@@ -71,11 +71,12 @@ void slicer::create_slices(unsigned int level_count, unsigned int inner_shell_co
 int main()
 {
 
-    frep_object *cutable_obj = new RBF_surface();
-    slicer::bounding_box bb(vec3(-110, -110, -110), 220, 220);
+    frep_object *cutable_obj = new chmutov();
+    slicer::bounding_box bb1(vec3(-1.10, -1.10, -1.10), 2.20, 2.20);
+    slicer::bounding_box bb2(vec3(-110, -110, -110), 220, 220);
 
-    slicer slicer(cutable_obj, bb);
-    slicer.create_slices(10, 2, 3);
+    slicer slicer(cutable_obj, bb1);
+    slicer.create_slices(10, 2, 0.1);
 
     return 0;
 }

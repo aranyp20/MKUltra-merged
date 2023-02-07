@@ -64,22 +64,15 @@ polylines inner_shell_generator::generate_one_part(polylines &contour, unsigned 
 
     vec3 last_pos = offset_p(contour.data[which_part][0], w);
     std::vector<vec3> current_string;
-    bool last_section_good = false;
     vec3 first_point = last_pos;
     if (surface->inside(first_point) && !detect_intersection(first_point, contour, w))
     {
-        last_section_good = true;
         current_string.push_back(first_point);
     }
     bool active = true;
     for (int i = 1; i < contour.data[which_part].size(); i++)
     {
         generate_one_point(result, contour, contour.data[which_part][i], current_string, last_pos, w, active);
-    }
-    if (last_section_good)
-    {
-
-        // point_was_good(first_point, current_string, last_pos, active);
     }
 
     handle_ending(current_string, last_pos, active, result);

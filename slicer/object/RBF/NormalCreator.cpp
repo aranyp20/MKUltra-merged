@@ -9,7 +9,16 @@ NormalCreator::NormalCreator(const std::string &filename)
     std::fstream file;
     std::string word;
 
-    file.open(filename.c_str());
+    try
+    {
+
+        file.open(filename.c_str());
+    }
+    catch (std::exception)
+    {
+        perror("Object input could not be opened.");
+        exit(1);
+    }
 
     InputState is;
 
