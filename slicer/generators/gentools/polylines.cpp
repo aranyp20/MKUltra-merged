@@ -7,3 +7,8 @@ void polylines::add_together(const polylines &other)
         data.push_back(a);
     }
 }
+
+void polylines::eat(const std::vector<vec3> &what)
+{
+    data.push_back(what);
+}

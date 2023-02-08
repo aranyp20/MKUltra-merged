@@ -33,12 +33,11 @@ opt_return<vec2> section::intersect(const section &other) const
 
     if (FE(dot(normal2, DIR), 0))
     {
-        std::cout << "parallel" << std::endl;
         return opt_return<vec2>();
     }
 
     float t1 = -1 * dot(normal2, START - other.p2) / dot(normal2, DIR);
     vec2 line_intersection(START + DIR * t1);
 
-     return {line_intersection, dot(line_intersection - other.p1, line_intersection - other.p2) < 0 && dot(line_intersection - p1, line_intersection - p2) < 0};
+    return {line_intersection, dot(line_intersection - other.p1, line_intersection - other.p2) < 0 && dot(line_intersection - p1, line_intersection - p2) < 0};
 }

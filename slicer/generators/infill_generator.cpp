@@ -4,17 +4,127 @@ infill_generator::infill_generator(frep_object *_surface) : surface(_surface)
 {
 }
 
-polylines infill_generator::generate(const plane &plane, double h, double angle_between, double space_between) const
+infill_generator::marked_point::marked_point(const vec3 &s, bool _enters) : vec3(s), enters(_enters) {}
+
+polylines infill_generator::generate(const plane &plane, double h, double angle_between, double space_between, double wall_thickness) const
 {
-    std::array<section, 2> generators = create_generator_sections(plane, M_PI / 5);
+    polylines result;
 
-        generate_relevant_section(plane, section((generators[0].p1 + generators[0].p2) / 2, (generators[1].p1 + generators[1].p2) / 2));
+    double current_angle = 0;
+    while (current_angle < M_PI)
+    {
 
-    return polylines();
+        result.add_together(generate_one(plane, h, current_angle, space_between, wall_thickness));
+
+        current_angle += angle_between;
+    }
+
+    return result;
+}
+
+polylines infill_generator::generate_one(const plane &plane, double h, double angle, double space_between, double wall_thickness) const
+{
+    polylines result;
+
+    std::vector<section> relevants = generate_relevant_sections_angle(plane, h, angle, space_between);
+
+    for (int i = 0; i < relevants.size(); i++)
+    {
+        result.add_together(trace_section(relevants[i], plane.get_size() / 100, h));
+
+        // result.eat(std::vector<vec3>{vec3(relevants[i].p1.x, relevants[i].p1.y, h), vec3(relevants[i].p2.x, relevants[i].p2.y, h)});
+    }
+
+    shrink_polylines(result, wall_thickness);
+
+    return result;
+}
+
+void infill_generator::shrink_polylines(polylines &p, double amount) const
+{
+    for (int i = p.data.size() - 1; i >= 0; i--)
+    {
+        vec3 dir = normalize(p.data[i].back() - p.data[i][0]);
+        p.data[i][0] = p.data[i][0] + dir * amount;
+        p.data[i].back() = p.data[i].back() - dir * amount;
+
+        if (dot(p.data[i].back() - p.data[i][0], dir) < 0)
+        {
+            p.data.erase(p.data.begin() + i);
+        }
+    }
 }
 
 std::vector<section> infill_generator::generate_relevant_sections_angle(const plane &plane, double h, double angle, double space_between) const
 {
+    std::vector<section> result;
+
+    std::array<section, 2> generators = create_generator_sections(plane, angle);
+
+    double generator_length = (generators[0].p1 - generators[0].p2).length();
+
+    double ray_count = generator_length / space_between;
+
+    for (int i = 1; i < ray_count; i++)
+    {
+        opt_return<section> s = generate_relevant_section(plane, section((generators[0].p1 * (i / ray_count) + generators[0].p2 * (1 - i / ray_count)), (generators[1].p1 * (i / ray_count) + generators[1].p2 * (1 - i / ray_count))));
+        if (s.valid)
+        {
+            result.push_back(s.data);
+        }
+    }
+    return result;
+}
+
+polylines infill_generator::fit_polylines_to_marked_points(const std::vector<marked_point> &v) const
+{
+    polylines result;
+
+    for (int i = 1; i < v.size(); i++)
+    {
+        // itt mas lehetosegek is lehetnek
+        if (v[i - 1].enters && !v[i].enters)
+        {
+            result.eat(std::vector<vec3>{v[i - 1], v[i]});
+        }
+    }
+
+    return result;
+}
+
+polylines infill_generator::trace_section(const section &s, double step_distance, double h) const
+{
+
+    std::vector<infill_generator::marked_point> zero_points = find_sign_changes(s, step_distance, h);
+
+    return fit_polylines_to_marked_points(zero_points);
+}
+
+std::vector<infill_generator::marked_point> infill_generator::find_sign_changes(const section &s, double step_distance, double h) const
+{
+    std::vector<infill_generator::marked_point> result;
+
+    double step_count = (s.p1 - s.p2).length() / step_distance;
+
+    vec3 last_pos(s.p2.x, s.p2.y, h);
+    bool last_was_in = surface->inside(last_pos);
+
+    for (int i = 1; i < step_count; i++)
+    {
+        vec2 current_pos_tmp = (s.p1 * (i / step_count) + s.p2 * (1 - i / step_count));
+        vec3 current_pos(current_pos_tmp.x, current_pos_tmp.y, h);
+        bool this_is_in = surface->inside(current_pos);
+
+        if (this_is_in != last_was_in)
+        {
+            vec3 zero_point = (current_pos + last_pos) / 2; // bisectionnel majd
+            result.push_back(marked_point(zero_point, this_is_in));
+        }
+        last_pos = current_pos;
+        last_was_in = this_is_in;
+    }
+
+    return result;
 }
 
 opt_return<section> infill_generator::generate_relevant_section(const plane &plane, const section &intersector) const
@@ -32,7 +142,6 @@ opt_return<section> infill_generator::generate_relevant_section(const plane &pla
 
         if (result_points.size() == 2)
         {
-            std::cout << "Kiraly" << std::endl;
             return {section(result_points[0], result_points[1])};
         }
     }
@@ -46,7 +155,6 @@ std::array<section, 2> infill_generator::create_generator_sections(const plane &
     vec2 top_point = center;
     double optimal_distance = plane.get_diagonal_size(); // at least diagonal/sqrt(2)
     top_point.x += optimal_distance;
-    std::cout << top_point << std::endl;
     vec3 left_point_tmp = vec3(top_point.x, top_point.y, 0);
     vec3 right_point_tmp = vec3(top_point.x, top_point.y, 0);
 

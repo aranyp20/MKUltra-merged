@@ -23,3 +23,8 @@ std::vector<section> plane::get_sides() const
     vec2 p4(corner);
     return std::vector<section>{section(p1, p2), section(p2, p3), section(p3, p4), section(p4, p1)};
 }
+
+double plane::get_size() const
+{
+    return size;
+}
