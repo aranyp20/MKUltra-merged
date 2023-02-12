@@ -51,7 +51,7 @@ std::vector<polylines> slicer::slice(double h_per_max, unsigned int inner_shell_
     double h = my_bounding_box.floor.first.z + h_per_max * my_bounding_box.height;
     polylines outer = outer_generator.generate(my_bounding_box.floor, h, 5);
     level.push_back(outer);
-    level.push_back(inf_generator.generate(std::pair<vec2, double>(my_bounding_box.floor), h, M_PI / 3, 0.08, 0.06));
+    // level.push_back(inf_generator.generate(std::pair<vec2, double>(my_bounding_box.floor), h, M_PI / 3, 0.08, 0.06));
     for (int i = 1; i <= inner_shell_count; i++)
     {
         polylines inner = inner_generator.generate_one(outer, inner_shell_distance * i);
@@ -75,12 +75,13 @@ void slicer::create_slices(unsigned int level_count, unsigned int inner_shell_co
 int main()
 {
 
-    frep_object *cutable_obj = new chmutov();
+    frep_object *cutable_obj = new gyroid();
     slicer::bounding_box bb1(vec3(-1.10, -1.10, -1.10), 2.20, 2.20);
     slicer::bounding_box bb2(vec3(-110, -110, -110), 220, 220);
+    slicer::bounding_box bb3(vec3(-11, -11, -11), 22, 22);
 
-    slicer slicer(cutable_obj, bb1);
-    slicer.create_slices(10, 2, 0.02);
+    slicer slicer(cutable_obj, bb3);
+    slicer.create_slices(10, 2, 0.2);
 
     return 0;
 }
@@ -91,6 +92,7 @@ BUGS:
 inner shell generator utolso es nulladik pontja kozott levo szakasz - megint megjelent valami szakadas, de aztan eltunik .^.
 
 TODO:
+slice()-nak paramobject
 planet hasznalni mindenhol
 functioncreater createje ne legyen static
 
@@ -105,4 +107,5 @@ const iterator
 iterator jaitas: it->data
 polylines es sectionvector vegeinek osszekotese
 RBF kiertekelst optimalizalni
+inner_fill-nel a relevant_section-oket eleg lenne egyszer kiszamolni
 */

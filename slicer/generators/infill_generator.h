@@ -8,7 +8,6 @@ class infill_generator
 {
     frep_object *surface;
 
-    // prevents small errors causing big problems...
     struct marked_point : public vec3
     {
         bool enters;
