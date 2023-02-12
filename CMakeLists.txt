@@ -45,8 +45,9 @@ app/slicer/object/RBF/FunctionCreator.cpp
 app/slicer/object/RBF/NormalCreator.cpp
 app/slicer/generators/infill_generator.cpp
 app/slicer/generators/gentools/plane.cpp
+app/slicer/printable_object.cpp
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer/global ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer/generators ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer/generators/gentools ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer/object ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer/object/RBF)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer/global ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer/generators ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer/generators/gentools ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer/object ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer/object/RBF ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/app/gui)
 target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL Qt5::Widgets)

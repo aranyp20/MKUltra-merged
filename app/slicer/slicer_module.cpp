@@ -2,6 +2,7 @@
 #include "FunctionCreator.h"
 #include "slicer_module.h"
 
+/*
 void print(const std::vector<polylines> &d)
 {
     std::cout << "Printing..." << std::endl;
@@ -35,6 +36,7 @@ void print(const std::vector<polylines> &d)
     }
     std::cout << "Printing ended" << std::endl;
 }
+*/
 
 slicer::slicer(frep_object *_cutable_obj, const bounding_box &_box) : cutable_obj(_cutable_obj), my_bounding_box(_box), outer_generator(outer_shell_generator(_cutable_obj)), inner_generator(inner_shell_generator(cutable_obj)), inf_generator(infill_generator(cutable_obj))
 {
@@ -60,7 +62,7 @@ std::vector<polylines> slicer::slice(double h_per_max, unsigned int inner_shell_
     return level;
 }
 
-void slicer::create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance) const
+sliced_obj slicer::create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance) const
 {
     std::vector<polylines> result;
 
@@ -69,7 +71,8 @@ void slicer::create_slices(unsigned int level_count, unsigned int inner_shell_co
         std::vector<polylines> level = slice(i / (double)level_count /*floor to one lvl below ceiling*/, inner_shell_count, inner_shell_distance);
         result.insert(result.end(), level.begin(), level.end());
     }
-    print(result);
+    // print(result);
+    return sliced_obj(result);
 }
 /*
 int main()

@@ -1,15 +1,15 @@
 #include "myglwidget.h"
 
-MyGLDrawer::MyGLDrawer(QWidget *parent)
+poly_2D_widget::poly_2D_widget(QWidget *parent)
     : QOpenGLWidget(parent)
 {
 }
 
-MyGLDrawer::~MyGLDrawer()
+poly_2D_widget::~poly_2D_widget()
 {
 }
 
-void MyGLDrawer::initializeGL()
+void poly_2D_widget::initializeGL()
 {
     sp = new QOpenGLShaderProgram();
     sp->addShaderFromSourceCode(QOpenGLShader::Vertex,
@@ -44,11 +44,11 @@ void MyGLDrawer::initializeGL()
     vbo.release();
 }
 
-void MyGLDrawer::resizeGL(int w, int h)
+void poly_2D_widget::resizeGL(int w, int h)
 {
 }
 
-void MyGLDrawer::paintGL()
+void poly_2D_widget::paintGL()
 {
 
     sp->bind();

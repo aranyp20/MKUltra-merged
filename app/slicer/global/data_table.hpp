@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <iostream>
 
 template <typename T>
 struct data_table

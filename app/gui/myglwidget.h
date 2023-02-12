@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-class MyGLDrawer : public QOpenGLWidget //, QOpenGLFunctions
+class poly_2D_widget : public QOpenGLWidget
 {
     Q_OBJECT
 
@@ -19,9 +19,9 @@ class MyGLDrawer : public QOpenGLWidget //, QOpenGLFunctions
     QOpenGLShaderProgram *sp;
 
 public:
-    MyGLDrawer(QWidget *parent);
+    poly_2D_widget(QWidget *parent);
 
-    ~MyGLDrawer();
+    ~poly_2D_widget();
 
 protected:
     void initializeGL() override;
