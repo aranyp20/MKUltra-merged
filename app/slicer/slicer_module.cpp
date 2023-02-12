@@ -71,7 +71,7 @@ void slicer::create_slices(unsigned int level_count, unsigned int inner_shell_co
     }
     print(result);
 }
-
+/*
 int main()
 {
 
