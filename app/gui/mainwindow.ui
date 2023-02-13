@@ -42,10 +42,10 @@
    <widget class="poly_2D_widget" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>210</y>
-      <width>661</width>
-      <height>451</height>
+      <x>290</x>
+      <y>140</y>
+      <width>500</width>
+      <height>500</height>
      </rect>
     </property>
    </widget>
