@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     slicer slicer(cutable_obj, bb1);
 
-    ui->widget->set_surface(new sliced_obj(slicer.create_slices(10, 2, 0.1)));
+    ui->widget->set_obj(new sliced_obj(slicer.create_slices(10, 2, 0.1)));
 }
 
 MainWindow::~MainWindow()

@@ -46,18 +46,18 @@ slicer::bounding_box::bounding_box(const vec3 &_corner, double _width, double _h
 {
 }
 
-std::vector<polylines> slicer::slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance) const
+polylines slicer::slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance) const
 {
-    std::vector<polylines> level;
+    polylines level;
 
     double h = my_bounding_box.floor.first.z + h_per_max * my_bounding_box.height;
     polylines outer = outer_generator.generate(my_bounding_box.floor, h, 5);
-    level.push_back(outer);
-    // level.push_back(inf_generator.generate(std::pair<vec2, double>(my_bounding_box.floor), h, M_PI / 3, 0.08, 0.06));
+    level.add_together(outer);
+    level.add_together(inf_generator.generate(std::pair<vec2, double>(my_bounding_box.floor), h, M_PI / 3, 0.08, inner_shell_count * inner_shell_distance));
     for (int i = 1; i <= inner_shell_count; i++)
     {
         polylines inner = inner_generator.generate_one(outer, inner_shell_distance * i);
-        level.push_back(inner);
+        level.add_together(inner);
     }
     return level;
 }
@@ -68,8 +68,8 @@ sliced_obj slicer::create_slices(unsigned int level_count, unsigned int inner_sh
 
     for (int i = 0; i < level_count; i++)
     {
-        std::vector<polylines> level = slice(i / (double)level_count /*floor to one lvl below ceiling*/, inner_shell_count, inner_shell_distance);
-        result.insert(result.end(), level.begin(), level.end());
+        polylines level = slice(i / (double)level_count /*floor to one lvl below ceiling*/, inner_shell_count, inner_shell_distance);
+        result.push_back(level);
     }
     // print(result);
     return sliced_obj(result, std::pair<vec2, double>(my_bounding_box.floor));

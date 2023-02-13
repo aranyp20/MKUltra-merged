@@ -16,16 +16,20 @@ class poly_2D_widget : public QOpenGLWidget
 {
     Q_OBJECT
 
-    QOpenGLVertexArrayObject vao;
     QOpenGLBuffer vbo{QOpenGLBuffer::VertexBuffer};
+
+    QOpenGLVertexArrayObject vao;
+    std::vector<QOpenGLBuffer> vbos;
     QOpenGLShaderProgram *sp;
 
-    sliced_obj *surface = nullptr;
+    sliced_obj *obj = nullptr;
+
+    unsigned int printable_level = 6;
 
 public:
     poly_2D_widget(QWidget *parent);
 
-    void set_surface(sliced_obj *);
+    void set_obj(sliced_obj *);
 
     ~poly_2D_widget();
 

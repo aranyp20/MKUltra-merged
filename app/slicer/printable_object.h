@@ -12,7 +12,7 @@ struct sliced_obj
     plane bounding_plane;
     unsigned int slice_count;
 
-    std::vector<float **> raw_datas;
+    std::vector<std::vector<float>> filled_data;
 
     sliced_obj(const std::vector<polylines> &, const plane &);
 };

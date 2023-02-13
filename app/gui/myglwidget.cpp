@@ -47,28 +47,13 @@ void poly_2D_widget::resizeGL(int w, int h)
 void poly_2D_widget::paintGL()
 {
 
-    if (surface == nullptr)
+    if (obj == nullptr)
         return;
-
-    int seg = 8;
-    int sel = 0;
-
-    float vertices[surface->data[seg].data[sel].size() * 3];
-    int tmp = 0;
-    for (int i = 0; i < surface->data[seg].data[sel].size(); i++, tmp += 3)
-    {
-        vertices[tmp] = (float)(surface->data[seg].data[sel][i].x);
-        vertices[tmp + 1] = (float)(surface->data[seg].data[sel][i].y);
-        vertices[tmp + 2] = (float)(surface->data[seg].data[sel][i].z);
-    }
-
-    vao.bind();
-    vbo.bind();
-    vbo.allocate(vertices, sizeof(vertices));
 
     sp->bind();
     vao.bind();
     vbo.bind();
+    vbo.allocate(obj->filled_data[printable_level].data(), sizeof(float) * obj->filled_data[printable_level].size());
 
     sp->enableAttributeArray("position");
     sp->setAttributeArray("position", GL_FLOAT, 0, 3);
@@ -76,10 +61,30 @@ void poly_2D_widget::paintGL()
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glDrawArrays(GL_LINE_STRIP, 0, surface->data[seg].data[sel].size());
+    glDrawArrays(GL_LINES, 0, obj->filled_data[printable_level].size() / 3);
 }
 
-void poly_2D_widget::set_surface(sliced_obj *_surface)
+void poly_2D_widget::set_obj(sliced_obj *_obj)
 {
-    surface = _surface;
+    // TODO: delete previus vaos, vbos
+    obj = _obj;
+
+    /*
+    for (int i = 5; i < 6; i++)
+    {
+        QOpenGLBuffer vbo{QOpenGLBuffer::VertexBuffer};
+        vbo.create();
+        vbo.bind();
+        vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
+        std::vector<float> xd;
+        for (int j = 0; j < 12; j++)
+        {
+            std::cout << obj->filled_data[i][j] << std::endl;
+            xd.push_back((float)obj->filled_data[i][j]);
+        }
+        vbo.allocate(xd.data(), xd.size() * sizeof(float));
+
+        vbos.push_back(vbo);
+    }
+*/
 }

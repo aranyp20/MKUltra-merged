@@ -35,7 +35,7 @@ polylines infill_generator::generate_one(const plane &plane, double h, double an
         // result.eat(std::vector<vec3>{vec3(relevants[i].p1.x, relevants[i].p1.y, h), vec3(relevants[i].p2.x, relevants[i].p2.y, h)});
     }
 
-    shrink_polylines(result, wall_thickness);
+    // shrink_polylines(result, wall_thickness);
 
     return result;
 }
