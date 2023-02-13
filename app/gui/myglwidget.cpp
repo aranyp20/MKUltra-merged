@@ -29,7 +29,7 @@ void poly_2D_widget::initializeGL()
                                 "}");
     sp->link();
 
-    glLineWidth(2);
+    glLineWidth(1);
 
     vao.create();
     vao.bind();
@@ -87,4 +87,10 @@ void poly_2D_widget::set_obj(sliced_obj *_obj)
         vbos.push_back(vbo);
     }
 */
+}
+
+void poly_2D_widget::slot_layer_changed(int l)
+{
+    printable_level = obj->slice_count - l - 1;
+    update();
 }

@@ -99,6 +99,8 @@ slice()-nak paramobject
 planet hasznalni mindenhol
 functioncreater createje ne legyen static
 
+infillnel a generatorsectionok egy atlobol csinalodjanak
+
 polylines eatet hasznalni mindenhol
 
 std::vector<polylines>-nak lehet nincs sok ertelme (mondjuk arra jo h a dolgokat elkulonitsuk)

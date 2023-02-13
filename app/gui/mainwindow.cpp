@@ -15,7 +15,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     slicer slicer(cutable_obj, bb1);
 
-    ui->widget->set_obj(new sliced_obj(slicer.create_slices(10, 2, 0.1)));
+    int l = 20;
+
+    ui->widget->set_obj(new sliced_obj(slicer.create_slices(l, 2, 0.08)));
+
+    ui->verticalScrollBar->setMaximum(l - 1);
+    ui->verticalScrollBar->setValue(l - 1);
+
+    QObject::connect(ui->verticalScrollBar, &QScrollBar::valueChanged, ui->widget, &poly_2D_widget::slot_layer_changed);
 }
 
 MainWindow::~MainWindow()

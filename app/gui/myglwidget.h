@@ -24,7 +24,7 @@ class poly_2D_widget : public QOpenGLWidget
 
     sliced_obj *obj = nullptr;
 
-    unsigned int printable_level = 6;
+    unsigned int printable_level = 0;
 
 public:
     poly_2D_widget(QWidget *parent);
@@ -39,4 +39,8 @@ protected:
     void resizeGL(int w, int h) override;
 
     void paintGL() override;
+
+public slots:
+
+    void slot_layer_changed(int l);
 };
