@@ -72,7 +72,7 @@ sliced_obj slicer::create_slices(unsigned int level_count, unsigned int inner_sh
         result.insert(result.end(), level.begin(), level.end());
     }
     // print(result);
-    return sliced_obj(result);
+    return sliced_obj(result, std::pair<vec2, double>(my_bounding_box.floor));
 }
 /*
 int main()
