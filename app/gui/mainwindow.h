@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "printable_object.h"
+#include "frep.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -20,7 +21,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void load_object();
+    void slice_object();
+
 private:
     Ui::MainWindow *ui;
+
+    frep_object *cutable_obj = nullptr;
 };
 #endif // MAINWINDOW_H

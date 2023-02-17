@@ -106,6 +106,8 @@ polylines eatet hasznalni mindenhol
 std::vector<polylines>-nak lehet nincs sok ertelme (mondjuk arra jo h a dolgokat elkulonitsuk)
 2D forgato matrix
 
+statusbar surface betoltesehez
+
 vec2->vec3 illetve az egesz mymath.h-hoz cpp, vec2-re jo normalize-t meg ilyeneket stb stb..
 squaret es planet valamennyire ossze lehetne vonni
 const iterator

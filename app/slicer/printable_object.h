@@ -14,5 +14,7 @@ struct sliced_obj
 
     std::vector<std::vector<float>> filled_data;
 
+    void normalize_for_gl(vec3 &, const plane &) const;
+
     sliced_obj(const std::vector<polylines> &, const plane &);
 };

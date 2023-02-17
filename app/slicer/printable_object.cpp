@@ -20,15 +20,18 @@ sliced_obj::sliced_obj(const std::vector<polylines> &_data, const plane &_bp) : 
 
             for (int k = 0; k < _data[i].data[j].size(); k++)
             {
+                vec3 current_point(_data[i].data[j][k]);
+                normalize_for_gl(current_point, _bp);
+
                 if (k > 0 && k < _data[i].data[j].size() - 1)
                 {
-                    current_level.push_back((float)_data[i].data[j][k].x);
-                    current_level.push_back((float)_data[i].data[j][k].y);
-                    current_level.push_back((float)_data[i].data[j][k].z);
+                    current_level.push_back((float)current_point.x);
+                    current_level.push_back((float)current_point.y);
+                    current_level.push_back((float)current_point.z);
                 }
-                current_level.push_back((float)_data[i].data[j][k].x);
-                current_level.push_back((float)_data[i].data[j][k].y);
-                current_level.push_back((float)_data[i].data[j][k].z);
+                current_level.push_back((float)current_point.x);
+                current_level.push_back((float)current_point.y);
+                current_level.push_back((float)current_point.z);
             }
         }
 
@@ -36,4 +39,16 @@ sliced_obj::sliced_obj(const std::vector<polylines> &_data, const plane &_bp) : 
     }
 
     slice_count = data.size();
+}
+
+void sliced_obj::normalize_for_gl(vec3 &p, const plane &plane) const
+{
+    vec2 changed_part(p);
+
+    changed_part = changed_part - plane.get_center();
+
+    changed_part.x = 2.0f * changed_part.x / plane.get_size();
+    changed_part.y = 2.0f * changed_part.y / plane.get_size();
+
+    p = vec3(changed_part.x, changed_part.y, p.z);
 }
