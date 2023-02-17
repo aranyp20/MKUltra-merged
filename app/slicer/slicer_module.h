@@ -19,7 +19,7 @@ public:
     slicer(frep_object *_cutable_obj, const bounding_box &_box);
 
     polylines slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance) const;
-    sliced_obj create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance) const;
+    sliced_object create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance) const;
 
 private:
     frep_object *cutable_obj;

@@ -64,33 +64,17 @@ void poly_2D_widget::paintGL()
     glDrawArrays(GL_LINES, 0, obj->filled_data[printable_level].size() / 3);
 }
 
-void poly_2D_widget::set_obj(sliced_obj *_obj)
+void poly_2D_widget::set_obj(sliced_object *_obj)
 {
     // TODO: delete previus vaos, vbos
     obj = _obj;
-
-    /*
-    for (int i = 5; i < 6; i++)
-    {
-        QOpenGLBuffer vbo{QOpenGLBuffer::VertexBuffer};
-        vbo.create();
-        vbo.bind();
-        vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
-        std::vector<float> xd;
-        for (int j = 0; j < 12; j++)
-        {
-            std::cout << obj->filled_data[i][j] << std::endl;
-            xd.push_back((float)obj->filled_data[i][j]);
-        }
-        vbo.allocate(xd.data(), xd.size() * sizeof(float));
-
-        vbos.push_back(vbo);
-    }
-*/
 }
 
 void poly_2D_widget::slot_layer_changed(int l)
 {
+    if (obj == nullptr)
+        return;
+
     printable_level = obj->slice_count - l - 1;
     update();
 }

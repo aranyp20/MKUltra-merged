@@ -62,7 +62,7 @@ polylines slicer::slice(double h_per_max, unsigned int inner_shell_count, double
     return level;
 }
 
-sliced_obj slicer::create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance) const
+sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance) const
 {
     std::vector<polylines> result;
 
@@ -72,7 +72,7 @@ sliced_obj slicer::create_slices(unsigned int level_count, unsigned int inner_sh
         result.push_back(level);
     }
     // print(result);
-    return sliced_obj(result, std::pair<vec2, double>(my_bounding_box.floor));
+    return sliced_object(result, std::pair<vec2, double>(my_bounding_box.floor));
 }
 /*
 int main()

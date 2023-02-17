@@ -5,7 +5,7 @@
 #include "polylines.h"
 #include "plane.h"
 
-struct sliced_obj
+struct sliced_object
 {
 
     std::vector<polylines> data;
@@ -16,5 +16,5 @@ struct sliced_obj
 
     void normalize_for_gl(vec3 &, const plane &) const;
 
-    sliced_obj(const std::vector<polylines> &, const plane &);
+    sliced_object(const std::vector<polylines> &, const plane &);
 };

@@ -1,6 +1,6 @@
 #include "printable_object.h"
 
-sliced_obj::sliced_obj(const std::vector<polylines> &_data, const plane &_bp) : data(_data), bounding_plane(_bp)
+sliced_object::sliced_object(const std::vector<polylines> &_data, const plane &_bp) : data(_data), bounding_plane(_bp)
 {
 
     for (int i = 0; i < _data.size(); i++)
@@ -41,7 +41,7 @@ sliced_obj::sliced_obj(const std::vector<polylines> &_data, const plane &_bp) : 
     slice_count = data.size();
 }
 
-void sliced_obj::normalize_for_gl(vec3 &p, const plane &plane) const
+void sliced_object::normalize_for_gl(vec3 &p, const plane &plane) const
 {
     vec2 changed_part(p);
 

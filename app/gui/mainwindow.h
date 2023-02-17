@@ -28,5 +28,6 @@ private:
     Ui::MainWindow *ui;
 
     frep_object *cutable_obj = nullptr;
+    sliced_object *sliced_obj = nullptr;
 };
 #endif // MAINWINDOW_H
