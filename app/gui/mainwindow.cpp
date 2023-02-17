@@ -16,8 +16,11 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(ui->slice_button, &QPushButton::pressed, this, &MainWindow::slice_object);
 
     ui->layer_count_box->setValue(settings::level_count);
-
     QObject::connect(ui->layer_count_box, qOverload<int>(&QSpinBox::valueChanged), this, &MainWindow::set_level_count);
+
+    ui->surface_selector_box->addItem("Chmutov", QVariant(surface_type::CHMUTOV));
+    ui->surface_selector_box->addItem("Gyroid", QVariant(surface_type::GYROID));
+    QObject::connect(ui->surface_selector_box, qOverload<int>(&QComboBox::currentIndexChanged), this, &MainWindow::set_surface_type);
 }
 
 MainWindow::~MainWindow()
@@ -71,4 +74,9 @@ void MainWindow::slice_object()
 void MainWindow::set_level_count(int n)
 {
     settings::level_count = n;
+}
+
+void MainWindow::set_surface_type(int i)
+{
+    settings::s_type = i;
 }

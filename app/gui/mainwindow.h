@@ -29,6 +29,8 @@ private:
 public slots:
     void slice_object();
     void load_object();
+
     void set_level_count(int n);
+    void set_surface_type(int i);
 };
 #endif // MAINWINDOW_H
