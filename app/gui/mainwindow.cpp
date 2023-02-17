@@ -9,6 +9,10 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QObject::connect(ui->verticalScrollBar, &QScrollBar::valueChanged, ui->widget, &poly_2D_widget::slot_layer_changed);
+    QObject::connect(ui->surface_loader_button, &QPushButton::pressed, this, &MainWindow::load_object);
+    QObject::connect(ui->slice_button, &QPushButton::pressed, this, &MainWindow::slice_object);
 }
 
 MainWindow::~MainWindow()
