@@ -8,15 +8,7 @@
 class slicer
 {
 public:
-    struct bounding_box
-    {
-        std::pair<vec3, double> floor;
-        double height;
-
-        bounding_box(const vec3 &_corner, double _width, double _height);
-    };
-
-    slicer(frep_object *_cutable_obj, const bounding_box &_box);
+        slicer(frep_object *_cutable_obj);
 
     polylines slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance) const;
     sliced_object create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance) const;

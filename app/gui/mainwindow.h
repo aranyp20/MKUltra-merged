@@ -32,5 +32,9 @@ public slots:
 
     void set_level_count(int n);
     void set_surface_type(int i);
+    void set_inner_shell_count(int n);
+    void set_inner_shell_distance(double v);
+    void set_infill_space_between(double val);
+    void set_infill_number_rot(int n);
 };
 #endif // MAINWINDOW_H

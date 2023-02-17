@@ -90,7 +90,7 @@ vec3 inner_shell_generator::offset_p(const vec3 &p, double w) const
 
 bool inner_shell_generator::detect_intersection(const vec3 &of, polylines &contour, double w) const
 {
-    const double danger_zone = w * 0.9;
+    const double danger_zone = w * 0.8;
 
     polylines::iterator it = contour.begin();
     while (it.has_next())

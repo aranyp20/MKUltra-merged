@@ -15,4 +15,6 @@ public:
     static unsigned int inner_shell_count;
     static double inner_shell_distance;
     static int s_type;
+    static double infill_space_between;
+    static int infill_number_rot;
 };

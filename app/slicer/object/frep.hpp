@@ -4,6 +4,14 @@
 #include <functional>
 #include <FunctionCreator.h>
 
+struct bounding_box
+{
+    std::pair<vec3, double> floor;
+    double height;
+
+    bounding_box(const vec3 &_corner, double _width, double _height) : floor(std::pair<vec3, double>{_corner, _width}), height(_height) {}
+};
+
 inline vec3 fn_grad_changethis(const vec3 &p)
 {
     return vec3(32 * pow(p.x, 3) - 16 * p.x, 32 * pow(p.y, 3) - 16 * p.y, 32 * pow(p.z, 3) - 16 * p.z);
@@ -17,6 +25,8 @@ public:
     virtual double fn(const vec3 &) const = 0;
     virtual interval fn(const interval &X, const interval &Y, double h) const = 0;
     virtual vec3 grad(const vec3 &) const = 0;
+
+    virtual bounding_box get_prefered_box() const { return bounding_box(vec3(-1.1, -1.1, -1.1), 2.2, 2.2); }
 
     bool inside(const vec3 &p) const
     {
@@ -75,6 +85,8 @@ class gyroid : public frep_object
     {
         return cos(x) * sin(y) + cos(y) * sin(T(h)) + cos(T(h)) * sin(x);
     }
+
+    bounding_box get_prefered_box() const override { return bounding_box(vec3(-11, -11, -11), 22, 22); }
 
 public:
     interval fn(const interval &X, const interval &Y, double h) const override
