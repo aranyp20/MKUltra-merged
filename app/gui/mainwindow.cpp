@@ -1,3 +1,4 @@
+#include <QSpinBox>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "myglwidget.h"
@@ -13,6 +14,10 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(ui->verticalScrollBar, &QScrollBar::valueChanged, ui->widget, &poly_2D_widget::slot_layer_changed);
     QObject::connect(ui->surface_loader_button, &QPushButton::pressed, this, &MainWindow::load_object);
     QObject::connect(ui->slice_button, &QPushButton::pressed, this, &MainWindow::slice_object);
+
+    ui->layer_count_box->setValue(settings::level_count);
+
+    QObject::connect(ui->layer_count_box, qOverload<int>(&QSpinBox::valueChanged), this, &MainWindow::set_level_count);
 }
 
 MainWindow::~MainWindow()
@@ -61,4 +66,9 @@ void MainWindow::slice_object()
 
     ui->verticalScrollBar->setMaximum(settings::level_count - 1);
     ui->verticalScrollBar->setValue(settings::level_count - 1);
+}
+
+void MainWindow::set_level_count(int n)
+{
+    settings::level_count = n;
 }

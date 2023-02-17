@@ -21,13 +21,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void load_object();
-    void slice_object();
-
 private:
     Ui::MainWindow *ui;
 
     frep_object *cutable_obj = nullptr;
     sliced_object *sliced_obj = nullptr;
+public slots:
+    void slice_object();
+    void load_object();
+    void set_level_count(int n);
 };
 #endif // MAINWINDOW_H
