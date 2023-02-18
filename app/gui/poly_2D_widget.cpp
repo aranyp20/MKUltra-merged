@@ -1,4 +1,4 @@
-#include "myglwidget.h"
+#include "poly_2D_widget.h"
 
 poly_2D_widget::poly_2D_widget(QWidget *parent)
     : QOpenGLWidget(parent)

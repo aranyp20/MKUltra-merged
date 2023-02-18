@@ -24,7 +24,6 @@ BUGS:
 
 
 TODO:
-functioncreater createje ne legyen static
 infillnel a generatorsectionok egy atlobol csinalodjanak
 Qobject::connect -hez fuggveny ami inicializa is (ami pedig jobb hogy a surface ad egy recommendationt es azzal kitolt mindent)
 polylines eatet hasznalni mindenhol
@@ -43,6 +42,7 @@ inner_fill-nel a relevant_section-oket eleg lenne egyszer kiszamolni
 
 
 DONE:
+functioncreater createje ne legyen static
 
 
 -mostly..:

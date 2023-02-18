@@ -1,47 +1,47 @@
 #include <QSpinBox>
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "myglwidget.h"
+#include "main_window.h"
+#include "ui_main_window.h"
+#include "poly_2D_widget.h"
 #include "slicer_module.h"
 
 #include "settings.h"
 
-MainWindow::MainWindow(QWidget *parent)
+main_window::main_window(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
     QObject::connect(ui->verticalScrollBar, &QScrollBar::valueChanged, ui->widget, &poly_2D_widget::slot_layer_changed);
-    QObject::connect(ui->surface_loader_button, &QPushButton::pressed, this, &MainWindow::load_object);
-    QObject::connect(ui->slice_button, &QPushButton::pressed, this, &MainWindow::slice_object);
+    QObject::connect(ui->surface_loader_button, &QPushButton::pressed, this, &main_window::load_object);
+    QObject::connect(ui->slice_button, &QPushButton::pressed, this, &main_window::slice_object);
 
     ui->layer_count_box->setValue(settings::level_count);
-    QObject::connect(ui->layer_count_box, qOverload<int>(&QSpinBox::valueChanged), this, &MainWindow::set_level_count);
+    QObject::connect(ui->layer_count_box, qOverload<int>(&QSpinBox::valueChanged), this, &main_window::set_level_count);
 
     ui->inner_shell_count_box->setValue(settings::inner_shell_count);
-    QObject::connect(ui->inner_shell_count_box, qOverload<int>(&QSpinBox::valueChanged), this, &MainWindow::set_inner_shell_count);
+    QObject::connect(ui->inner_shell_count_box, qOverload<int>(&QSpinBox::valueChanged), this, &main_window::set_inner_shell_count);
 
     ui->inner_shell_distance_box->setValue(settings::inner_shell_distance);
-    QObject::connect(ui->inner_shell_distance_box, qOverload<double>(&QDoubleSpinBox::valueChanged), this, &MainWindow::set_inner_shell_distance);
+    QObject::connect(ui->inner_shell_distance_box, qOverload<double>(&QDoubleSpinBox::valueChanged), this, &main_window::set_inner_shell_distance);
 
     ui->infill_number_box->setValue(settings::infill_number_rot);
-    QObject::connect(ui->infill_number_box, qOverload<int>(&QSpinBox::valueChanged), this, &MainWindow::set_infill_number_rot);
+    QObject::connect(ui->infill_number_box, qOverload<int>(&QSpinBox::valueChanged), this, &main_window::set_infill_number_rot);
 
     ui->infill_space_between_box->setValue(settings::infill_space_between);
-    QObject::connect(ui->infill_space_between_box, qOverload<double>(&QDoubleSpinBox::valueChanged), this, &MainWindow::set_infill_space_between);
+    QObject::connect(ui->infill_space_between_box, qOverload<double>(&QDoubleSpinBox::valueChanged), this, &main_window::set_infill_space_between);
 
     ui->surface_selector_box->addItem("Chmutov", QVariant(surface_type::CHMUTOV));
     ui->surface_selector_box->addItem("Gyroid", QVariant(surface_type::GYROID));
-    QObject::connect(ui->surface_selector_box, qOverload<int>(&QComboBox::currentIndexChanged), this, &MainWindow::set_surface_type);
+    QObject::connect(ui->surface_selector_box, qOverload<int>(&QComboBox::currentIndexChanged), this, &main_window::set_surface_type);
 }
 
-MainWindow::~MainWindow()
+main_window::~main_window()
 {
     delete ui;
 }
 
 // sliceolas nelkuli nezegetonel lesz ertelme
-void MainWindow::load_object()
+void main_window::load_object()
 {
     if (cutable_obj != nullptr)
     {
@@ -63,7 +63,7 @@ void MainWindow::load_object()
     }
 }
 
-void MainWindow::slice_object()
+void main_window::slice_object()
 {
     if (cutable_obj == nullptr)
         return;
@@ -83,32 +83,32 @@ void MainWindow::slice_object()
     ui->verticalScrollBar->setValue(settings::level_count - 1);
 }
 
-void MainWindow::set_level_count(int n)
+void main_window::set_level_count(int n)
 {
     settings::level_count = n;
 }
 
-void MainWindow::set_surface_type(int i)
+void main_window::set_surface_type(int i)
 {
     settings::s_type = i;
 }
 
-void MainWindow::set_inner_shell_count(int n)
+void main_window::set_inner_shell_count(int n)
 {
     settings::inner_shell_count = n;
 }
 
-void MainWindow::set_inner_shell_distance(double v)
+void main_window::set_inner_shell_distance(double v)
 {
     settings::inner_shell_distance = v;
 }
 
-void MainWindow::set_infill_number_rot(int n)
+void main_window::set_infill_number_rot(int n)
 {
     settings::infill_number_rot = n;
 }
 
-void MainWindow::set_infill_space_between(double val)
+void main_window::set_infill_space_between(double val)
 {
     settings::infill_space_between = val;
 }

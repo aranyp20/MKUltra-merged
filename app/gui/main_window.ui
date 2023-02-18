@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>MKUltra</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -206,7 +206,7 @@
   <customwidget>
    <class>poly_2D_widget</class>
    <extends>QWidget</extends>
-   <header location="global">myglwidget.h</header>
+   <header location="global">poly_2D_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

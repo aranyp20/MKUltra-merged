@@ -26,13 +26,13 @@ find_package(Qt5 COMPONENTS Widgets OpenGL REQUIRED)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-qt5_wrap_ui(UI_HEADERS app/gui/mainwindow.ui)
+qt5_wrap_ui(UI_HEADERS app/gui/main_window.ui)
 
 add_executable(${PROJECT_NAME}
 app/gui/main.cpp
-app/gui/mainwindow.cpp
-app/gui/mainwindow.ui
-app/gui/myglwidget.cpp
+app/gui/main_window.cpp
+app/gui/main_window.ui
+app/gui/poly_2D_widget.cpp
 ${UI_HEADERS}
 app/slicer/slicer_module.cpp 
 app/slicer/generators/inner_shell_generator.cpp

@@ -7,10 +7,9 @@
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLBuffer>
 #include <QOpenGLShaderProgram>
+#include <iostream>
 
 #include "printable_object.h"
-
-#include <iostream>
 
 class poly_2D_widget : public QOpenGLWidget
 {
