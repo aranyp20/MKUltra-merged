@@ -6,7 +6,7 @@
 class FunctionCreator
 {
 
-    static FunctionCreator *activeEntity;
+    // static FunctionCreator *activeEntity;
 
     struct Node
     {
@@ -32,14 +32,12 @@ class FunctionCreator
     void CalculateCoefficients();
 
 public:
-    void Activate();
-
     FunctionCreator();
 
-    static double Create(const vec3 &);
+    double Create(const vec3 &) const;
 
     interval KernelFunction_interval(const interval &xi, const interval &yi, const vec3 &p, double h) const;
-    static interval Create_interval(const interval &i1, const interval &i2, double h);
+    interval Create_interval(const interval &i1, const interval &i2, double h) const;
 
-    static vec3 Create_grad(const vec3 &p);
+    vec3 Create_grad(const vec3 &p) const;
 };

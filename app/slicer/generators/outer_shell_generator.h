@@ -3,6 +3,7 @@
 #include "section_organiser.h"
 #include "frep.hpp"
 #include "section.h"
+#include "plane.h"
 
 class outer_shell_generator
 {
@@ -61,5 +62,5 @@ class outer_shell_generator
 public:
     outer_shell_generator(frep_object *);
 
-    polylines generate(const std::pair<vec2, double> &plane, double h, unsigned int resolution) const;
+    polylines generate(const plane &, double h, unsigned int resolution) const;
 };

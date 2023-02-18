@@ -5,7 +5,7 @@
 #include <eigen3/Eigen/Dense>
 #include "FunctionCreator.h"
 
-FunctionCreator *FunctionCreator::activeEntity = NULL;
+// FunctionCreator *FunctionCreator::activeEntity = NULL;
 
 FunctionCreator::FunctionCreator()
 {
@@ -16,14 +16,7 @@ FunctionCreator::FunctionCreator()
 
     CalculateCoefficients();
 
-    Activate();
-
     std::cout << "Surface creation done." << std::endl;
-}
-
-void FunctionCreator::Activate()
-{
-    FunctionCreator::activeEntity = this;
 }
 
 void FunctionCreator::FillNodes(const NormalCreator &nc)
@@ -86,12 +79,12 @@ double FunctionCreator::KernelFunction(const vec3 &p1, const vec3 &p2) const
     return sqrt(distance * distance + preferableConstant * preferableConstant);
 }
 
-double FunctionCreator::Create(const vec3 &p)
+double FunctionCreator::Create(const vec3 &p) const
 {
     double result = 0;
-    for (int i = 0; i < activeEntity->nodes.size(); i++)
+    for (int i = 0; i < nodes.size(); i++)
     {
-        result += activeEntity->nodes[i].coefficient * activeEntity->KernelFunction(p, activeEntity->nodes[i].pos);
+        result += nodes[i].coefficient * KernelFunction(p, nodes[i].pos);
     }
 
     return result;
@@ -105,12 +98,12 @@ interval FunctionCreator::KernelFunction_interval(const interval &xi, const inte
     return sqrt(distance * distance + interval(preferableConstant) * interval(preferableConstant));
 }
 
-interval FunctionCreator::Create_interval(const interval &i1, const interval &i2, double h)
+interval FunctionCreator::Create_interval(const interval &i1, const interval &i2, double h) const
 {
     interval result(0);
-    for (int i = 0; i < activeEntity->nodes.size(); i++)
+    for (int i = 0; i < nodes.size(); i++)
     {
-        result = result + interval(activeEntity->nodes[i].coefficient) * activeEntity->KernelFunction_interval(i1, i2, activeEntity->nodes[i].pos, h);
+        result = result + interval(nodes[i].coefficient) * KernelFunction_interval(i1, i2, nodes[i].pos, h);
     }
 
     return result;
@@ -123,12 +116,12 @@ vec3 FunctionCreator::KernelFunction_grad(const vec3 &p1, const vec3 &p2) const
     return vec3((p1.x - p2.x) / dist, (p1.y - p2.y) / dist, (p1.z - p2.z) / dist) * preferableConstant;
 }
 
-vec3 FunctionCreator::Create_grad(const vec3 &p)
+vec3 FunctionCreator::Create_grad(const vec3 &p) const
 {
     vec3 result;
-    for (auto &a : activeEntity->nodes)
+    for (auto &a : nodes)
     {
-        result = result + activeEntity->KernelFunction_grad(p, a.pos) * a.coefficient;
+        result = result + KernelFunction_grad(p, a.pos) * a.coefficient;
     }
     return result;
 }

@@ -28,3 +28,8 @@ double plane::get_size() const
 {
     return size;
 }
+
+vec2 plane::get_corner() const
+{
+    return corner;
+}

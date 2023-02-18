@@ -16,10 +16,12 @@ polylines inner_shell_generator::generate_one(polylines &contour, double w) cons
 
 void inner_shell_generator::point_was_good(const vec3 &p, std::vector<vec3> &current_string, vec3 &last_pos, bool &active) const
 {
+
     if (!active)
     {
         current_string.push_back(last_pos);
     }
+
     current_string.push_back(p);
     active = true;
     last_pos = p;

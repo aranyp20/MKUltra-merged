@@ -18,3 +18,35 @@ public:
     static double infill_space_between;
     static int infill_number_rot;
 };
+
+/*
+BUGS:
+
+
+TODO:
+functioncreater createje ne legyen static
+infillnel a generatorsectionok egy atlobol csinalodjanak
+Qobject::connect -hez fuggveny ami inicializa is (ami pedig jobb hogy a surface ad egy recommendationt es azzal kitolt mindent)
+polylines eatet hasznalni mindenhol
+settingsben ha megvaltozik valami arrol ertesitse a viewt
+guiban atnevezesek(snakecase)
+2D forgato matrix
+
+statusbar surface betoltesehez
+
+vec2->vec3 illetve az egesz mymath.h-hoz cpp, vec2-re jo normalize-t meg ilyeneket stb stb..
+squaret es planet valamennyire ossze lehetne vonni
+const iterator
+iterator jaitas: it->data
+RBF kiertekelst optimalizalni
+inner_fill-nel a relevant_section-oket eleg lenne egyszer kiszamolni
+
+
+DONE:
+
+
+-mostly..:
+
+planet hasznalni mindenhol
+
+*/

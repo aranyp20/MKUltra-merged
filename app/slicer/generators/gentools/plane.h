@@ -17,4 +17,5 @@ public:
     double get_diagonal_size() const;
     std::vector<section> get_sides() const;
     double get_size() const;
+    vec2 get_corner() const;
 };
