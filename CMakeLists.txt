@@ -26,29 +26,29 @@ find_package(Qt5 COMPONENTS Widgets OpenGL REQUIRED)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-qt5_wrap_ui(UI_HEADERS app/gui/main_window.ui)
+qt5_wrap_ui(UI_HEADERS src/gui/main_window.ui)
 
 add_executable(${PROJECT_NAME}
-app/gui/main.cpp
-app/gui/main_window.cpp
-app/gui/main_window.ui
-app/gui/poly_2D_widget.cpp
+src/gui/main.cpp
+src/gui/main_window.cpp
+src/gui/main_window.ui
+src/gui/poly_2D_widget.cpp
 ${UI_HEADERS}
-app/slicer/slicer_module.cpp 
-app/slicer/generators/inner_shell_generator.cpp
-app/slicer/generators/outer_shell_generator.cpp
-app/slicer/generators/gentools/interval.cpp
-app/slicer/generators/gentools/polylines.cpp
-app/slicer/generators/gentools/section_organiser.cpp
-app/slicer/global/section.cpp
-app/slicer/object/RBF/FunctionCreator.cpp
-app/slicer/object/RBF/NormalCreator.cpp
-app/slicer/generators/infill_generator.cpp
-app/slicer/generators/gentools/plane.cpp
-app/slicer/printable_object.cpp
-app/settings.cpp
+src/slicer/slicer_module.cpp 
+src/slicer/generators/inner_shell_generator.cpp
+src/slicer/generators/outer_shell_generator.cpp
+src/slicer/generators/gentools/interval.cpp
+src/slicer/generators/gentools/polylines.cpp
+src/slicer/generators/gentools/section_organiser.cpp
+src/slicer/global/section.cpp
+src/slicer/object/RBF/FunctionCreator.cpp
+src/slicer/object/RBF/NormalCreator.cpp
+src/slicer/generators/infill_generator.cpp
+src/slicer/generators/gentools/plane.cpp
+src/slicer/printable_object.cpp
+src/settings.cpp
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer/global ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer/generators ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer/generators/gentools ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer/object ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer/object/RBF ${CMAKE_CURRENT_SOURCE_DIR}/app/slicer)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/app/gui ${CMAKE_CURRENT_SOURCE_DIR}/app)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/global ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/generators ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/generators/gentools ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object/RBF ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/gui ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL Qt5::Widgets)

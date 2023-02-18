@@ -134,7 +134,7 @@ opt_return<section> infill_generator::generate_relevant_section(const plane &pla
     // if we cast a scanner section exactly at the diagonal, it will itersect all 4 sides, resulting 2 rlevant_section at the same place
     for (int i = 0; i < 4; i++)
     {
-        opt_return inter = intersector.intersect(plane_sides[i]);
+        opt_return<vec2> inter = intersector.intersect(plane_sides[i]);
         if (inter.valid)
         {
             result_points.push_back(inter.data);
