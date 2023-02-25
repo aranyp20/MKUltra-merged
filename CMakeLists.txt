@@ -32,7 +32,8 @@ add_executable(${PROJECT_NAME}
 src/gui/main.cpp
 src/gui/main_window.cpp
 src/gui/main_window.ui
-src/gui/poly_2D_widget.cpp
+src/gui/widgets/poly_2D_widget.cpp
+src/gui/widgets/poly_3D_widget.cpp
 ${UI_HEADERS}
 src/slicer/slicer_module.cpp 
 src/slicer/generators/inner_shell_generator.cpp
@@ -50,5 +51,5 @@ src/settings.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/global ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/generators ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/generators/gentools ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object/RBF ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/gui ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/gui ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/widgets)
 target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL Qt5::Widgets)

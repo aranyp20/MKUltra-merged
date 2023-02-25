@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>994</width>
+    <width>1118</width>
     <height>822</height>
    </rect>
   </property>
@@ -23,9 +23,9 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>20</y>
-      <width>111</width>
+      <x>30</x>
+      <y>40</y>
+      <width>21</width>
       <height>501</height>
      </rect>
     </property>
@@ -42,8 +42,8 @@
    <widget class="poly_2D_widget" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>20</y>
+      <x>80</x>
+      <y>40</y>
       <width>500</width>
       <height>500</height>
      </rect>
@@ -88,8 +88,8 @@
    <widget class="QComboBox" name="surface_selector_box">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>640</y>
+      <x>300</x>
+      <y>610</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -180,8 +180,8 @@
    <widget class="QSpinBox" name="infill_number_box">
     <property name="geometry">
      <rect>
-      <x>920</x>
-      <y>470</y>
+      <x>60</x>
+      <y>680</y>
       <width>51</width>
       <height>41</height>
      </rect>
@@ -190,8 +190,8 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>780</x>
-      <y>470</y>
+      <x>30</x>
+      <y>640</y>
       <width>141</width>
       <height>41</height>
      </rect>
@@ -200,13 +200,29 @@
      <string>Infill number (rot):</string>
     </property>
    </widget>
+   <widget class="poly_3D_widget" name="widget_2" native="true">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>40</y>
+      <width>500</width>
+      <height>500</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
  <customwidgets>
   <customwidget>
    <class>poly_2D_widget</class>
    <extends>QWidget</extends>
-   <header location="global">poly_2D_widget.h</header>
+   <header>poly_2D_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>poly_3D_widget</class>
+   <extends>QWidget</extends>
+   <header location="global">poly_3D_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

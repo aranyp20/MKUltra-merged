@@ -2,6 +2,7 @@
 #include "main_window.h"
 #include "ui_main_window.h"
 #include "poly_2D_widget.h"
+#include "poly_3D_widget.h"
 #include "slicer_module.h"
 
 #include "settings.h"
@@ -12,6 +13,8 @@ main_window::main_window(QWidget *parent)
     ui->setupUi(this);
 
     QObject::connect(ui->verticalScrollBar, &QScrollBar::valueChanged, ui->widget, &poly_2D_widget::slot_layer_changed);
+    QObject::connect(ui->verticalScrollBar, &QScrollBar::valueChanged, ui->widget_2, &poly_3D_widget::slot_layer_changed);
+
     QObject::connect(ui->surface_loader_button, &QPushButton::pressed, this, &main_window::load_object);
     QObject::connect(ui->slice_button, &QPushButton::pressed, this, &main_window::slice_object);
 
@@ -78,6 +81,8 @@ void main_window::slice_object()
     sliced_obj = new sliced_object(slicer.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance));
 
     ui->widget->set_obj(sliced_obj);
+
+    ui->widget_2->set_obj(sliced_obj);
 
     ui->verticalScrollBar->setMaximum(settings::level_count - 1);
     ui->verticalScrollBar->setValue(settings::level_count - 1);

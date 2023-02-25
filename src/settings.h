@@ -24,8 +24,9 @@ BUGS:
 
 
 TODO:
+infillnel bisection method
 infillnel a generatorsectionok egy atlobol csinalodjanak
-Qobject::connect -hez fuggveny ami inicializa is (ami pedig jobb hogy a surface ad egy recommendationt es azzal kitolt mindent)
+surface ad egy recommendationt es azzal kitolt mindent
 polylines eatet hasznalni mindenhol
 settingsben ha megvaltozik valami arrol ertesitse a viewt
 guiban atnevezesek(snakecase)
