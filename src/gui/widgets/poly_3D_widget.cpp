@@ -79,9 +79,10 @@ void poly_3D_widget::paintGL()
     vao.bind();
     vbo.bind();
 
-    const void *printable_data = colorize_level().data();
+    std::vector<qgl_vertex> pp = colorize_level();
+    const void *printable_data = pp.data();
 
-    vbo.allocate(printable_data, sizeof(float) * obj->filled_data_together.size() * 2);
+    vbo.allocate(printable_data, sizeof(qgl_vertex) * pp.size());
 
     sp->enableAttributeArray("position");
     sp->enableAttributeArray("color");
@@ -92,7 +93,7 @@ void poly_3D_widget::paintGL()
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glDrawArrays(GL_LINES, 0, obj->filled_data_together.size() * 2 / 3);
+    glDrawArrays(GL_LINES, 0, pp.size());
 }
 
 void poly_3D_widget::set_obj(sliced_object *_obj)
