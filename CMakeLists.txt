@@ -34,6 +34,7 @@ src/gui/main_window.cpp
 src/gui/main_window.ui
 src/gui/widgets/poly_2D_widget.cpp
 src/gui/widgets/poly_3D_widget.cpp
+src/gui/widgets/camera.cpp
 ${UI_HEADERS}
 src/slicer/slicer_module.cpp 
 src/slicer/generators/inner_shell_generator.cpp

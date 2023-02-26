@@ -13,6 +13,7 @@ struct sliced_object
     unsigned int slice_count;
 
     std::vector<std::vector<float>> filled_data;
+    std::vector<float> filled_data_together;
 
     void normalize_for_gl(vec3 &, const plane &) const;
 

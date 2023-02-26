@@ -17,7 +17,6 @@ class poly_2D_widget : public QOpenGLWidget
     QOpenGLBuffer vbo{QOpenGLBuffer::VertexBuffer};
 
     QOpenGLVertexArrayObject vao;
-    std::vector<QOpenGLBuffer> vbos;
     QOpenGLShaderProgram *sp;
 
     sliced_object *obj = nullptr;

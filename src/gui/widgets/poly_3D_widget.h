@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include "printable_object.h"
+#include "camera.h"
 
 class poly_3D_widget : public QOpenGLWidget
 {
@@ -17,12 +18,13 @@ class poly_3D_widget : public QOpenGLWidget
     QOpenGLBuffer vbo{QOpenGLBuffer::VertexBuffer};
 
     QOpenGLVertexArrayObject vao;
-    std::vector<QOpenGLBuffer> vbos;
     QOpenGLShaderProgram *sp;
 
     sliced_object *obj = nullptr;
 
     unsigned int printable_level = 0;
+
+    camera cam;
 
 public:
     poly_3D_widget(QWidget *parent);

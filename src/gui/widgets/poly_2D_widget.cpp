@@ -17,7 +17,7 @@ void poly_2D_widget::initializeGL()
                                 "in vec3 position;\n"
                                 "out vec4 fragColor;\n"
                                 "void main(){\n"
-                                "fragColor = vec4(0.0,1.0,0.0,1.0);\n"
+                                "fragColor = vec4(0.0,0.0,1.0,1.0);\n"
                                 "gl_Position = vec4(position.x,position.y,0.0,1.0);\n"
                                 "}");
     sp->addShaderFromSourceCode(QOpenGLShader::Fragment,
@@ -68,6 +68,8 @@ void poly_2D_widget::set_obj(sliced_object *_obj)
 {
     // TODO: delete previus vaos, vbos
     obj = _obj;
+
+    update();
 }
 
 void poly_2D_widget::slot_layer_changed(int l)

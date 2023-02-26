@@ -32,6 +32,8 @@ settingsben ha megvaltozik valami arrol ertesitse a viewt
 guiban atnevezesek(snakecase)
 2D forgato matrix
 
+
+
 statusbar surface betoltesehez
 
 vec2->vec3 illetve az egesz mymath.h-hoz cpp, vec2-re jo normalize-t meg ilyeneket stb stb..

@@ -36,6 +36,7 @@ sliced_object::sliced_object(const std::vector<polylines> &_data, const plane &_
         }
 
         filled_data.push_back(current_level);
+        filled_data_together.insert(filled_data_together.end(), current_level.begin(), current_level.end());
     }
 
     slice_count = data.size();
