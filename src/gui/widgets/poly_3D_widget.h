@@ -11,6 +11,12 @@
 #include "printable_object.h"
 #include "camera.h"
 
+struct qgl_vertex
+{
+    QVector3D position;
+    QVector3D color;
+};
+
 class poly_3D_widget : public QOpenGLWidget
 {
     Q_OBJECT
@@ -25,6 +31,8 @@ class poly_3D_widget : public QOpenGLWidget
     unsigned int printable_level = 0;
 
     camera cam;
+
+    std::vector<qgl_vertex> colorize_level() const;
 
 public:
     poly_3D_widget(QWidget *parent);

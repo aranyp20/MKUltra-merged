@@ -4,7 +4,7 @@ camera::camera()
 {
     wLookat = vec3(0, 0, 0);
     wUp = vec3(0, 0, 1);
-    wEye = vec3(3, 1, 0);
+    wEye = vec3(2.5, 1, 0);
 
     originalDistance = (wEye - wLookat).length();
 

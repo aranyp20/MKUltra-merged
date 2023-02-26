@@ -13,6 +13,7 @@ main_window::main_window(QWidget *parent)
     ui->setupUi(this);
 
     QObject::connect(ui->verticalScrollBar, &QScrollBar::valueChanged, ui->widget, &poly_2D_widget::slot_layer_changed);
+    QObject::connect(ui->verticalScrollBar, &QScrollBar::valueChanged, ui->widget_2, &poly_3D_widget::slot_layer_changed);
 
     QObject::connect(ui->surface_loader_button, &QPushButton::pressed, this, &main_window::load_object);
     QObject::connect(ui->slice_button, &QPushButton::pressed, this, &main_window::slice_object);
