@@ -5,6 +5,7 @@
 #include <QOpenGLShaderProgram>
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLBuffer>
+#include <QMouseEvent>
 
 #include <iostream>
 
@@ -15,6 +16,19 @@ struct qgl_vertex
 {
     QVector3D position;
     QVector3D color;
+};
+
+class mouse_pos_handler
+{
+    QWidget *parent;
+    vec2 last_pos;
+
+public:
+    mouse_pos_handler(QWidget *);
+
+    void register_pos();
+
+    vec2 get_last_pos() const;
 };
 
 class poly_3D_widget : public QOpenGLWidget
@@ -34,6 +48,10 @@ class poly_3D_widget : public QOpenGLWidget
 
     std::vector<qgl_vertex> colorize_level() const;
 
+    mouse_pos_handler mp_handler;
+
+    void rotate_camera();
+
 public:
     poly_3D_widget(QWidget *parent);
 
@@ -47,6 +65,10 @@ protected:
     void resizeGL(int w, int h) override;
 
     void paintGL() override;
+
+    void mousePressEvent(QMouseEvent *event) override;
+
+    void mouseMoveEvent(QMouseEvent *event) override;
 
 public slots:
 

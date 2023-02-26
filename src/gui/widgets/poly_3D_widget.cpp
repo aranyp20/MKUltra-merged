@@ -1,7 +1,7 @@
 #include "poly_3D_widget.h"
 
 poly_3D_widget::poly_3D_widget(QWidget *parent)
-    : QOpenGLWidget(parent)
+    : QOpenGLWidget(parent), mp_handler(this)
 {
 }
 
@@ -36,22 +36,6 @@ void poly_3D_widget::initializeGL()
                                 "}");
     sp->link();
 
-    QMatrix4x4 q_v;
-    QMatrix4x4 q_p;
-    mat4 m_v = cam.V();
-    mat4 m_p = cam.P();
-
-    for (int i = 0; i < 4; i++)
-    {
-        q_v.setRow(i, QVector4D(m_v[i][0], m_v[i][1], m_v[i][2], m_v[i][3]));
-        q_p.setRow(i, QVector4D(m_p[i][0], m_p[i][1], m_p[i][2], m_p[i][3]));
-    }
-
-    sp->bind();
-    sp->setUniformValue("V", q_v);
-    sp->setUniformValue("P", q_p);
-    sp->release();
-
     glLineWidth(1);
 
     vao.create();
@@ -75,7 +59,21 @@ void poly_3D_widget::paintGL()
     if (obj == nullptr)
         return;
 
+    QMatrix4x4 q_v;
+    QMatrix4x4 q_p;
+    mat4 m_v = cam.V();
+    mat4 m_p = cam.P();
+
+    for (int i = 0; i < 4; i++)
+    {
+        q_v.setRow(i, QVector4D(m_v[i][0], m_v[i][1], m_v[i][2], m_v[i][3]));
+        q_p.setRow(i, QVector4D(m_p[i][0], m_p[i][1], m_p[i][2], m_p[i][3]));
+    }
+
     sp->bind();
+    sp->setUniformValue("V", q_v);
+    sp->setUniformValue("P", q_p);
+
     vao.bind();
     vbo.bind();
 
@@ -129,4 +127,55 @@ std::vector<qgl_vertex> poly_3D_widget::colorize_level() const
     }
 
     return result;
+}
+
+void poly_3D_widget::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        mp_handler.register_pos();
+    }
+}
+
+void poly_3D_widget::mouseMoveEvent(QMouseEvent *event)
+{
+    if (event->buttons() & Qt::LeftButton)
+    {
+        rotate_camera();
+        mp_handler.register_pos();
+        update();
+    }
+}
+
+void poly_3D_widget::rotate_camera()
+{
+    vec2 last_pos(mp_handler.get_last_pos());
+    vec2 curr_pos(this->mapFromGlobal(QCursor::pos()).x(), this->mapFromGlobal(QCursor::pos()).y());
+
+    if (last_pos.x == curr_pos.x && last_pos.y == curr_pos.y)
+        return;
+
+    vec2 tVec = curr_pos - last_pos;
+
+    std::vector<vec3> wuv = cam.get_wuv();
+    vec3 axis = wuv[2] * tVec.x + wuv[1] * tVec.y;
+    vec3 newEye = cam.get_eye();
+    newEye = newEye - cam.get_lookat();
+    TransformPoint(newEye, RotationMatrix(tVec.length() / -200, axis));
+    newEye = newEye + cam.get_lookat();
+    cam.replace_eye(newEye);
+}
+
+mouse_pos_handler::mouse_pos_handler(QWidget *_parent) : parent(_parent)
+{
+}
+
+void mouse_pos_handler::register_pos()
+{
+    last_pos = vec2(parent->mapFromGlobal(QCursor::pos()).x(), parent->mapFromGlobal(QCursor::pos()).y());
+}
+
+vec2 mouse_pos_handler::get_last_pos() const
+{
+    return last_pos;
 }
