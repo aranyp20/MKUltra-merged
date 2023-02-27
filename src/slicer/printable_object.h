@@ -2,20 +2,60 @@
 
 #include <array>
 #include <float.h>
+#include <QVector3D>
 #include "polylines.h"
 #include "plane.h"
 
-struct sliced_object
+struct qgl_vertex
 {
+    QVector3D position;
+    QVector3D color;
+};
 
-    std::vector<polylines> data;
+class sliced_object
+{
+public:
+    struct layer_data
+    {
+        enum part_type
+        {
+            INNER,
+            OUTER,
+            INFILL
+        };
+
+        struct part
+        {
+            polylines poly;
+            std::vector<float> org;
+            std::vector<qgl_vertex> colored;
+        };
+
+        std::array<part, 3> parts;
+        std::vector<float> combined_org;
+        void combine_orgs();
+
+        layer_data(const polylines &_outer, const polylines &_inner, const polylines &_infill, const plane &_bp);
+
+    private:
+        void normalize_for_gl(vec3 &, const plane &) const;
+        std::vector<float> transfer(const polylines &_data, const plane &_bp) const;
+    };
+
+private:
+    std::vector<layer_data> data;
+
     plane bounding_plane;
     unsigned int slice_count;
 
-    std::vector<std::vector<float>> filled_data;
-    std::vector<float> filled_data_together;
+public:
+    unsigned int get_slice_count() const;
+    // const std::vector<std::vector<float>> &get_org_data() const;
 
-    void normalize_for_gl(vec3 &, const plane &) const;
+    sliced_object(const std::vector<layer_data> &, const plane &_bp);
 
-    sliced_object(const std::vector<polylines> &, const plane &);
+    const std::vector<float> &get_org_level(unsigned int) const;
+    const std::vector<float> &get_org_level(unsigned int, const layer_data::part_type &) const;
+
+    void set_level_color(const std::vector<qgl_vertex> &, unsigned int, const layer_data::part_type &);
 };

@@ -43,29 +43,30 @@ slicer::slicer(frep_object *_cutable_obj) : cutable_obj(_cutable_obj), my_boundi
 {
 }
 
-polylines slicer::slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance) const
+sliced_object::layer_data slicer::slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance) const
 {
-    polylines level;
-
     double h = my_bounding_box.floor.first.z + h_per_max * my_bounding_box.height;
+
+    polylines inner;
+    polylines infill;
     polylines outer = outer_generator.generate(std::pair<vec2, double>(my_bounding_box.floor), h, 5);
-    level.add_together(outer);
-    level.add_together(inf_generator.generate(std::pair<vec2, double>(my_bounding_box.floor), h, M_PI / settings::infill_number_rot, settings::infill_space_between, inner_shell_count * inner_shell_distance));
+
+    infill.add_together(inf_generator.generate(std::pair<vec2, double>(my_bounding_box.floor), h, M_PI / settings::infill_number_rot, settings::infill_space_between, inner_shell_count * inner_shell_distance));
     for (int i = 1; i <= inner_shell_count; i++)
     {
-        polylines inner = inner_generator.generate_one(outer, inner_shell_distance * i);
-        level.add_together(inner);
+        polylines inner_l = inner_generator.generate_one(outer, inner_shell_distance * i);
+        inner.add_together(inner_l);
     }
-    return level;
+    return sliced_object::layer_data(outer, inner, infill, std::pair<vec2, double>(my_bounding_box.floor));
 }
 
 sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance) const
 {
-    std::vector<polylines> result;
+    std::vector<sliced_object::layer_data> result;
 
     for (int i = 0; i < level_count; i++)
     {
-        polylines level = slice(i / (double)level_count /*floor to one lvl below ceiling*/, inner_shell_count, inner_shell_distance);
+        sliced_object::layer_data level = slice(i / (double)level_count /*floor to one lvl below ceiling*/, inner_shell_count, inner_shell_distance);
         result.push_back(level);
     }
     // print(result);

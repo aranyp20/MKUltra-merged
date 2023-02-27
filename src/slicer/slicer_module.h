@@ -8,9 +8,9 @@
 class slicer
 {
 public:
-        slicer(frep_object *_cutable_obj);
+    slicer(frep_object *_cutable_obj);
 
-    polylines slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance) const;
+    sliced_object::layer_data slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance) const;
     sliced_object create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance) const;
 
 private:

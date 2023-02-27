@@ -53,7 +53,7 @@ void poly_2D_widget::paintGL()
     sp->bind();
     vao.bind();
     vbo.bind();
-    vbo.allocate(obj->filled_data[printable_level].data(), sizeof(float) * obj->filled_data[printable_level].size());
+    vbo.allocate(obj->get_org_level(printable_level).data(), sizeof(float) * obj->get_org_level(printable_level).size());
 
     sp->enableAttributeArray("position");
     sp->setAttributeArray("position", GL_FLOAT, 0, 3);
@@ -61,7 +61,7 @@ void poly_2D_widget::paintGL()
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glDrawArrays(GL_LINES, 0, obj->filled_data[printable_level].size() / 3);
+    glDrawArrays(GL_LINES, 0, obj->get_org_level(printable_level).size() / 3);
 }
 
 void poly_2D_widget::set_obj(sliced_object *_obj)
@@ -77,6 +77,6 @@ void poly_2D_widget::slot_layer_changed(int l)
     if (obj == nullptr)
         return;
 
-    printable_level = obj->slice_count - l - 1;
+    printable_level = obj->get_slice_count() - l - 1;
     update();
 }

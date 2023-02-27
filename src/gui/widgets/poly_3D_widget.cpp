@@ -107,7 +107,7 @@ void poly_3D_widget::slot_layer_changed(int l)
     if (obj == nullptr)
         return;
 
-    printable_level = obj->slice_count - l - 1;
+    printable_level = obj->get_slice_count() - l - 1;
     update();
 }
 
@@ -116,14 +116,15 @@ std::vector<qgl_vertex> poly_3D_widget::colorize_level() const
     std::vector<qgl_vertex> result;
 
     std::array<float, 3> color;
-    for (unsigned int i = 0; i < obj->slice_count; i++)
+    for (unsigned int i = 0; i < obj->get_slice_count(); i++)
     {
         i == printable_level ? color = {0.0f, 0.0f, 1.0f} : color = {0.0f, 1.0f, 0.0f};
-
+        /*
         for (int j = 0; j < obj->filled_data[i].size(); j += 3)
         {
             result.push_back({QVector3D(obj->filled_data[i][j], obj->filled_data[i][j + 1], obj->filled_data[i][j + 2]), QVector3D(color[0], color[1], color[2])});
         }
+        */
     }
 
     return result;

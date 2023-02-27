@@ -12,12 +12,6 @@
 #include "printable_object.h"
 #include "camera.h"
 
-struct qgl_vertex
-{
-    QVector3D position;
-    QVector3D color;
-};
-
 class mouse_pos_handler
 {
     QWidget *parent;
