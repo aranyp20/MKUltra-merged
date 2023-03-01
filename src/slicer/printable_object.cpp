@@ -39,6 +39,22 @@ const std::vector<float> &sliced_object::get_org_level(unsigned int level, const
     return data[level].parts[pt].org;
 }
 
+const std::vector<qgl_vertex> &sliced_object::get_colored_level(unsigned int level) const
+{
+    return data[level].combined_colored;
+}
+
+const std::vector<qgl_vertex> sliced_object::get_colored() const
+{
+    std::vector<qgl_vertex> result;
+    for(int i=0;i<data.size();i++)
+    {
+        std::vector<qgl_vertex> c_level = get_colored_level(i);
+        result.insert(result.end(),c_level.begin(),c_level.end());
+    }
+    return result;
+}
+
 void sliced_object::set_level_color(const std::vector<qgl_vertex> &_colored, unsigned int level, const layer_data::part_type &pt)
 {
     data[level].parts[pt].colored = _colored;
@@ -55,18 +71,36 @@ void sliced_object::layer_data::combine_orgs()
     combined_org = result;
 }
 
+void sliced_object::layer_data::combine_coloreds()
+{
+    std::vector<qgl_vertex> result;
+
+    for(int i =0;i<parts.size();i++)
+    {
+        result.insert(result.end(), parts[i].colored.begin(), parts[i].colored.end());
+    }
+
+    combined_colored = result;
+}
+
 sliced_object::layer_data::layer_data(const polylines &_outer, const polylines &_inner, const polylines &_infill, const plane &_bp)
 {
     parts[0].poly = _inner;
     parts[0].org = transfer(_inner, _bp);
+    parts[0].colored = colorize(parts[0].org,vec3(0,0,1));
 
     parts[1].poly = _outer;
     parts[1].org = transfer(_outer, _bp);
+    parts[1].colored = colorize(parts[1].org,vec3(0,1,0));
+
 
     parts[2].poly = _infill;
     parts[2].org = transfer(_infill, _bp);
+    parts[2].colored = colorize(parts[2].org,vec3(1,0,0));
+
 
     combine_orgs();
+    combine_coloreds();
 }
 
 std::vector<float> sliced_object::layer_data::transfer(const polylines &_data, const plane &_bp) const
@@ -100,4 +134,16 @@ std::vector<float> sliced_object::layer_data::transfer(const polylines &_data, c
     }
 
     return current_level;
+}
+
+std::vector<qgl_vertex> sliced_object::layer_data::colorize(const std::vector<float>& _data, const vec3 &_color) const
+{
+    std::vector<qgl_vertex> result;
+
+    for(int i=0;i<_data.size();i+=3)
+    {
+        result.push_back({QVector3D(_data[i],_data[i+1], _data[i+2]), QVector3D(_color.x, _color.y, _color.z)});
+    }
+
+    return result;
 }
