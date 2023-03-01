@@ -77,7 +77,7 @@ void poly_3D_widget::paintGL()
     vao.bind();
     vbo.bind();
 
-    std::vector<qgl_vertex> pp = obj->get_colored();
+    std::vector<qgl_vertex> pp = colorize_level();
     const void *printable_data = pp.data();
 
     vbo.allocate(printable_data, sizeof(qgl_vertex) * pp.size());
@@ -118,13 +118,16 @@ std::vector<qgl_vertex> poly_3D_widget::colorize_level() const
     std::array<float, 3> color;
     for (unsigned int i = 0; i < obj->get_slice_count(); i++)
     {
-        i == printable_level ? color = {0.0f, 0.0f, 1.0f} : color = {0.0f, 1.0f, 0.0f};
-        /*
-        for (int j = 0; j < obj->filled_data[i].size(); j += 3)
+        std::vector<qgl_vertex> level;
+
+        if(i==printable_level)
         {
-            result.push_back({QVector3D(obj->filled_data[i][j], obj->filled_data[i][j + 1], obj->filled_data[i][j + 2]), QVector3D(color[0], color[1], color[2])});
+            level = obj->get_custom_colored_level(i,vec3(1,1,1));
+        }else{
+            level = obj->get_colored_level(i);
         }
-        */
+
+        result.insert(result.end(),level.begin(),level.end());
     }
 
     return result;

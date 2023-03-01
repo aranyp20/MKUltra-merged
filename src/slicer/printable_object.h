@@ -39,7 +39,7 @@ public:
 
         layer_data(const polylines &_outer, const polylines &_inner, const polylines &_infill, const plane &_bp);
 
-    private:
+
         void normalize_for_gl(vec3 &, const plane &) const;
         std::vector<float> transfer(const polylines &_data, const plane &_bp) const;
         std::vector<qgl_vertex> colorize(const std::vector<float>&, const vec3& _color) const;
@@ -62,6 +62,10 @@ public:
     const std::vector<qgl_vertex> &get_colored_level(unsigned int) const;
 
     const std::vector<qgl_vertex> get_colored() const;
+
+    const polylines& get_poly_level(unsigned int, const layer_data::part_type &) const;
+
+    const std::vector<qgl_vertex> get_custom_colored_level(unsigned int, const vec3&) const;
 
     void set_level_color(const std::vector<qgl_vertex> &, unsigned int, const layer_data::part_type &);
 };

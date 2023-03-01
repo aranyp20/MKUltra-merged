@@ -55,9 +55,21 @@ const std::vector<qgl_vertex> sliced_object::get_colored() const
     return result;
 }
 
+const polylines &sliced_object::get_poly_level(unsigned int level, const layer_data::part_type &part) const
+{
+    return data[level].parts[part].poly;
+}
+
+const std::vector<qgl_vertex> sliced_object::get_custom_colored_level(unsigned int level, const vec3 &color) const
+{
+    return data[level].colorize(data[level].combined_org,color);
+}
+
 void sliced_object::set_level_color(const std::vector<qgl_vertex> &_colored, unsigned int level, const layer_data::part_type &pt)
 {
     data[level].parts[pt].colored = _colored;
+
+    data[level].combine_coloreds();
 }
 
 void sliced_object::layer_data::combine_orgs()
