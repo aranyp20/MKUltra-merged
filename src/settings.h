@@ -1,4 +1,5 @@
-#pragma ponce
+#ifndef _SETTINGS_
+#define _SETTINGS_
 
 enum surface_type
 {
@@ -9,7 +10,6 @@ enum surface_type
 
 class settings
 {
-
 public:
     static unsigned int level_count;
     static unsigned int inner_shell_count;
@@ -18,6 +18,8 @@ public:
     static double infill_space_between;
     static int infill_number_rot;
 };
+
+#endif
 
 /*
 BUGS:

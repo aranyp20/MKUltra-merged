@@ -4,6 +4,8 @@
 #include <functional>
 #include <FunctionCreator.h>
 
+#include "settings.h"
+
 struct bounding_box
 {
     std::pair<vec3, double> floor;
@@ -34,6 +36,7 @@ public:
     virtual double fn(const vec3 &) const = 0;
     virtual interval fn(const interval &X, const interval &Y, double h) const = 0;
     virtual vec3 grad(const vec3 &) const = 0;
+    virtual void set_prefered_settings() {}
 
     virtual bounding_box get_prefered_box() const { return bounding_box(vec3(-1.1, -1.1, -1.1), 2.2, 2.2); }
 
@@ -64,6 +67,12 @@ public:
     double fn(const vec3 &p) const override
     {
         return common_fn(p.x, p.y, p.z);
+    }
+
+    void set_prefered_settings() override
+    {
+        settings::inner_shell_distance = 0.05;
+        settings::infill_space_between = 0.1;
     }
 };
 
@@ -109,5 +118,11 @@ public:
     double fn(const vec3 &p) const override
     {
         return common_fn(p.x, p.y, p.z);
+    }
+
+    void set_prefered_settings() override
+    {
+        settings::inner_shell_distance = 0.3;
+        settings::infill_space_between = 1.2;
     }
 };

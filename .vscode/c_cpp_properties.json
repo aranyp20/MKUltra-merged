@@ -15,7 +15,8 @@
                 "${workspaceFolder}/src/slicer/object/RBF",
                 "${workspaceFolder}/src/slicer",
                 "${workspaceFolder}/src/slicer/generators/gentools",
-                "${workspaceFolder}/src/slicer/global"
+                "${workspaceFolder}/src/slicer/global",
+                "${workspaceFolder}/src"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang-14",

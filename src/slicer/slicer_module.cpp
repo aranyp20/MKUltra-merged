@@ -62,6 +62,7 @@ sliced_object::layer_data slicer::slice(double h_per_max, unsigned int inner_she
 
 sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance) const
 {
+
     std::vector<sliced_object::layer_data> result;
 
     for (int i = 0; i < level_count; i++)

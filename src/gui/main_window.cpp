@@ -5,8 +5,6 @@
 #include "poly_3D_widget.h"
 #include "slicer_module.h"
 
-#include "settings.h"
-
 main_window::main_window(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -18,29 +16,35 @@ main_window::main_window(QWidget *parent)
     QObject::connect(ui->surface_loader_button, &QPushButton::pressed, this, &main_window::load_object);
     QObject::connect(ui->slice_button, &QPushButton::pressed, this, &main_window::slice_object);
 
-    ui->layer_count_box->setValue(settings::level_count);
     QObject::connect(ui->layer_count_box, qOverload<int>(&QSpinBox::valueChanged), this, &main_window::set_level_count);
 
-    ui->inner_shell_count_box->setValue(settings::inner_shell_count);
     QObject::connect(ui->inner_shell_count_box, qOverload<int>(&QSpinBox::valueChanged), this, &main_window::set_inner_shell_count);
 
-    ui->inner_shell_distance_box->setValue(settings::inner_shell_distance);
     QObject::connect(ui->inner_shell_distance_box, qOverload<double>(&QDoubleSpinBox::valueChanged), this, &main_window::set_inner_shell_distance);
 
-    ui->infill_number_box->setValue(settings::infill_number_rot);
     QObject::connect(ui->infill_number_box, qOverload<int>(&QSpinBox::valueChanged), this, &main_window::set_infill_number_rot);
 
-    ui->infill_space_between_box->setValue(settings::infill_space_between);
     QObject::connect(ui->infill_space_between_box, qOverload<double>(&QDoubleSpinBox::valueChanged), this, &main_window::set_infill_space_between);
 
     ui->surface_selector_box->addItem("Chmutov", QVariant(surface_type::CHMUTOV));
     ui->surface_selector_box->addItem("Gyroid", QVariant(surface_type::GYROID));
     QObject::connect(ui->surface_selector_box, qOverload<int>(&QComboBox::currentIndexChanged), this, &main_window::set_surface_type);
+
+    set_values_from_settings();
 }
 
 main_window::~main_window()
 {
     delete ui;
+}
+
+void main_window::set_values_from_settings()
+{
+    ui->layer_count_box->setValue(settings::level_count);
+    ui->inner_shell_count_box->setValue(settings::inner_shell_count);
+    ui->inner_shell_distance_box->setValue(settings::inner_shell_distance);
+    ui->infill_number_box->setValue(settings::infill_number_rot);
+    ui->infill_space_between_box->setValue(settings::infill_space_between);
 }
 
 // sliceolas nelkuli nezegetonel lesz ertelme
@@ -64,6 +68,9 @@ void main_window::load_object()
     default:
         break;
     }
+
+    cutable_obj->set_prefered_settings();
+    set_values_from_settings();
 }
 
 void main_window::slice_object()
