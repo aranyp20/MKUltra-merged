@@ -10,6 +10,15 @@ struct bounding_box
     double height;
 
     bounding_box(const vec3 &_corner, double _width, double _height) : floor(std::pair<vec3, double>{_corner, _width}), height(_height) {}
+
+    inline vec3 get_center() const
+    {
+        return vec3(floor.first.x + (floor.second / 2), floor.first.y + (floor.second / 2), floor.first.z + (height / 2));
+    }
+
+    inline double get_size() const { return floor.second; }
+
+    inline double get_height() const { return height; }
 };
 
 inline vec3 fn_grad_changethis(const vec3 &p)
@@ -86,7 +95,7 @@ class gyroid : public frep_object
         return cos(x) * sin(y) + cos(y) * sin(T(h)) + cos(T(h)) * sin(x);
     }
 
-    bounding_box get_prefered_box() const override { return bounding_box(vec3(-11, -11, -11), 22, 22); }
+    bounding_box get_prefered_box() const override { return bounding_box(vec3(-11, -11, -11), 11, 22); }
 
 public:
     interval fn(const interval &X, const interval &Y, double h) const override

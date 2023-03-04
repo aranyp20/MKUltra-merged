@@ -57,7 +57,7 @@ sliced_object::layer_data slicer::slice(double h_per_max, unsigned int inner_she
         polylines inner_l = inner_generator.generate_one(outer, inner_shell_distance * i);
         inner.add_together(inner_l);
     }
-    return sliced_object::layer_data(outer, inner, infill, std::pair<vec2, double>(my_bounding_box.floor));
+    return sliced_object::layer_data(outer, inner, infill, my_bounding_box);
 }
 
 sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance) const
@@ -70,5 +70,5 @@ sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner
         result.push_back(level);
     }
     // print(result);
-    return sliced_object(result, std::pair<vec2, double>(my_bounding_box.floor));
+    return sliced_object(result, my_bounding_box);
 }

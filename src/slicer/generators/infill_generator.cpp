@@ -152,17 +152,21 @@ opt_return<section> infill_generator::generate_relevant_section(const plane &pla
 std::array<section, 2> infill_generator::create_generator_sections(const plane &plane, double angle) const
 {
     vec2 center = plane.get_center();
-    vec2 top_point = center;
+    vec2 top_point(0, 0);
     double optimal_distance = plane.get_diagonal_size(); // at least diagonal/sqrt(2)
     top_point.x += optimal_distance;
+
     vec3 left_point_tmp = vec3(top_point.x, top_point.y, 0);
     vec3 right_point_tmp = vec3(top_point.x, top_point.y, 0);
 
-    TransformPoint(left_point_tmp, RotationMatrix(angle - M_PI / 4, vec3(center.x, center.y, 1)));
-    TransformPoint(right_point_tmp, RotationMatrix(angle + M_PI / 4, vec3(center.x, center.y, 1)));
+    TransformPoint(left_point_tmp, RotationMatrix(angle - M_PI / 4, vec3(0, 0, 1)));
+    TransformPoint(right_point_tmp, RotationMatrix(angle + M_PI / 4, vec3(0, 0, 1)));
 
     vec2 left_point(left_point_tmp);
     vec2 right_point(right_point_tmp);
+
+    left_point = left_point + center;
+    right_point = right_point + center;
 
     vec2 normal = (left_point - right_point);
     normal.Normalize();
