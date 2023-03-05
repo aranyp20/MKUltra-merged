@@ -31,6 +31,8 @@ main_window::main_window(QWidget *parent)
     QObject::connect(ui->surface_selector_box, qOverload<int>(&QComboBox::currentIndexChanged), this, &main_window::set_surface_type);
 
     set_values_from_settings();
+
+    this->setStyleSheet("QMainWindow { background-color: grey; }");
 }
 
 main_window::~main_window()
