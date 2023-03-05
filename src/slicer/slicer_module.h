@@ -3,6 +3,7 @@
 #include "outer_shell_generator.h"
 #include "inner_shell_generator.h"
 #include "infill_generator.h"
+#include "support_structure_generator.h"
 #include "printable_object.h"
 
 class slicer
@@ -20,4 +21,5 @@ private:
     outer_shell_generator outer_generator;
     inner_shell_generator inner_generator;
     infill_generator inf_generator;
+    support_sctructure_generator support_generator;
 };

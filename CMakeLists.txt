@@ -39,6 +39,7 @@ ${UI_HEADERS}
 src/slicer/slicer_module.cpp 
 src/slicer/generators/inner_shell_generator.cpp
 src/slicer/generators/outer_shell_generator.cpp
+src/slicer/generators/support_structure_generator.cpp
 src/slicer/generators/gentools/interval.cpp
 src/slicer/generators/gentools/polylines.cpp
 src/slicer/generators/gentools/section_organiser.cpp

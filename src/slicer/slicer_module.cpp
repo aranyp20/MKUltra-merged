@@ -39,7 +39,7 @@ void print(const std::vector<polylines> &d)
 }
 */
 
-slicer::slicer(frep_object *_cutable_obj) : cutable_obj(_cutable_obj), my_bounding_box(_cutable_obj->get_prefered_box()), outer_generator(outer_shell_generator(_cutable_obj)), inner_generator(inner_shell_generator(cutable_obj)), inf_generator(infill_generator(cutable_obj))
+slicer::slicer(frep_object *_cutable_obj) : cutable_obj(_cutable_obj), my_bounding_box(_cutable_obj->get_prefered_box()), outer_generator(outer_shell_generator(_cutable_obj)), inner_generator(inner_shell_generator(cutable_obj)), inf_generator(infill_generator(cutable_obj)), support_generator(_cutable_obj)
 {
 }
 
@@ -73,5 +73,9 @@ sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner
         result.push_back(level);
     }
     // print(result);
-    return sliced_object(result, my_bounding_box);
+    sliced_object obj(result, my_bounding_box);
+
+    // support_generator.generate_to(obj);
+
+    return obj;
 }
