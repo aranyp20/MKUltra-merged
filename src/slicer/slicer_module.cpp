@@ -67,6 +67,8 @@ sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner
 
     for (int i = 0; i < level_count; i++)
     {
+        std::cout << "Current slice: " << i << std::endl;
+
         sliced_object::layer_data level = slice(i / (double)level_count /*floor to one lvl below ceiling*/, inner_shell_count, inner_shell_distance);
         result.push_back(level);
     }
