@@ -4,6 +4,7 @@
 #include <functional>
 #include <FunctionCreator.h>
 
+
 #include "settings.h"
 
 struct bounding_box
@@ -47,7 +48,7 @@ public:
 
 class chmutov : public frep_object
 {
-#if 0
+#if 1
     template <typename T>
     T common_fn_base(const T &x, const T &y, double h) const
     {
@@ -57,7 +58,9 @@ class chmutov : public frep_object
     template <typename T>
     T intersection(const T &v1, const T &v2) const
     {
-        return v1 + v2 - sqrt(v1 * v1 + v2 * v2);
+
+
+        return T(0.5)*(v1 + v2 + sqrt(std::max(T(0), v1 * v1 + v2 * v2- T(2)*v1*v2)));
     }
 
     template <typename T>
@@ -72,7 +75,7 @@ class chmutov : public frep_object
     }
 #endif
 
-#if 1
+#if 0
     template <typename T>
     T common_fn(const T &x, const T &y, double h) const
     {

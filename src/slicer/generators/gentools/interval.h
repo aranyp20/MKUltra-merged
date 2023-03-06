@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 struct interval
 {
@@ -22,3 +23,9 @@ interval operator/(const interval &lhs, const interval &rhs);
 interval sqrt(const interval &inter);
 interval sin(const interval &inter);
 interval cos(const interval &inter);
+
+namespace std {
+    interval max(const interval&,const interval&);
+}
+
+std::ostream& operator<< (std::ostream&,const interval&);

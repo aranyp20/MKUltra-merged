@@ -90,6 +90,7 @@ void outer_shell_generator::rejection_testing_square(std::vector<square> &leaves
 {
     if (rejection_test(testable, h))
     {
+        std::cout<<resolution<<std::endl;
         if (resolution == 0)
         {
 
@@ -120,7 +121,8 @@ std::vector<outer_shell_generator::square> outer_shell_generator::rejection_test
 
 bool outer_shell_generator::rejection_test(const square &s, double h) const
 {
-    return surface->fn(interval(s.start.x, s.start.x + s.size), interval(s.start.y, s.start.y + s.size), h).contains(0);
+    interval tmp = surface->fn(interval(s.start.x, s.start.x + s.size), interval(s.start.y, s.start.y + s.size), h);
+    return tmp.contains(0);
 }
 
 std::vector<outer_shell_generator::square> outer_shell_generator::square::breakup(unsigned int count) const

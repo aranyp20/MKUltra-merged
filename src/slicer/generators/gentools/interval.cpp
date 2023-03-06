@@ -91,3 +91,17 @@ interval cos(const interval &inter)
 
     return res;
 }
+
+interval std::max(const interval &i1, const interval &i2)
+{
+    return interval(std::max(i1.start,i2.start),std::max(i1.end,i2.end));
+}
+
+
+
+
+std::ostream &operator<<(std::ostream& os,const interval & i)
+{
+    os << "[" << i.start << ", " << i.end << "]";
+    return os;
+}
