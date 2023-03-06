@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QProgressBar>
 
 #include "printable_object.h"
 #include "frep.hpp"
@@ -21,8 +22,12 @@ public:
     main_window(QWidget *parent = nullptr);
     ~main_window();
 
+    static QProgressBar* slice_bar; 
+    static void cb_slice_progressed(int val);
 private:
     Ui::MainWindow *ui;
+
+
 
     frep_object *cutable_obj = nullptr;
     sliced_object *sliced_obj = nullptr;
@@ -38,5 +43,6 @@ public slots:
     void set_inner_shell_distance(double v);
     void set_infill_space_between(double val);
     void set_infill_number_rot(int n);
+
 };
 #endif // MAINWINDOW_H

@@ -31,7 +31,12 @@ inline vec3 fn_grad_changethis(const vec3 &p)
 
 class frep_object
 {
-
+protected:
+    template <typename T>
+    T intersection(const T &v1, const T &v2) const
+    {
+        return v1 + v2 - sqrt(v1 * v1 + v2 * v2);
+    }
 public:
     // caller functions: the implementation usually just calls the local template function with its overload parameter types. (template functions can't be virtuals.)
     virtual double fn(const vec3 &) const = 0;
@@ -136,11 +141,6 @@ class gyroid : public frep_object
         return cos(x) * sin(y) + cos(y) * sin(T(h)) + cos(T(h)) * sin(x);
     }
 
-    template <typename T>
-    T intersection(const T &v1, const T &v2) const
-    {
-        return v1 + v2 - sqrt(v1 * v1 + v2 * v2);
-    }
 
     template <typename T>
     T common_fn(const T &x, const T &y, double h) const

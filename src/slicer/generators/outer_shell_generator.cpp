@@ -90,7 +90,6 @@ void outer_shell_generator::rejection_testing_square(std::vector<square> &leaves
 {
     if (rejection_test(testable, h))
     {
-        std::cout<<resolution<<std::endl;
         if (resolution == 0)
         {
 

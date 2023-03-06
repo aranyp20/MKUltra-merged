@@ -60,17 +60,16 @@ sliced_object::layer_data slicer::slice(double h_per_max, unsigned int inner_she
     return sliced_object::layer_data(outer, inner, infill, my_bounding_box);
 }
 
-sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance) const
+sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)> cb) const
 {
 
     std::vector<sliced_object::layer_data> result;
 
     for (int i = 0; i < level_count; i++)
     {
-        std::cout << "Current slice: " << i << std::endl;
-
         sliced_object::layer_data level = slice(i / (double)level_count /*floor to one lvl below ceiling*/, inner_shell_count, inner_shell_distance);
         result.push_back(level);
+        cb((i+1)*100/level_count);
     }
     // print(result);
     sliced_object obj(result, my_bounding_box);

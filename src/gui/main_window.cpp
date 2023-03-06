@@ -5,6 +5,8 @@
 #include "poly_3D_widget.h"
 #include "slicer_module.h"
 
+QProgressBar* main_window::slice_bar = nullptr;
+
 main_window::main_window(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -26,6 +28,8 @@ main_window::main_window(QWidget *parent)
 
     QObject::connect(ui->infill_space_between_box, qOverload<double>(&QDoubleSpinBox::valueChanged), this, &main_window::set_infill_space_between);
 
+    main_window::slice_bar = ui->slice_bar;
+    ui->slice_bar->setValue(0);
     ui->surface_selector_box->addItem("Chmutov", QVariant(surface_type::CHMUTOV));
     ui->surface_selector_box->addItem("Gyroid", QVariant(surface_type::GYROID));
     QObject::connect(ui->surface_selector_box, qOverload<int>(&QComboBox::currentIndexChanged), this, &main_window::set_surface_type);
@@ -87,7 +91,7 @@ void main_window::slice_object()
     }
 
     slicer slicer(cutable_obj);
-    sliced_obj = new sliced_object(slicer.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance));
+    sliced_obj = new sliced_object(slicer.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance,main_window::cb_slice_progressed));
 
     ui->widget->set_obj(sliced_obj);
 
@@ -120,6 +124,12 @@ void main_window::set_inner_shell_distance(double v)
 void main_window::set_infill_number_rot(int n)
 {
     settings::infill_number_rot = n;
+}
+
+
+void main_window::cb_slice_progressed(int val)
+{
+    (main_window::slice_bar)->setValue(val);
 }
 
 void main_window::set_infill_space_between(double val)

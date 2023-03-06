@@ -210,6 +210,19 @@
      </rect>
     </property>
    </widget>
+   <widget class="QProgressBar" name="slice_bar">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>610</y>
+      <width>231</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>24</number>
+    </property>
+   </widget>
   </widget>
  </widget>
  <customwidgets>
