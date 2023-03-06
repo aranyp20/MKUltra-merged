@@ -35,7 +35,9 @@ protected:
     template <typename T>
     T intersection(const T &v1, const T &v2) const
     {
-        return v1 + v2 - sqrt(v1 * v1 + v2 * v2);
+
+
+        return T(0.5)*(v1 + v2 + sqrt(std::max(T(0), v1 * v1 + v2 * v2- T(2)*v1*v2)));
     }
 public:
     // caller functions: the implementation usually just calls the local template function with its overload parameter types. (template functions can't be virtuals.)
@@ -60,13 +62,7 @@ class chmutov : public frep_object
         return T(8) * (pow(x, 4) + pow(y, 4) + pow(T(h), 4)) - T(8) * (pow(x, 2) + pow(y, 2) + pow(T(h), 2)) + T(3);
     }
 
-    template <typename T>
-    T intersection(const T &v1, const T &v2) const
-    {
-
-
-        return T(0.5)*(v1 + v2 + sqrt(std::max(T(0), v1 * v1 + v2 * v2- T(2)*v1*v2)));
-    }
+  
 
     template <typename T>
     T common_fn(const T &x, const T &y, double h) const
@@ -142,17 +138,18 @@ class gyroid : public frep_object
     }
 
 
+  
     template <typename T>
     T common_fn(const T &x, const T &y, double h) const
     {
-        T normal = common_fn_base(x, y, h);
-        T inverted_scaled_up = (normal - T(1)) * T(-0.1);
+        T normal_inverted = common_fn_base(x, y, h) * T(-1);
+        T scaled_up = common_fn_base(x, y, h) - T(0.8);
 
-        return intersection(normal, inverted_scaled_up);
+        return intersection(normal_inverted, scaled_up);
+
     }
-
 protected:
-    bounding_box get_prefered_box() const override { return bounding_box(vec3(0, 0, -11), 22, 22); }
+    bounding_box get_prefered_box() const override { return bounding_box(vec3(-11, -11, -11), 22, 22); }
 
 public:
     interval fn(const interval &X, const interval &Y, double h) const override
@@ -171,8 +168,8 @@ public:
 
     vec3 grad(const vec3 &p) const
     {
-        std::cout << "Out of order function!" << std::endl;
-        return vec3();
+        //std::cout << "Out of order function!" << std::endl;
+        return grad_base(p);
     }
 
     void set_prefered_settings() override
