@@ -1,6 +1,7 @@
 
 
 #include <QApplication>
+#include <muParser.h>
 
 #include "poly_2D_widget.h"
 #include "main_window.h"

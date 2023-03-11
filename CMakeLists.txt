@@ -21,7 +21,7 @@ find_package(OpenGL REQUIRED)
 
 
 
-
+find_library(MUPARSER_LIB muparser HINTS "/usr/local/lib")
 find_package(Qt5 COMPONENTS Widgets OpenGL REQUIRED)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -54,4 +54,4 @@ src/settings.cpp
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/global ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/generators ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/generators/gentools ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object/RBF ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/gui ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/widgets)
-target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL Qt5::Widgets)
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL Qt5::Widgets ${MUPARSER_LIB})
