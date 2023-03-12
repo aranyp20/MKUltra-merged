@@ -4,7 +4,6 @@
 #include <functional>
 #include <FunctionCreator.h>
 
-
 #include "settings.h"
 
 struct bounding_box
@@ -36,9 +35,9 @@ protected:
     T intersection(const T &v1, const T &v2) const
     {
 
-
-        return T(0.5)*(v1 + v2 + sqrt(std::max(T(0), v1 * v1 + v2 * v2- T(2)*v1*v2)));
+        return T(0.5) * (v1 + v2 + sqrt(std::max(T(0), v1 * v1 + v2 * v2 - T(2) * v1 * v2)));
     }
+
 public:
     // caller functions: the implementation usually just calls the local template function with its overload parameter types. (template functions can't be virtuals.)
     virtual double fn(const vec3 &) const = 0;
@@ -55,7 +54,7 @@ public:
 
 class chmutov : public frep_object
 {
-#if 1
+#if 0
     template <typename T>
     T common_fn_base(const T &x, const T &y, double h) const
     {
@@ -76,7 +75,7 @@ class chmutov : public frep_object
     }
 #endif
 
-#if 0
+#if 1
     template <typename T>
     T common_fn(const T &x, const T &y, double h) const
     {
@@ -137,8 +136,6 @@ class gyroid : public frep_object
         return cos(x) * sin(y) + cos(y) * sin(T(h)) + cos(T(h)) * sin(x);
     }
 
-
-  
     template <typename T>
     T common_fn(const T &x, const T &y, double h) const
     {
@@ -146,8 +143,8 @@ class gyroid : public frep_object
         T scaled_up = common_fn_base(x, y, h) - T(0.8);
 
         return intersection(normal_inverted, scaled_up);
-
     }
+
 protected:
     bounding_box get_prefered_box() const override { return bounding_box(vec3(-11, -11, -11), 22, 22); }
 
@@ -168,7 +165,7 @@ public:
 
     vec3 grad(const vec3 &p) const
     {
-        //std::cout << "Out of order function!" << std::endl;
+        // std::cout << "Out of order function!" << std::endl;
         return grad_base(p);
     }
 

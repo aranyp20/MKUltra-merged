@@ -69,12 +69,11 @@ sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner
     {
         sliced_object::layer_data level = slice(i / (double)level_count /*floor to one lvl below ceiling*/, inner_shell_count, inner_shell_distance);
         result.push_back(level);
-        cb((i+1)*100/level_count);
+        cb((i + 1) * 100 / level_count);
     }
-    // print(result);
     sliced_object obj(result, my_bounding_box);
 
-    // support_generator.generate_to(obj);
+    support_generator.generate_to(obj);
 
     return obj;
 }

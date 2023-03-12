@@ -6,7 +6,7 @@ polylines support_sctructure_generator::create_colors_from_wieghts(const weighte
 
     auto colored = [&](std::pair<vec3, double> d) -> vec3
     {
-        return vec3(0, std::max(1.0, std::min(0.0, 1 * d.second)), 0);
+        return vec3(0, std::min(1.0, std::max(0.0, d.second)), 0);
     };
 
     for (int i = 0; i < wp.data.size(); i++)
@@ -27,7 +27,15 @@ support_sctructure_generator::support_sctructure_generator(frep_object *_surface
 
 void support_sctructure_generator::generate_to(sliced_object &obj) const
 {
-    weighted_polylines weighted(obj.get_poly_level(5, sliced_object::layer_data::part_type::OUTER));
+    auto weighed = [&](const vec3 &p, frep_object *surf) -> double
+    {
+        return dot(vec3(0.0, 0.0, -1.0), normalize(surf->grad(p)));
+    };
 
-    obj.set_level_color(create_colors_from_wieghts(weighted), 5, sliced_object::layer_data::part_type::OUTER);
+    for (int level = 0; level < obj.get_slice_count(); level++)
+    {
+        weighted_polylines weighted(obj.get_poly_level(level, sliced_object::layer_data::part_type::OUTER), weighed, surface);
+
+        obj.set_level_color(create_colors_from_wieghts(weighted), level, sliced_object::layer_data::part_type::OUTER);
+    }
 }
