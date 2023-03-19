@@ -4,8 +4,10 @@
 #include "poly_2D_widget.h"
 #include "poly_3D_widget.h"
 #include "slicer_module.h"
+#include "chmutov.hpp"
+#include "gyroid.hpp"
 
-QProgressBar* main_window::slice_bar = nullptr;
+QProgressBar *main_window::slice_bar = nullptr;
 
 main_window::main_window(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -91,7 +93,7 @@ void main_window::slice_object()
     }
 
     slicer slicer(cutable_obj);
-    sliced_obj = new sliced_object(slicer.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance,main_window::cb_slice_progressed));
+    sliced_obj = new sliced_object(slicer.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, main_window::cb_slice_progressed));
 
     ui->widget->set_obj(sliced_obj);
 
@@ -125,7 +127,6 @@ void main_window::set_infill_number_rot(int n)
 {
     settings::infill_number_rot = n;
 }
-
 
 void main_window::cb_slice_progressed(int val)
 {

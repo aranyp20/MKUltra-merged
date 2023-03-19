@@ -6,7 +6,7 @@ polylines support_sctructure_generator::create_colors_from_wieghts(const weighte
 
     auto colored = [&](std::pair<vec3, double> d) -> vec3
     {
-        return vec3(0, std::min(1.0, std::max(0.0, d.second)), 0);
+        return vec3(1.0, 0, std::min(1.0, std::max(0.0, d.second)));
     };
 
     for (int i = 0; i < wp.data.size(); i++)

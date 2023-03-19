@@ -50,8 +50,22 @@ src/slicer/generators/infill_generator.cpp
 src/slicer/generators/gentools/plane.cpp
 src/slicer/printable_object.cpp
 src/settings.cpp
+src/slicer/object/bounding_box.cpp
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/global ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/generators ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/generators/gentools ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object/RBF ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/gui ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/widgets)
+target_include_directories(${PROJECT_NAME} PUBLIC 
+${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/global 
+${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/generators 
+${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/generators/gentools 
+${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object
+${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object/basic_objects
+${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object/RBF 
+${CMAKE_CURRENT_SOURCE_DIR}/src/slicer)
+
+target_include_directories(${PROJECT_NAME} PUBLIC 
+${CMAKE_CURRENT_SOURCE_DIR}/src/gui 
+${CMAKE_CURRENT_SOURCE_DIR}/src 
+${CMAKE_CURRENT_SOURCE_DIR}/src/gui/widgets)
+
+
 target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL Qt5::Widgets ${MUPARSER_LIB})
