@@ -75,7 +75,7 @@ sliced_object slicer::create_test_slices(unsigned int inner_shell_count, double 
 sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)> cb) const
 {
 
-    return create_test_slices(inner_shell_count, inner_shell_distance);
+    // return create_test_slices(inner_shell_count, inner_shell_distance);
 
     std::vector<sliced_object::layer_data> result;
 
