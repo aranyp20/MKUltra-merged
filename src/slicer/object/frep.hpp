@@ -6,6 +6,7 @@
 #include "interval.h"
 #include "settings.h"
 #include "bounding_box.h"
+#include "dual_num.h"
 
 inline vec3 fn_grad_changethis(const vec3 &p)
 {

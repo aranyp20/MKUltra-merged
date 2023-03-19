@@ -7,11 +7,12 @@
 #include "ui_main_window.h"
 
 #include "slicer_module.h"
+#include "dual_num.h"
 
 int main(int argc, char *argv[])
 {
 
-    QApplication a(argc, argv);
+        QApplication a(argc, argv);
 
     main_window w;
 

@@ -44,6 +44,7 @@ src/slicer/generators/gentools/interval.cpp
 src/slicer/generators/gentools/polylines.cpp
 src/slicer/generators/gentools/section_organiser.cpp
 src/slicer/global/section.cpp
+src/slicer/global/dual_num.cpp
 src/slicer/object/RBF/FunctionCreator.cpp
 src/slicer/object/RBF/NormalCreator.cpp
 src/slicer/generators/infill_generator.cpp

@@ -26,10 +26,10 @@ class chmutov : public frep_object
 #endif
 
 #if 1
-    template <typename T>
-    T common_fn(const T &x, const T &y, double h) const
+    template <typename T, typename H>
+    T common_fn(const T &x, const T &y, const H &h) const
     {
-        return T(8) * (pow(x, 4) + pow(y, 4) + pow(T(h), 4)) - T(8) * (pow(x, 2) + pow(y, 2) + pow(T(h), 2)) + T(3);
+        return T(8) * (pow(x, 4) + pow(y, 4) + T(pow(h, 4))) - T(8) * (pow(x, 2) + pow(y, 2) + T(pow(h, 2))) + T(3);
     }
 
 #endif
@@ -41,11 +41,9 @@ public:
     }
     vec3 grad(const vec3 &p) const override
     {
-        // std::cout << "Out of order function!" << std::endl;
 
-        vec3 res = fn_grad_changethis(p);
-        return res;
-    }
+        return vec3(common_fn(dnum(p.x, 1), dnum(p.y, 0), dnum(p.z, 0)).der_val, common_fn(dnum(p.x, 0), dnum(p.y, 1), dnum(p.z, 0)).der_val, common_fn(dnum(p.x, 0), dnum(p.y, 0), dnum(p.z, 1)).der_val);
+        }
     double fn(const vec3 &p) const override
     {
         return common_fn(p.x, p.y, p.z);
