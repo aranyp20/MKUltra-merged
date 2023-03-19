@@ -8,11 +8,6 @@
 #include "bounding_box.h"
 #include "dual_num.h"
 
-inline vec3 fn_grad_changethis(const vec3 &p)
-{
-    return vec3(32 * pow(p.x, 3) - 16 * p.x, 32 * pow(p.y, 3) - 16 * p.y, 32 * pow(p.z, 3) - 16 * p.z);
-}
-
 class frep_object
 {
 protected:

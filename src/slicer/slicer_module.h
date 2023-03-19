@@ -17,10 +17,12 @@ class slicer
     inner_shell_generator inner_generator;
     infill_generator inf_generator;
     support_sctructure_generator support_generator;
+
+    sliced_object create_test_slices(unsigned int inner_shell_count, double inner_shell_distance) const;
+
 public:
     slicer(frep_object *_cutable_obj);
 
     sliced_object::layer_data slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance) const;
     sliced_object create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)>) const;
-
 };

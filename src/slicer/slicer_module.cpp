@@ -1,4 +1,3 @@
-#include <fstream>
 #include "FunctionCreator.h"
 #include "slicer_module.h"
 #include "settings.h"
@@ -60,8 +59,23 @@ sliced_object::layer_data slicer::slice(double h_per_max, unsigned int inner_she
     return sliced_object::layer_data(outer, inner, infill, my_bounding_box);
 }
 
+sliced_object slicer::create_test_slices(unsigned int inner_shell_count, double inner_shell_distance) const
+{
+    std::vector<sliced_object::layer_data> result;
+
+    for (int i = 0; i < 3; i++)
+    {
+        sliced_object::layer_data level = slice(0.45 + i * 0.05, inner_shell_count, inner_shell_distance);
+        result.push_back(level);
+    }
+
+    return sliced_object(result, my_bounding_box);
+}
+
 sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)> cb) const
 {
+
+    return create_test_slices(inner_shell_count, inner_shell_distance);
 
     std::vector<sliced_object::layer_data> result;
 

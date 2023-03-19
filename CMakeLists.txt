@@ -52,6 +52,7 @@ src/slicer/generators/gentools/plane.cpp
 src/slicer/printable_object.cpp
 src/settings.cpp
 src/slicer/object/bounding_box.cpp
+src/gcode_writer.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC 

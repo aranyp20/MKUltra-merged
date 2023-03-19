@@ -53,7 +53,6 @@ private:
 
 public:
     unsigned int get_slice_count() const;
-    // const std::vector<std::vector<float>> &get_org_data() const;
 
     sliced_object(const std::vector<layer_data> &, const bounding_box &_bb);
 
@@ -64,6 +63,7 @@ public:
     const std::vector<qgl_vertex> get_colored() const;
 
     const polylines &get_poly_level(unsigned int, const layer_data::part_type &) const;
+    const polylines get_poly_level(unsigned int) const;
 
     const std::vector<qgl_vertex> get_custom_colored_level(unsigned int, const vec3 &) const;
 

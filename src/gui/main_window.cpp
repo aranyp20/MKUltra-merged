@@ -10,7 +10,7 @@
 QProgressBar *main_window::slice_bar = nullptr;
 
 main_window::main_window(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
+    : QMainWindow(parent), ui(new Ui::MainWindow), g_writer("result.txt")
 {
     ui->setupUi(this);
 
@@ -101,6 +101,8 @@ void main_window::slice_object()
 
     ui->verticalScrollBar->setMaximum(settings::level_count - 1);
     ui->verticalScrollBar->setValue(settings::level_count - 1);
+
+    g_writer.write_gcode(sliced_obj);
 }
 
 void main_window::set_level_count(int n)

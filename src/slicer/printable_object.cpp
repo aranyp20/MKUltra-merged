@@ -61,6 +61,18 @@ const polylines &sliced_object::get_poly_level(unsigned int level, const layer_d
     return data[level].parts[part].poly;
 }
 
+const polylines sliced_object::get_poly_level(unsigned int level) const
+{
+    polylines result;
+
+    for (const auto &b : data[level].parts)
+    {
+        result.add_together(b.poly);
+    }
+
+    return result;
+}
+
 const std::vector<qgl_vertex> sliced_object::get_custom_colored_level(unsigned int level, const vec3 &color) const
 {
     return data[level].colorize(data[level].combined_org, color);

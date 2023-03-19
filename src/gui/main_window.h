@@ -6,6 +6,7 @@
 
 #include "printable_object.h"
 #include "frep.hpp"
+#include "gcode_writer.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -22,15 +23,16 @@ public:
     main_window(QWidget *parent = nullptr);
     ~main_window();
 
-    static QProgressBar* slice_bar; 
+    static QProgressBar *slice_bar;
     static void cb_slice_progressed(int val);
+
 private:
     Ui::MainWindow *ui;
 
-
-
     frep_object *cutable_obj = nullptr;
     sliced_object *sliced_obj = nullptr;
+
+    gcode_writer g_writer;
 public slots:
     void slice_object();
     void load_object();
@@ -43,6 +45,5 @@ public slots:
     void set_inner_shell_distance(double v);
     void set_infill_space_between(double val);
     void set_infill_number_rot(int n);
-
 };
 #endif // MAINWINDOW_H
