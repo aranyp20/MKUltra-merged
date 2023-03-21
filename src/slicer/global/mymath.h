@@ -5,10 +5,19 @@
 #include <math.h>
 #include <iostream>
 
+#include "mymath_templ.hpp"
+
 #define _USE_MATH_DEFINES
 
 ////////////////////////////////VEC3/////////////////////////////////////////
 
+struct vec3 : public vec3_t<double>
+{
+	vec3(double _x = 0, double _y = 0, double _z = 0) : vec3_t(_x, _y, _z) {}
+	vec3(const vec3_t<double> &p) : vec3_t(p) {}
+};
+
+/*
 struct vec3
 {
 
@@ -47,6 +56,7 @@ inline vec3 cross(const vec3 &v1, const vec3 &v2)
 {
 	return vec3(v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x);
 }
+*/
 
 // inline double distance(const vec3& v1, const vec3& v2){return (v1-v2).length();}
 

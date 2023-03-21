@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 
+#include "mymath_templ.hpp"
+
 struct interval
 {
     double start;
@@ -24,8 +26,9 @@ interval sqrt(const interval &inter);
 interval sin(const interval &inter);
 interval cos(const interval &inter);
 
-namespace std {
-    interval max(const interval&,const interval&);
+namespace std
+{
+    interval max(const interval &, const interval &);
 }
 
-std::ostream& operator<< (std::ostream&,const interval&);
+std::ostream &operator<<(std::ostream &, const interval &);

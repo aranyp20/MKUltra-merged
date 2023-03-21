@@ -120,14 +120,16 @@ std::vector<qgl_vertex> poly_3D_widget::colorize_level() const
     {
         std::vector<qgl_vertex> level;
 
-        if(i==printable_level)
+        if (i == printable_level)
         {
-            level = obj->get_custom_colored_level(i,vec3(1,1,1));
-        }else{
+            level = obj->get_custom_colored_level(i, vec3(1, 1, 1));
+        }
+        else
+        {
             level = obj->get_colored_level(i);
         }
 
-        result.insert(result.end(),level.begin(),level.end());
+        result.insert(result.end(), level.begin(), level.end());
     }
 
     return result;

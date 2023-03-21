@@ -9,10 +9,15 @@
 #include "slicer_module.h"
 #include "dual_num.h"
 
+#include "cylinder.hpp"
+
 int main(int argc, char *argv[])
 {
 
-        QApplication a(argc, argv);
+    cylinder cyl;
+    std::cout << cyl.fn(interval(1), interval(2), 3) << std::endl;
+
+    QApplication a(argc, argv);
 
     main_window w;
 
