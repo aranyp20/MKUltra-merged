@@ -16,5 +16,6 @@ struct dnum
 };
 
 dnum pow(const dnum &d, double n);
+dnum sqrt(const dnum &d);
 
 std::ostream &operator<<(std::ostream &os, const dnum &d);

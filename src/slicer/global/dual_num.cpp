@@ -30,6 +30,11 @@ dnum pow(const dnum &d, double n)
     return dnum(pow(d.val, n), n * pow(d.val, n - 1) * d.der_val);
 }
 
+dnum sqrt(const dnum &d)
+{
+    return pow(d, 0.5);
+}
+
 std::ostream &operator<<(std::ostream &os, const dnum &d)
 {
     os << "Value: " << d.val << " Derivate: " << d.der_val;

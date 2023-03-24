@@ -6,6 +6,7 @@
 #include "slicer_module.h"
 #include "chmutov.hpp"
 #include "gyroid.hpp"
+#include "sphere.hpp"
 
 QProgressBar *main_window::slice_bar = nullptr;
 
@@ -34,6 +35,8 @@ main_window::main_window(QWidget *parent)
     ui->slice_bar->setValue(0);
     ui->surface_selector_box->addItem("Chmutov", QVariant(surface_type::CHMUTOV));
     ui->surface_selector_box->addItem("Gyroid", QVariant(surface_type::GYROID));
+    ui->surface_selector_box->addItem("Sphere", QVariant(surface_type::SPHERE));
+
     QObject::connect(ui->surface_selector_box, qOverload<int>(&QComboBox::currentIndexChanged), this, &main_window::set_surface_type);
 
     set_values_from_settings();
@@ -73,6 +76,8 @@ void main_window::load_object()
     case surface_type::GYROID:
         cutable_obj = new gyroid();
         break;
+    case surface_type::SPHERE:
+        cutable_obj = new sphere();
     default:
         break;
     }

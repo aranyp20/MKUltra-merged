@@ -4,7 +4,8 @@
 enum surface_type
 {
     CHMUTOV = 0,
-    GYROID = 1
+    GYROID = 1,
+    SPHERE = 2
 
 };
 
@@ -27,7 +28,7 @@ BUGS:
 
 TODO:
 nem-e problemas alakitgatni vec3 es vec3_t kozott
-RBF-nel intervalok kozotti distance nem jo
+intervalok kozotti distance nem jo
 
 infillnel bisection method
 infillnel a generatorsectionok egy atlobol csinalodjanak
