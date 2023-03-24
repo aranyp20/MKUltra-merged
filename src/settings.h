@@ -26,10 +26,12 @@ public:
 /*
 BUGS:
 
+intersectnel pont kozepen ket kornel nem lesz jo a gradiens
 
 TODO:
 nem-e problemas alakitgatni vec3 es vec3_t kozott
 intervalok kozotti distance nem jo
+common_fn problema
 
 infillnel bisection method
 infillnel a generatorsectionok egy atlobol csinalodjanak

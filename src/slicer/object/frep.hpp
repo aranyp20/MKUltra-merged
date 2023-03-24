@@ -12,9 +12,33 @@ class frep_object
 {
 protected:
     template <typename T>
+    T invert(const T &v1) const
+    {
+        return T(-1) * v1;
+    }
+
+    template <typename T>
     T intersection(const T &v1, const T &v2) const
     {
         return T(0.5) * (v1 + v2 + sqrt(std::max(T(0), v1 * v1 + v2 * v2 - T(2) * v1 * v2)));
+    }
+
+    template <typename T>
+    T onion(const T &v1, const T &v2) const
+    {
+        return T(0.5) * (v1 + v2 - sqrt(std::max(T(0), v1 * v1 + v2 * v2 - T(2) * v1 * v2)));
+    }
+
+    template <typename T>
+    T scale(const T &v1, double val) const
+    {
+        return v1 - T(val);
+    }
+
+    template <typename T>
+    T substract(const T &v1, const T &v2) const
+    {
+        return intersection(v1, invert(intersection(v1, v2)));
     }
 
 public:

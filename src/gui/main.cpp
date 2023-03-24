@@ -15,10 +15,7 @@
 int main(int argc, char *argv[])
 {
 
-    sphere sp;
-    std::cout << sp.fn(interval(1, 2), interval(3, 4), 1) << std::endl;
-
-    QApplication a(argc, argv);
+     QApplication a(argc, argv);
 
     main_window w;
 

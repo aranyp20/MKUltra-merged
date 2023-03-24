@@ -40,3 +40,9 @@ std::ostream &operator<<(std::ostream &os, const dnum &d)
     os << "Value: " << d.val << " Derivate: " << d.der_val;
     return os;
 }
+
+dnum std::max(const dnum &d1, const dnum &d2)
+{
+    return d2;
+    return d1.der_val > d2.der_val ? d1 : d2;
+}
