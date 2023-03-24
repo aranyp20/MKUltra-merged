@@ -5,7 +5,8 @@ enum surface_type
 {
     CHMUTOV = 0,
     GYROID = 1,
-    SPHERE = 2
+    SPHERE = 2,
+    CYLINDER = 3
 
 };
 

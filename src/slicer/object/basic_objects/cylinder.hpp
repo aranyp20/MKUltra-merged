@@ -6,14 +6,16 @@ class cylinder : public frep_object
 {
     vec3 dir = vec3(0, 0, 1);
     vec3 fix_point = vec3();
-    double radius = 0.2;
+    double radius = 0.8;
 
     template <typename T, typename H, typename ARRAY = vec3_t<T>>
     T common_fn(const T &x, const T &y, const H &h) const
     {
         ARRAY p(x, y, T(h));
         ARRAY q(T(fix_point.x), T(fix_point.y), T(fix_point.z));
-        return p.y;
+        ARRAY d(T(dir.x), T(dir.y), T(dir.z));
+
+        return (q - p - d * (dot((q - p), d))).length() - T(radius);
     }
 
 public:

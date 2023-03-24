@@ -7,6 +7,7 @@
 #include "chmutov.hpp"
 #include "gyroid.hpp"
 #include "sphere.hpp"
+#include "cylinder.hpp"
 
 QProgressBar *main_window::slice_bar = nullptr;
 
@@ -36,6 +37,7 @@ main_window::main_window(QWidget *parent)
     ui->surface_selector_box->addItem("Chmutov", QVariant(surface_type::CHMUTOV));
     ui->surface_selector_box->addItem("Gyroid", QVariant(surface_type::GYROID));
     ui->surface_selector_box->addItem("Sphere", QVariant(surface_type::SPHERE));
+    ui->surface_selector_box->addItem("Cylinder", QVariant(surface_type::CYLINDER));
 
     QObject::connect(ui->surface_selector_box, qOverload<int>(&QComboBox::currentIndexChanged), this, &main_window::set_surface_type);
 
@@ -78,6 +80,10 @@ void main_window::load_object()
         break;
     case surface_type::SPHERE:
         cutable_obj = new sphere();
+        break;
+    case surface_type::CYLINDER:
+        cutable_obj = new cylinder();
+        break;
     default:
         break;
     }
