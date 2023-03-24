@@ -8,7 +8,7 @@ class sphere : public frep_object
     ////////////////
     vec3 dir = vec3(0, 0, 1);
     vec3 fix_point = vec3(0, 0.2, 0);
-    double radius_cyl = 0.5;
+    double radius_cyl = 0.2;
 
     template <typename T, typename H, typename ARRAY = vec3_t<T>>
     T cylinder(const T &x, const T &y, const H &h) const
@@ -31,7 +31,7 @@ class sphere : public frep_object
         ARRAY q(T(center.x), T(center.y), T(center.z));
         T s1 = (p - q).length() - T(radius);
 
-        return onion(s1, substract(cylinder(x, y, h), scale(s1, 0.15)));
+        return onion(s1, substract(blend(s1, 0.5, cylinder(x, y, h), 1.21), scale(s1, 0.15)));
     }
 
 public:

@@ -27,6 +27,7 @@ public:
 BUGS:
 
 intersectnel pont kozepen ket kornel nem lesz jo a gradiens
+blendelesnel az hogy 0 vagy a szam a kiertekelt dnumtol fugg. a masik std::max(0,)-snal pedig csak az intervallumos meghivasra kene
 
 TODO:
 nem-e problemas alakitgatni vec3 es vec3_t kozott

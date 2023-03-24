@@ -41,6 +41,12 @@ protected:
         return intersection(v1, invert(intersection(v1, v2)));
     }
 
+    template <typename T>
+    T blend(const T &v1, double r1, const T &v2, double r2) const
+    {
+        return T(1) - std::max(T(0), T(1) - (v1 / T(r1))) - std::max(T(0), T(1) - (v2 / T(r2)));
+    }
+
 public:
     // caller functions: the implementation usually just calls the local template function with its overload parameter types. (template functions can't be virtuals.)
     virtual double fn(const vec3 &) const = 0;
