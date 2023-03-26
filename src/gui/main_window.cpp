@@ -44,6 +44,7 @@ main_window::main_window(QWidget *parent)
     set_values_from_settings();
 
     this->setStyleSheet("QMainWindow { background-color: grey; }");
+    ui->verticalScrollBar->setStyleSheet("QScrollBar:vertical { background-color: red; }");
 }
 
 main_window::~main_window()
@@ -104,7 +105,8 @@ void main_window::slice_object()
     }
 
     slicer slicer(cutable_obj);
-    sliced_obj = new sliced_object(slicer.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, main_window::cb_slice_progressed));
+    sliced_obj = new sliced_object(slicer.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, [this](int v)
+                                                        { this->cb_slice_progressed(v); }));
 
     ui->widget->set_obj(sliced_obj);
 

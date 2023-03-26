@@ -18,7 +18,7 @@ struct vec3_t
     vec3_t operator-(const vec3_t &v) const { return vec3_t(x - v.x, y - v.y, z - v.z); }
     vec3_t operator*(const vec3_t &v) const { return vec3_t(x * v.x, y * v.y, z * v.z); }
 
-    inline T length() const { return sqrt(x * x + y * y + z * z); }
+    virtual inline T length() const { return sqrt(x * x + y * y + z * z); }
 
     inline void normalize()
     {

@@ -32,3 +32,14 @@ namespace std
 }
 
 std::ostream &operator<<(std::ostream &, const interval &);
+
+/*
+struct vec3_interval : public vec3_t<interval>
+{
+    vec3_interval(const vec3_t<interval> &p) : vec3_t(p) {}
+
+    template <typename T>
+    inline vec3_t<T> length() const override { return sqrt(x * x + y * y + z * z); }
+
+};
+*/

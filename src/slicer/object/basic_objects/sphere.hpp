@@ -31,7 +31,7 @@ class sphere : public frep_object
         ARRAY q(T(center.x), T(center.y), T(center.z));
         T s1 = (p - q).length() - T(radius);
 
-        return onion(s1, substract(blend(s1, 0.5, cylinder(x, y, h), 1.21), scale(s1, 0.15)));
+        return onion(s1, substract(blend(s1, 0.8, cylinder(x, y, h), 0.71), scale(s1, 0.15)));
     }
 
 public:

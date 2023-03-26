@@ -24,7 +24,7 @@ public:
     ~main_window();
 
     static QProgressBar *slice_bar;
-    static void cb_slice_progressed(int val);
+    void cb_slice_progressed(int val);
 
 private:
     Ui::MainWindow *ui;
