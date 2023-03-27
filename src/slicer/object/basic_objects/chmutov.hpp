@@ -39,11 +39,12 @@ public:
     {
         return common_fn(X, Y, h);
     }
-    vec3 grad(const vec3 &p) const override
+    
+    dnum fn(const dnum &X, const dnum& Y, const dnum& h) const override
     {
-
-        return vec3(common_fn(dnum(p.x, 1), dnum(p.y, 0), dnum(p.z, 0)).der_val, common_fn(dnum(p.x, 0), dnum(p.y, 1), dnum(p.z, 0)).der_val, common_fn(dnum(p.x, 0), dnum(p.y, 0), dnum(p.z, 1)).der_val);
+        return common_fn(X,Y,h);
     }
+
 
     double fn(const vec3 &p) const override
     {

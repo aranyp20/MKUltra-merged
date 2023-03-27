@@ -51,9 +51,16 @@ public:
     // caller functions: the implementation usually just calls the local template function with its overload parameter types. (template functions can't be virtuals.)
     virtual double fn(const vec3 &) const = 0;
     virtual interval fn(const interval &X, const interval &Y, double h) const = 0;
-    virtual vec3 grad(const vec3 &) const = 0;
+    virtual dnum fn(const dnum &X, const dnum& Y, const dnum& h) const =0;
+
     virtual void set_prefered_settings() {}
     virtual bounding_box get_prefered_box() const { return bounding_box(vec3(-1.1, -1.1, -1.1), 2.2, 2.2); }
+
+    vec3 grad(const vec3 &p) const
+    {
+        return vec3(fn(dnum(p.x, 1), dnum(p.y, 0), dnum(p.z, 0)).der_val, fn(dnum(p.x, 0), dnum(p.y, 1), dnum(p.z, 0)).der_val, fn(dnum(p.x, 0), dnum(p.y, 0), dnum(p.z, 1)).der_val);
+    }
+
 
     bool inside(const vec3 &p) const
     {
