@@ -31,7 +31,6 @@ blendelesnel az hogy 0 vagy a szam a kiertekelt dnumtol fugg. a masik std::max(0
 
 TODO:
 nem-e problemas alakitgatni vec3 es vec3_t kozott
-intervalok kozotti distance nem jo
 common_fn problema
 
 infillnel bisection method

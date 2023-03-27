@@ -4,6 +4,7 @@
 
 #include <cmath>
 
+
 template <typename T>
 struct vec3_t
 {
@@ -29,6 +30,7 @@ struct vec3_t
         z = newVec.z;
     }
 };
+
 
 template <typename T>
 inline std::ostream &operator<<(std::ostream &os, const vec3_t<T> &v)

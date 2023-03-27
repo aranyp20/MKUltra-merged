@@ -5,6 +5,9 @@
 #include <cmath>
 #include <mymath.h>
 
+#include "mymath_templ.hpp"
+
+
 interval::interval(double _start, double _end) : start(std::min(_start, _end)), end(std::max(_start, _end))
 {
 }
@@ -102,3 +105,9 @@ std::ostream &operator<<(std::ostream &os, const interval &i)
     os << "[" << i.start << ", " << i.end << "]";
     return os;
 }
+
+template<>
+interval vec3_t<interval>::length() const
+{
+    return sqrt(std::max(interval(0), dot(*this,*this)));
+};
