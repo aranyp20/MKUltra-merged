@@ -8,6 +8,8 @@
 #include "gyroid.hpp"
 #include "sphere.hpp"
 #include "cylinder.hpp"
+#include "periodic_columns.hpp"
+#include "support.hpp"
 
 QProgressBar *main_window::slice_bar = nullptr;
 
@@ -83,7 +85,7 @@ void main_window::load_object()
         cutable_obj = new sphere();
         break;
     case surface_type::CYLINDER:
-        cutable_obj = new cylinder();
+        cutable_obj = new support();
         break;
     default:
         break;

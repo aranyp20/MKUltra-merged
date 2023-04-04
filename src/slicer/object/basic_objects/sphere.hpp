@@ -1,10 +1,13 @@
 #pragma once
 
 #include "frep.hpp"
+#include "frep_scale.hpp"
 #include "cylinder.hpp"
 
 class sphere : public frep_object
 {
+
+#if 0
     ////////////////
     vec3 dir = vec3(0, 0, 1);
     vec3 fix_point = vec3(0, 0.2, 0);
@@ -21,6 +24,20 @@ class sphere : public frep_object
     }
     //////////////
 
+
+    template <typename T, typename H, typename ARRAY = vec3_t<T>>
+    T common_fn(const T &x, const T &y, const H &h) const
+    {
+        ARRAY p(x, y, T(h));
+        ARRAY q(T(center.x), T(center.y), T(center.z));
+        T s1 = (p - q).length() - T(radius);
+
+
+        return onion(s1, substract(blend(s1, 0.8, cylinder(x, y, h), 0.71), scale(s1, 0.15)));
+    }
+
+#endif
+
     vec3 center = vec3(0, 0, 1.2);
     double radius = 1.0;
 
@@ -31,7 +48,7 @@ class sphere : public frep_object
         ARRAY q(T(center.x), T(center.y), T(center.z));
         T s1 = (p - q).length() - T(radius);
 
-        return onion(s1, substract(blend(s1, 0.8, cylinder(x, y, h), 0.71), scale(s1, 0.15)));
+        return s1;
     }
 
 public:
@@ -43,11 +60,8 @@ public:
     {
         return common_fn<double, double, vec3>(p.x, p.y, p.z);
     }
-    dnum fn(const dnum &X, const dnum& Y, const dnum& h) const override
+    dnum fn(const dnum &X, const dnum &Y, const dnum &h) const override
     {
-        return common_fn(X,Y,h);
+        return common_fn(X, Y, h);
     }
-
-   
 };
-

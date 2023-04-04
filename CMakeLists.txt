@@ -60,7 +60,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/generators
 ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/generators/gentools 
 ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object
 ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object/basic_objects
-${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object/RBF 
+${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object/RBF
+${CMAKE_CURRENT_SOURCE_DIR}/src/slicer/object/operations
 ${CMAKE_CURRENT_SOURCE_DIR}/src/slicer)
 
 target_include_directories(${PROJECT_NAME} PUBLIC 

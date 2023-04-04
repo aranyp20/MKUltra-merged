@@ -5,8 +5,8 @@
 class cylinder : public frep_object
 {
     vec3 dir = vec3(0, 0, 1);
-    vec3 fix_point = vec3();
-    double radius = 0.8;
+    vec3 fix_point = vec3(0, 0.25, 0);
+    double radius = 0.2;
 
     template <typename T, typename H, typename ARRAY = vec3_t<T>>
     T common_fn(const T &x, const T &y, const H &h) const
@@ -27,8 +27,8 @@ public:
     {
         return common_fn<double, double, vec3>(p.x, p.y, p.z);
     }
-    dnum fn(const dnum &X, const dnum& Y, const dnum& h) const override
+    dnum fn(const dnum &X, const dnum &Y, const dnum &h) const override
     {
-        return common_fn(X,Y,h);
+        return common_fn(X, Y, h);
     }
 };
