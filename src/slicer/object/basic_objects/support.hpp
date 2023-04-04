@@ -5,6 +5,8 @@
 #include "frep_substract.hpp"
 #include "frep_onion.hpp"
 
+#include "periodic_columns.hpp"
+
 class support : public frep_object
 {
 
@@ -19,10 +21,18 @@ class support : public frep_object
 
     frep_onion m_onion;
 
+    frep_substract m_c_substract;
+
+    frep_intersect m_c_holder;
+
+    periodic_columns m_c_pattern;
+
+    frep_intersect m_c_ready;
+
     frep_onion ready;
 
 public:
-    support() : m_sphere_scaled(m_sphere, 0.15), m_sphere_m_cylinder_blended(m_sphere, 0.8, m_cylinder, 0.71), m_substract(m_sphere_m_cylinder_blended, m_sphere_scaled), m_onion(m_sphere, m_substract), ready(m_onion) {}
+    support() : m_sphere_scaled(m_sphere, 0.15), m_sphere_m_cylinder_blended(m_sphere, 0.8, m_cylinder, 0.71), m_substract(m_sphere_m_cylinder_blended, m_sphere_scaled), m_onion(m_sphere, m_substract), m_c_substract(m_sphere_m_cylinder_blended, m_sphere), m_c_holder(m_c_substract, m_sphere_scaled), m_c_ready(m_c_holder, m_c_pattern), ready(m_c_ready, m_onion) {}
 
     interval fn(const interval &X, const interval &Y, double h) const override
     {
