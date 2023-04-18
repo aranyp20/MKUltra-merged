@@ -56,7 +56,7 @@ void poly_3D_widget::resizeGL(int w, int h)
 void poly_3D_widget::paintGL()
 {
 
-    if (obj == nullptr)
+    if (*obj == nullptr)
         return;
 
     QMatrix4x4 q_v;
@@ -94,7 +94,7 @@ void poly_3D_widget::paintGL()
     glDrawArrays(GL_LINES, 0, pp.size());
 }
 
-void poly_3D_widget::set_obj(sliced_object *_obj)
+void poly_3D_widget::set_obj(sliced_object **_obj)
 {
     // TODO: delete previus vaos, vbos
     obj = _obj;
@@ -104,10 +104,10 @@ void poly_3D_widget::set_obj(sliced_object *_obj)
 
 void poly_3D_widget::slot_layer_changed(int l)
 {
-    if (obj == nullptr)
+    if ((*obj) == nullptr)
         return;
 
-    printable_level = obj->get_slice_count() - l - 1;
+    printable_level = (*obj)->get_slice_count() - l - 1;
     update();
 }
 
@@ -116,17 +116,17 @@ std::vector<qgl_vertex> poly_3D_widget::colorize_level() const
     std::vector<qgl_vertex> result;
 
     std::array<float, 3> color;
-    for (unsigned int i = 0; i < obj->get_slice_count(); i++)
+    for (unsigned int i = 0; i < (*obj)->get_slice_count(); i++)
     {
         std::vector<qgl_vertex> level;
 
         if (i == printable_level)
         {
-            level = obj->get_custom_colored_level(i, vec3(1, 1, 1));
+            level = (*obj)->get_custom_colored_level(i, vec3(1, 1, 1));
         }
         else
         {
-            level = obj->get_colored_level(i);
+            level = (*obj)->get_colored_level(i);
         }
 
         result.insert(result.end(), level.begin(), level.end());

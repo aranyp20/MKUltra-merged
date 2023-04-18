@@ -43,6 +43,8 @@ public:
         std::vector<float> transfer(const polylines &_data, const bounding_box &_bb = bounding_box(vec3(-1, -1, -1), 2, 2)) const;
         std::vector<qgl_vertex> colorize(const std::vector<float> &, const vec3 &_color) const;
         std::vector<qgl_vertex> colorize(const std::vector<float> &positions, const std::vector<float> &colors) const;
+
+        void eat(const layer_data &);
     };
 
 private:
@@ -51,11 +53,16 @@ private:
     bounding_box m_bounding_box;
     unsigned int slice_count;
 
+    void eat(const sliced_object &);
+
 public:
     unsigned int get_slice_count() const;
 
+    sliced_object() = default;
     sliced_object(const std::vector<layer_data> &, const bounding_box &_bb);
+    sliced_object(const sliced_object &base, const sliced_object &addable);
 
+    const layer_data &get_level(unsigned int) const;
     const std::vector<float> &get_org_level(unsigned int) const;
     const std::vector<float> &get_org_level(unsigned int, const layer_data::part_type &) const;
     const std::vector<qgl_vertex> &get_colored_level(unsigned int) const;

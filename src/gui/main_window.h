@@ -7,6 +7,7 @@
 #include "printable_object.h"
 #include "frep.hpp"
 #include "gcode_writer.h"
+#include "support.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -30,12 +31,21 @@ private:
     Ui::MainWindow *ui;
 
     frep_object *cutable_obj = nullptr;
+    support *support_obj = nullptr;
+
     sliced_object *sliced_obj = nullptr;
+    sliced_object *sliced_support = nullptr;
+    sliced_object *whole_obj = nullptr;
+    sliced_object *printable = nullptr;
 
     gcode_writer g_writer;
+
+    void update_sliced_views();
 public slots:
     void slice_object();
     void load_object();
+    void generate_support();
+    void show_support(int should);
 
     void set_values_from_settings();
 

@@ -8,6 +8,7 @@ struct bounding_box
     std::pair<vec3, double> floor;
     double height;
 
+    bounding_box() = default;
     bounding_box(const vec3 &_corner, double _width, double _height);
 
     vec3 get_center() const;

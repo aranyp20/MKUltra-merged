@@ -19,14 +19,14 @@ class poly_2D_widget : public QOpenGLWidget
     QOpenGLVertexArrayObject vao;
     QOpenGLShaderProgram *sp;
 
-    sliced_object *obj = nullptr;
+    sliced_object **obj = nullptr;
 
     unsigned int printable_level = 0;
 
 public:
     poly_2D_widget(QWidget *parent);
 
-    void set_obj(sliced_object *);
+    void set_obj(sliced_object **);
 
     ~poly_2D_widget();
 

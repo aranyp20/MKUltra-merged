@@ -34,7 +34,7 @@ class poly_3D_widget : public QOpenGLWidget
     QOpenGLVertexArrayObject vao;
     QOpenGLShaderProgram *sp;
 
-    sliced_object *obj = nullptr;
+    sliced_object **obj = nullptr;
 
     unsigned int printable_level = 0;
 
@@ -49,7 +49,7 @@ class poly_3D_widget : public QOpenGLWidget
 public:
     poly_3D_widget(QWidget *parent);
 
-    void set_obj(sliced_object *);
+    void set_obj(sliced_object **);
 
     ~poly_3D_widget();
 

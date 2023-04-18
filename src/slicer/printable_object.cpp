@@ -17,6 +17,11 @@ sliced_object::sliced_object(const std::vector<layer_data> &_data, const boundin
     slice_count = data.size();
 }
 
+sliced_object::sliced_object(const sliced_object &base, const sliced_object &addable) : sliced_object(base)
+{
+    eat(addable);
+}
+
 void sliced_object::layer_data::normalize_for_gl(vec3 &p, const bounding_box &box) const
 {
     vec3 changed(p);
@@ -28,6 +33,11 @@ void sliced_object::layer_data::normalize_for_gl(vec3 &p, const bounding_box &bo
     changed = (changed * 2) / divider;
 
     p = changed;
+}
+
+const sliced_object::layer_data &sliced_object::get_level(unsigned int i) const
+{
+    return data[i];
 }
 
 const std::vector<float> &sliced_object::get_org_level(unsigned int level) const
@@ -188,4 +198,30 @@ std::vector<qgl_vertex> sliced_object::layer_data::colorize(const std::vector<fl
     }
 
     return result;
+}
+
+void sliced_object::eat(const sliced_object &other)
+{
+    if (other.get_slice_count() != get_slice_count())
+    {
+        std::cout << "Two different slice_count." << std::endl;
+        return;
+    }
+
+    for (unsigned int i = 0; i < get_slice_count(); i++)
+    {
+        data[i].eat(other.get_level(i));
+    }
+}
+
+void sliced_object::layer_data::eat(const layer_data &other)
+{
+    for (unsigned int i = 0; i < parts.size(); i++)
+    {
+        parts[i].poly.add_together(other.parts[i].poly);
+        parts[i].org.insert(parts[i].org.end(), other.parts[i].org.begin(), other.parts[i].org.end());
+        parts[i].colored.insert(parts[i].colored.end(), other.parts[i].colored.begin(), other.parts[i].colored.end());
+    }
+    combine_orgs();
+    combine_coloreds();
 }

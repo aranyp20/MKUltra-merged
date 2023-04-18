@@ -10,7 +10,6 @@
 class support : public frep_object
 {
 
-    sphere m_sphere;
     cylinder m_cylinder;
 
     frep_scale m_sphere_scaled;
@@ -18,8 +17,6 @@ class support : public frep_object
     frep_blend m_sphere_m_cylinder_blended;
 
     frep_substract m_substract;
-
-    frep_onion m_onion;
 
     frep_substract m_c_substract;
 
@@ -32,7 +29,7 @@ class support : public frep_object
     frep_onion ready;
 
 public:
-    support() : m_sphere_scaled(m_sphere, 0.15), m_sphere_m_cylinder_blended(m_sphere, 0.8, m_cylinder, 0.71), m_substract(m_sphere_m_cylinder_blended, m_sphere_scaled), m_onion(m_sphere, m_substract), m_c_substract(m_sphere_m_cylinder_blended, m_sphere), m_c_holder(m_c_substract, m_sphere_scaled), m_c_ready(m_c_holder, m_c_pattern), ready(m_c_ready, m_onion) {}
+    support(const frep_object &to) : m_sphere_scaled(to, 0.15), m_sphere_m_cylinder_blended(to, 0.8, m_cylinder, 0.71), m_substract(m_sphere_m_cylinder_blended, m_sphere_scaled), m_c_substract(m_sphere_m_cylinder_blended, to), m_c_holder(m_c_substract, m_sphere_scaled), m_c_ready(m_c_holder, m_c_pattern), ready(m_c_ready, m_substract) {}
 
     interval fn(const interval &X, const interval &Y, double h) const override
     {
