@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <memory>
 #include <QMainWindow>
 #include <QProgressBar>
 
@@ -30,8 +31,8 @@ public:
 private:
     Ui::MainWindow *ui;
 
-    frep_object *cutable_obj = nullptr;
-    support *support_obj = nullptr;
+    std::shared_ptr<frep_object> cutable_obj;
+    std::shared_ptr<support> support_obj;
 
     sliced_object *sliced_obj = nullptr;
     sliced_object *sliced_support = nullptr;

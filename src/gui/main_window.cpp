@@ -79,26 +79,21 @@ void main_window::update_sliced_views()
 // sliceolas nelkuli nezegetonel lesz ertelme
 void main_window::load_object()
 {
-    if (cutable_obj != nullptr)
-    {
-        delete cutable_obj;
-        cutable_obj = nullptr;
-    }
 
     switch (settings::s_type)
     {
     case surface_type::CHMUTOV:
-        cutable_obj = new chmutov();
+        cutable_obj = std::make_shared<chmutov>();
         break;
 
     case surface_type::GYROID:
-        cutable_obj = new gyroid();
+        cutable_obj = std::make_shared<gyroid>();
         break;
     case surface_type::SPHERE:
-        cutable_obj = new sphere();
+        cutable_obj = std::make_shared<sphere>();
         break;
     case surface_type::CYLINDER:
-        cutable_obj = new cylinder();
+        cutable_obj = std::make_shared<cylinder>();
         break;
     default:
         break;
@@ -110,7 +105,7 @@ void main_window::load_object()
 
 void main_window::slice_object()
 {
-    if (cutable_obj == nullptr)
+    if (cutable_obj.get() == nullptr)
         return;
 
     if (sliced_obj != nullptr)
@@ -135,7 +130,7 @@ void main_window::slice_object()
 
 void main_window::generate_support()
 {
-    if (cutable_obj == nullptr)
+    if (cutable_obj.get() == nullptr)
         return;
     if (sliced_obj == nullptr)
     {
@@ -146,13 +141,9 @@ void main_window::generate_support()
         delete sliced_support;
         sliced_support = nullptr;
     }
-    if (support_obj != nullptr)
-    {
-        delete support_obj;
-        support_obj = nullptr;
-    }
+   
 
-    support_obj = new support(*cutable_obj);
+    support_obj = std::make_shared<support>(*(cutable_obj.get()));
     slicer slicer(support_obj);
     sliced_support = new sliced_object(slicer.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, [this](int v)
                                                             { this->cb_slice_progressed(v); }));

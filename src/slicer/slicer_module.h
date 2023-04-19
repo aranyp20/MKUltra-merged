@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <memory>
 
 #include "outer_shell_generator.h"
 #include "inner_shell_generator.h"
@@ -10,7 +11,7 @@
 
 class slicer
 {
-    frep_object *cutable_obj;
+    std::shared_ptr<frep_object> cutable_obj;
     bounding_box my_bounding_box;
 
     outer_shell_generator outer_generator;
@@ -21,7 +22,7 @@ class slicer
     sliced_object create_test_slices(unsigned int inner_shell_count, double inner_shell_distance) const;
 
 public:
-    slicer(frep_object *_cutable_obj);
+    slicer(std::shared_ptr<frep_object> _cutable_obj);
 
     sliced_object::layer_data slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance) const;
     sliced_object create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)>) const;

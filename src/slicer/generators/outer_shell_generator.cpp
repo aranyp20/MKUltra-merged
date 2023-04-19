@@ -68,7 +68,7 @@ vec2 outer_shell_generator::square::get_vert(unsigned int vert_index) const
     }
 }
 
-outer_shell_generator::outer_shell_generator(frep_object *_surface) : surface(_surface)
+outer_shell_generator::outer_shell_generator(std::shared_ptr<frep_object> _surface) : surface(_surface)
 {
 }
 

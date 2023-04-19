@@ -13,7 +13,7 @@ void polylines::eat(const std::vector<vec3> &what)
     data.push_back(what);
 }
 
-weighted_polylines::weighted_polylines(const polylines &p, std::function<double(const vec3 &, frep_object *)> weigher_function, frep_object *surf)
+weighted_polylines::weighted_polylines(const polylines &p, std::function<double(const vec3 &, std::shared_ptr<frep_object>)> weigher_function, std::shared_ptr<frep_object> surf)
 {
     for (int i = 0; i < p.data.size(); i++)
     {

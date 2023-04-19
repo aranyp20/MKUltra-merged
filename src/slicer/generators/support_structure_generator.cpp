@@ -21,13 +21,13 @@ polylines support_sctructure_generator::create_colors_from_wieghts(const weighte
     return result;
 }
 
-support_sctructure_generator::support_sctructure_generator(frep_object *_surface) : surface(_surface)
+support_sctructure_generator::support_sctructure_generator(std::shared_ptr<frep_object> _surface) : surface(_surface)
 {
 }
 
 void support_sctructure_generator::generate_to(sliced_object &obj) const
 {
-    auto weighed = [&](const vec3 &p, frep_object *surf) -> double
+    auto weighed = [&](const vec3 &p, std::shared_ptr<frep_object> surf) -> double
     {
         return dot(vec3(0.0, 0.0, -1.0), normalize(surf->grad(p)));
     };

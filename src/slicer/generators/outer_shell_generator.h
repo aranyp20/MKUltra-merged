@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "section_organiser.h"
 #include "frep.hpp"
 #include "section.h"
@@ -7,7 +8,7 @@
 
 class outer_shell_generator
 {
-    frep_object *surface;
+    std::shared_ptr<frep_object> surface;
 
     struct square
     {
@@ -60,7 +61,7 @@ class outer_shell_generator
     section_organiser organiser;
 
 public:
-    outer_shell_generator(frep_object *);
+    outer_shell_generator(std::shared_ptr<frep_object>);
 
     polylines generate(const plane &, double h, unsigned int resolution) const;
 };

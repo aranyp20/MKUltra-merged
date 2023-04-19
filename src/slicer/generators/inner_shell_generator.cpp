@@ -1,6 +1,6 @@
 #include <inner_shell_generator.h>
 
-inner_shell_generator::inner_shell_generator(frep_object *_surface) : surface(_surface) {}
+inner_shell_generator::inner_shell_generator(std::shared_ptr<frep_object> _surface) : surface(_surface) {}
 
 polylines inner_shell_generator::generate_one(polylines &contour, double w) const
 {

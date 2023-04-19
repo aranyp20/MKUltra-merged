@@ -2,11 +2,13 @@
 
 #include <frep.hpp>
 #include <basics.hpp>
+#include <memory>
 #include "plane.h"
 
 class infill_generator
 {
-    frep_object *surface;
+    std::shared_ptr<frep_object> surface;
+
 
     struct marked_point : public vec3
     {
@@ -25,7 +27,7 @@ class infill_generator
     polylines generate_one(const plane &plane, double h, double angle, double space_between, double wall_thickness) const;
 
 public:
-    infill_generator(frep_object *);
+    infill_generator(std::shared_ptr<frep_object>);
 
     polylines generate(const plane &, double h, double angle_between, double space_between, double wall_thickness) const;
 };

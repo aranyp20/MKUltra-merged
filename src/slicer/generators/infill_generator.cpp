@@ -1,6 +1,6 @@
 #include "infill_generator.h"
 
-infill_generator::infill_generator(frep_object *_surface) : surface(_surface)
+infill_generator::infill_generator(std::shared_ptr<frep_object> _surface) : surface(_surface)
 {
 }
 
