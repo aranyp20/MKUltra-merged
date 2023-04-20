@@ -38,7 +38,6 @@ public:
 
     double qfn(const DualContouring::Point3D &p) const
     {
-        std::cout << fn(vec3(p.data[0], p.data[1], p.data[2])) << std::endl;
         return fn(vec3(p.data[0], p.data[1], p.data[2]));
     }
 };

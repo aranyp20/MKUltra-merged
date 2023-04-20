@@ -86,9 +86,7 @@ void main_window::load_object()
     sphere tsp;
     std::shared_ptr<DualContouring::QuadMesh> qm = std::make_shared<DualContouring::QuadMesh>(DualContouring::isosurface([&tsp](const DualContouring::Point3D &p)
                                                                                                                          { return tsp.qfn(p); },
-                                                                                                                         0.0, std::array<DualContouring::Point3D, 2>{-1.1, 1.1}, std::array<size_t, 3>{100, 100, 100}));
-
-    qm->writeOBJ("sppp.obj");
+                                                                                                                         0.0, std::array<DualContouring::Point3D, 2>{{{-1.1, -1.1, -1.1}, {1.1, 1.1, 1.1}}}, std::array<size_t, 3>{100, 100, 100}));
 
     ui->widget_3->set_obj(qm);
 

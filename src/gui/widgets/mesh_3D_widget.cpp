@@ -4,9 +4,14 @@ std::vector<qgl_vertex> mesh_3D_widget::obj_to_printable() const
 {
     std::vector<qgl_vertex> result;
 
-    for (const auto &a : obj->points)
+    for (const auto &a : obj->quads)
     {
-        result.push_back({QVector3D{a.data[0], a.data[1], a.data[2]}, QVector3D{1.0f, 1.0f, 0.0f}});
+        result.push_back({QVector3D{obj->points[a[0]][0], obj->points[a[0]][1], obj->points[a[0]][2]}, QVector3D{1.0f, 1.0f, 0.0f}});
+        result.push_back({QVector3D{obj->points[a[1]][0], obj->points[a[1]][1], obj->points[a[1]][2]}, QVector3D{1.0f, 1.0f, 0.0f}});
+        result.push_back({QVector3D{obj->points[a[2]][0], obj->points[a[2]][1], obj->points[a[2]][2]}, QVector3D{1.0f, 1.0f, 0.0f}});
+        result.push_back({QVector3D{obj->points[a[0]][0], obj->points[a[0]][1], obj->points[a[0]][2]}, QVector3D{1.0f, 1.0f, 0.0f}});
+        result.push_back({QVector3D{obj->points[a[2]][0], obj->points[a[2]][1], obj->points[a[2]][2]}, QVector3D{1.0f, 1.0f, 0.0f}});
+        result.push_back({QVector3D{obj->points[a[3]][0], obj->points[a[3]][1], obj->points[a[3]][2]}, QVector3D{1.0f, 1.0f, 0.0f}});
     }
 
     return result;
@@ -20,6 +25,7 @@ mesh_3D_widget::mesh_3D_widget(QWidget *parent)
 void mesh_3D_widget::set_obj(std::shared_ptr<DualContouring::QuadMesh> _obj)
 {
     obj = _obj;
+    update();
 }
 
 mesh_3D_widget::~mesh_3D_widget()
