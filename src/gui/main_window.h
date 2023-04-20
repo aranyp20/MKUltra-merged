@@ -34,10 +34,10 @@ private:
     std::shared_ptr<frep_object> cutable_obj;
     std::shared_ptr<support> support_obj;
 
-    sliced_object *sliced_obj = nullptr;
-    sliced_object *sliced_support = nullptr;
-    sliced_object *whole_obj = nullptr;
-    sliced_object *printable = nullptr;
+    std::shared_ptr<sliced_object> sliced_obj;
+    std::shared_ptr<sliced_object> sliced_support;
+    std::shared_ptr<sliced_object> whole_obj;
+    std::shared_ptr<sliced_object> printable;
 
     gcode_writer g_writer;
 

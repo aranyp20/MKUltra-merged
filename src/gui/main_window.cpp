@@ -54,6 +54,7 @@ main_window::main_window(QWidget *parent)
 
     ui->widget->set_obj(&printable);
     ui->widget_2->set_obj(&printable);
+
 }
 
 main_window::~main_window()
@@ -106,51 +107,43 @@ void main_window::load_object()
 void main_window::slice_object()
 {
     if (cutable_obj.get() == nullptr)
-        return;
-
-    if (sliced_obj != nullptr)
     {
-        delete sliced_obj;
-        sliced_obj = nullptr;
+        return;
     }
 
+   
+
     slicer slicer1(cutable_obj);
-    sliced_obj = new sliced_object(slicer1.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, [this](int v)
+    sliced_obj = std::make_shared<sliced_object>(slicer1.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, [this](int v)
                                                          { this->cb_slice_progressed(v); }));
 
     whole_obj = sliced_obj;
 
+    show_support(ui->support_checkbox->isChecked());
+
     ui->verticalScrollBar->setMaximum(settings::level_count - 1);
     ui->verticalScrollBar->setValue(settings::level_count - 1);
-
-    g_writer.write_gcode(sliced_obj);
-
-    show_support(ui->support_checkbox->isChecked());
 }
 
 void main_window::generate_support()
 {
     if (cutable_obj.get() == nullptr)
-        return;
-    if (sliced_obj == nullptr)
     {
         return;
     }
-    if (sliced_support != nullptr)
+    if (sliced_obj.get() == nullptr)
     {
-        delete sliced_support;
-        sliced_support = nullptr;
+        return;
     }
-   
 
     support_obj = std::make_shared<support>(*(cutable_obj.get()));
     slicer slicer(support_obj);
-    sliced_support = new sliced_object(slicer.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, [this](int v)
+    sliced_support = std::make_shared<sliced_object>(slicer.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, [this](int v)
                                                             { this->cb_slice_progressed(v); }));
 
-    whole_obj = new sliced_object(*sliced_obj, *sliced_support);
+    whole_obj = std::make_shared<sliced_object>(*sliced_obj, *sliced_support);
 
-    update_sliced_views();
+    show_support(ui->support_checkbox->isChecked());
 }
 
 void main_window::show_support(int should)
@@ -163,6 +156,7 @@ void main_window::show_support(int should)
     {
         printable = sliced_obj;
     }
+
 
     update_sliced_views();
 }

@@ -56,7 +56,7 @@ void poly_3D_widget::resizeGL(int w, int h)
 void poly_3D_widget::paintGL()
 {
 
-    if (*obj == nullptr)
+    if ((*obj).get() == nullptr)
         return;
 
     QMatrix4x4 q_v;
@@ -94,17 +94,19 @@ void poly_3D_widget::paintGL()
     glDrawArrays(GL_LINES, 0, pp.size());
 }
 
-void poly_3D_widget::set_obj(sliced_object **_obj)
+void poly_3D_widget::set_obj(std::shared_ptr<sliced_object>* _obj)
 {
     // TODO: delete previus vaos, vbos
     obj = _obj;
+
+
 
     update();
 }
 
 void poly_3D_widget::slot_layer_changed(int l)
 {
-    if ((*obj) == nullptr)
+    if ((*obj).get() == nullptr)
         return;
 
     printable_level = (*obj)->get_slice_count() - l - 1;

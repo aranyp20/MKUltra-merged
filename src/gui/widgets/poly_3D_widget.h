@@ -8,6 +8,7 @@
 #include <QMouseEvent>
 
 #include <iostream>
+#include <memory>
 
 #include "printable_object.h"
 #include "camera.h"
@@ -34,7 +35,6 @@ class poly_3D_widget : public QOpenGLWidget
     QOpenGLVertexArrayObject vao;
     QOpenGLShaderProgram *sp;
 
-    sliced_object **obj = nullptr;
 
     unsigned int printable_level = 0;
 
@@ -47,9 +47,10 @@ class poly_3D_widget : public QOpenGLWidget
     void rotate_camera();
 
 public:
+    std::shared_ptr<sliced_object>* obj;
     poly_3D_widget(QWidget *parent);
 
-    void set_obj(sliced_object **);
+    void set_obj(std::shared_ptr<sliced_object>*);
 
     ~poly_3D_widget();
 
