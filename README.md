@@ -3,7 +3,7 @@
 
 ## Summary
 
-- Outer shell generation with modified 'Marching cubes' algorithm, using interval arithmetic for optimalisation.
+- Outer shell generation with modified 'Marching cubes' algorithm, using interval arithmetic for optimization.
 
 - Inner shell generation from an outer shell, detecting self-intersections. Settings: number of inner shells, distance between shells.
 
