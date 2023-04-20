@@ -1,4 +1,7 @@
 #include <QSpinBox>
+
+#include "dc.hh"
+
 #include "main_window.h"
 #include "ui_main_window.h"
 #include "poly_2D_widget.h"
@@ -54,7 +57,6 @@ main_window::main_window(QWidget *parent)
 
     ui->widget->set_obj(&printable);
     ui->widget_2->set_obj(&printable);
-
 }
 
 main_window::~main_window()
@@ -80,6 +82,15 @@ void main_window::update_sliced_views()
 // sliceolas nelkuli nezegetonel lesz ertelme
 void main_window::load_object()
 {
+
+    sphere tsp;
+    std::shared_ptr<DualContouring::QuadMesh> qm = std::make_shared<DualContouring::QuadMesh>(DualContouring::isosurface([&tsp](const DualContouring::Point3D &p)
+                                                                                                                         { return tsp.qfn(p); },
+                                                                                                                         0.0, std::array<DualContouring::Point3D, 2>{-1.1, 1.1}, std::array<size_t, 3>{100, 100, 100}));
+
+    qm->writeOBJ("sppp.obj");
+
+    ui->widget_3->set_obj(qm);
 
     switch (settings::s_type)
     {
@@ -111,11 +122,9 @@ void main_window::slice_object()
         return;
     }
 
-   
-
     slicer slicer1(cutable_obj);
     sliced_obj = std::make_shared<sliced_object>(slicer1.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, [this](int v)
-                                                         { this->cb_slice_progressed(v); }));
+                                                                       { this->cb_slice_progressed(v); }));
 
     whole_obj = sliced_obj;
 
@@ -139,7 +148,7 @@ void main_window::generate_support()
     support_obj = std::make_shared<support>(*(cutable_obj.get()));
     slicer slicer(support_obj);
     sliced_support = std::make_shared<sliced_object>(slicer.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, [this](int v)
-                                                            { this->cb_slice_progressed(v); }));
+                                                                          { this->cb_slice_progressed(v); }));
 
     whole_obj = std::make_shared<sliced_object>(*sliced_obj, *sliced_support);
 
@@ -156,7 +165,6 @@ void main_window::show_support(int should)
     {
         printable = sliced_obj;
     }
-
 
     update_sliced_views();
 }

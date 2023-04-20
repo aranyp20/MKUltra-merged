@@ -23,6 +23,9 @@ find_package(OpenGL REQUIRED)
 
 find_package(Qt5 COMPONENTS Widgets OpenGL REQUIRED)
 
+
+
+
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 qt5_wrap_ui(UI_HEADERS src/gui/main_window.ui)
@@ -33,6 +36,7 @@ src/gui/main_window.cpp
 src/gui/main_window.ui
 src/gui/widgets/poly_2D_widget.cpp
 src/gui/widgets/poly_3D_widget.cpp
+src/gui/widgets/mesh_3D_widget.cpp
 src/gui/widgets/camera.cpp
 ${UI_HEADERS}
 src/slicer/slicer_module.cpp 
@@ -69,5 +73,10 @@ ${CMAKE_CURRENT_SOURCE_DIR}/src/gui
 ${CMAKE_CURRENT_SOURCE_DIR}/src 
 ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/widgets)
 
+target_include_directories(${PROJECT_NAME} PUBLIC 
+${CMAKE_CURRENT_SOURCE_DIR}/dependencies
+)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL Qt5::Widgets)
+link_directories(dependencies)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL Qt5::Widgets ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/build/libdualcontour.a)

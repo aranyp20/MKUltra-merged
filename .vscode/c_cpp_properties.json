@@ -17,7 +17,8 @@
                 "${workspaceFolder}/src/slicer/generators/gentools",
                 "${workspaceFolder}/src/slicer/global",
                 "${workspaceFolder}/src",
-                "${workspaceFolder}/src/slicer/object/basic_objects"
+                "${workspaceFolder}/src/slicer/object/basic_objects",
+                "${workspaceFolder}/dependencies"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang-14",

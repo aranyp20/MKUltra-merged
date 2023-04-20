@@ -2,6 +2,8 @@
 
 #include <QApplication>
 
+#include "quadmesh.hh"
+
 #include "poly_2D_widget.h"
 #include "main_window.h"
 #include "ui_main_window.h"
@@ -15,7 +17,9 @@
 int main(int argc, char *argv[])
 {
 
-     QApplication a(argc, argv);
+    DualContouring::QuadMesh tst;
+
+    QApplication a(argc, argv);
 
     main_window w;
 

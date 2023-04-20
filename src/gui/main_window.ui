@@ -249,6 +249,16 @@
      <string>Generate support</string>
     </property>
    </widget>
+   <widget class="mesh_3D_widget" name="widget_3" native="true">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>780</y>
+      <width>200</width>
+      <height>200</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
  <customwidgets>
@@ -261,7 +271,13 @@
   <customwidget>
    <class>poly_3D_widget</class>
    <extends>QWidget</extends>
-   <header location="global">poly_3D_widget.h</header>
+   <header>poly_3D_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>mesh_3D_widget</class>
+   <extends>QWidget</extends>
+   <header location="global">mesh_3D_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

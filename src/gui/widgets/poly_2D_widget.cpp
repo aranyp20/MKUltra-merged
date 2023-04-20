@@ -50,9 +50,6 @@ void poly_2D_widget::paintGL()
     if ((*obj) == nullptr)
         return;
 
-    std::cout<<"ff "<<(*obj)->get_slice_count()<<std::endl;
-
-
     sp->bind();
     vao.bind();
     vbo.bind();
@@ -65,11 +62,9 @@ void poly_2D_widget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT);
 
     glDrawArrays(GL_LINES, 0, (*obj)->get_org_level(printable_level).size() / 3);
-
-
 }
 
-void poly_2D_widget::set_obj(std::shared_ptr<sliced_object>* _obj)
+void poly_2D_widget::set_obj(std::shared_ptr<sliced_object> *_obj)
 {
     // TODO: delete previus vaos, vbos
     obj = _obj;
