@@ -6,12 +6,13 @@ std::vector<qgl_vertex> mesh_3D_widget::obj_to_printable() const
 
     for (const auto &a : obj->quads)
     {
-        result.push_back({QVector3D{obj->points[a[0]][0], obj->points[a[0]][1], obj->points[a[0]][2]}, QVector3D{1.0f, 1.0f, 0.0f}});
-        result.push_back({QVector3D{obj->points[a[1]][0], obj->points[a[1]][1], obj->points[a[1]][2]}, QVector3D{1.0f, 1.0f, 0.0f}});
-        result.push_back({QVector3D{obj->points[a[2]][0], obj->points[a[2]][1], obj->points[a[2]][2]}, QVector3D{1.0f, 1.0f, 0.0f}});
-        result.push_back({QVector3D{obj->points[a[0]][0], obj->points[a[0]][1], obj->points[a[0]][2]}, QVector3D{1.0f, 1.0f, 0.0f}});
-        result.push_back({QVector3D{obj->points[a[2]][0], obj->points[a[2]][1], obj->points[a[2]][2]}, QVector3D{1.0f, 1.0f, 0.0f}});
-        result.push_back({QVector3D{obj->points[a[3]][0], obj->points[a[3]][1], obj->points[a[3]][2]}, QVector3D{1.0f, 1.0f, 0.0f}});
+        vec3 normal = cross(vec3(obj->points[a[1]][0], obj->points[a[1]][1], obj->points[a[1]][2]) - vec3(obj->points[a[0]][0], obj->points[a[0]][1], obj->points[a[0]][2]), vec3(obj->points[a[2]][0], obj->points[a[2]][1], obj->points[a[2]][2]) - vec3(obj->points[a[0]][0], obj->points[a[0]][1], obj->points[a[0]][2]));
+        result.push_back({QVector3D{obj->points[a[0]][0], obj->points[a[0]][1], obj->points[a[0]][2]}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[1]][0], obj->points[a[1]][1], obj->points[a[1]][2]}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[2]][0], obj->points[a[2]][1], obj->points[a[2]][2]}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[0]][0], obj->points[a[0]][1], obj->points[a[0]][2]}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[2]][0], obj->points[a[2]][1], obj->points[a[2]][2]}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[3]][0], obj->points[a[3]][1], obj->points[a[3]][2]}, QVector3D{normal.x, normal.y, normal.z}});
     }
 
     return result;
@@ -39,23 +40,32 @@ void mesh_3D_widget::initializeGL()
                                 "#version 450\n"
 
                                 "uniform mat4  V, P;\n"
+                                "uniform vec3 eye;\n"
 
                                 "in vec3 position;\n"
-                                "in vec3 color;\n"
-                                "out vec4 fragColor;\n"
-
-                                "vec4 pos = vec4(position,1);\n"
+                                "in vec3 normal;\n"
+                                "out vec3 fragColor;\n"
 
                                 "void main(){\n"
-                                "fragColor = vec4(color,1.0);\n"
+                                "vec3 lightPos = vec3(-3.0,-1.0,-1.0);\n"
+
+                                "vec4 pos = vec4(position,1);\n"
+                                "vec4 norm = vec4(normal,0);\n"
                                 "gl_Position = pos * V * P;\n"
+
+                                "vec3 V = normalize(eye-position);\n"
+                                "vec3 N = normalize(position);\n"
+                                "if(dot(N,V)<0){N = -N;}\n"
+                                "vec3 L = normalize(lightPos-position);\n"
+
+                                "fragColor = vec3(0.1,0.2,0.2) + vec3(0.5,0.5,0.5)*max(dot(N,L),0);\n"
                                 "}");
     sp->addShaderFromSourceCode(QOpenGLShader::Fragment,
                                 "#version 450\n"
-                                "in vec4 fragColor;\n"
+                                "in vec3 fragColor;\n"
                                 "out vec4 finalColor;\n"
                                 "void main(){\n"
-                                "finalColor = fragColor;\n"
+                                "finalColor = vec4(fragColor,1.0);\n"
                                 "}");
     sp->link();
 
@@ -94,6 +104,7 @@ void mesh_3D_widget::paintGL()
     sp->bind();
     sp->setUniformValue("V", q_v);
     sp->setUniformValue("P", q_p);
+    sp->setUniformValue("eye", QVector3D(cam.get_eye().x, cam.get_eye().y, cam.get_eye().z));
 
     vao.bind();
     vbo.bind();
@@ -104,7 +115,7 @@ void mesh_3D_widget::paintGL()
     vbo.allocate(printable_data, sizeof(qgl_vertex) * pp.size());
 
     sp->enableAttributeArray("position");
-    sp->enableAttributeArray("color");
+    sp->enableAttributeArray("normal");
 
     sp->setAttributeBuffer(0, GL_FLOAT, offsetof(qgl_vertex, position), 3, sizeof(qgl_vertex));
     sp->setAttributeBuffer(1, GL_FLOAT, offsetof(qgl_vertex, color), 3, sizeof(qgl_vertex));

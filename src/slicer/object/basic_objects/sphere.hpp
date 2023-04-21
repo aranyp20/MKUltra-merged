@@ -9,7 +9,7 @@
 class sphere : public frep_object
 {
 
-    vec3 center = vec3(0, 0, 0);
+    vec3 center;
     double radius = 1.0;
 
     template <typename T, typename H, typename ARRAY = vec3_t<T>>
@@ -23,6 +23,8 @@ class sphere : public frep_object
     }
 
 public:
+    sphere(const vec3 &_center = vec3(0.0, 0.0, 1.2)) : center(_center) {}
+
     interval fn(const interval &X, const interval &Y, double h) const override
     {
         return common_fn(X, Y, h);

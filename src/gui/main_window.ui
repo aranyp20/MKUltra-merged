@@ -65,8 +65,8 @@
    <widget class="QPushButton" name="slice_button">
     <property name="geometry">
      <rect>
-      <x>590</x>
-      <y>580</y>
+      <x>240</x>
+      <y>820</y>
       <width>241</width>
       <height>31</height>
      </rect>
@@ -78,8 +78,8 @@
    <widget class="QSpinBox" name="layer_count_box">
     <property name="geometry">
      <rect>
-      <x>880</x>
-      <y>660</y>
+      <x>190</x>
+      <y>690</y>
       <width>101</width>
       <height>41</height>
      </rect>
@@ -98,7 +98,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>790</x>
+      <x>200</x>
       <y>670</y>
       <width>91</width>
       <height>17</height>
@@ -111,8 +111,8 @@
    <widget class="QSpinBox" name="inner_shell_count_box">
     <property name="geometry">
      <rect>
-      <x>880</x>
-      <y>730</y>
+      <x>60</x>
+      <y>880</y>
       <width>81</width>
       <height>41</height>
      </rect>
@@ -121,8 +121,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>750</x>
-      <y>730</y>
+      <x>40</x>
+      <y>840</y>
       <width>121</width>
       <height>31</height>
      </rect>
@@ -134,8 +134,8 @@
    <widget class="QDoubleSpinBox" name="inner_shell_distance_box">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>690</y>
+      <x>250</x>
+      <y>940</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -144,8 +144,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>690</y>
+      <x>220</x>
+      <y>910</y>
       <width>141</width>
       <height>21</height>
      </rect>
@@ -213,8 +213,8 @@
    <widget class="QProgressBar" name="slice_bar">
     <property name="geometry">
      <rect>
-      <x>870</x>
-      <y>610</y>
+      <x>10</x>
+      <y>970</y>
       <width>231</width>
       <height>31</height>
      </rect>
@@ -239,8 +239,8 @@
    <widget class="QPushButton" name="support_gen_button">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>620</y>
+      <x>240</x>
+      <y>860</y>
       <width>231</width>
       <height>31</height>
      </rect>
@@ -252,10 +252,10 @@
    <widget class="mesh_3D_widget" name="widget_3" native="true">
     <property name="geometry">
      <rect>
-      <x>590</x>
-      <y>780</y>
-      <width>200</width>
-      <height>200</height>
+      <x>610</x>
+      <y>550</y>
+      <width>431</width>
+      <height>431</height>
      </rect>
     </property>
    </widget>

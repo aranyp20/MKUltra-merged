@@ -83,7 +83,7 @@ void main_window::update_sliced_views()
 void main_window::load_object()
 {
 
-    sphere tsp;
+    sphere tsp(vec3(0.0, 0.0, 0.0));
     std::shared_ptr<DualContouring::QuadMesh> qm = std::make_shared<DualContouring::QuadMesh>(DualContouring::isosurface([&tsp](const DualContouring::Point3D &p)
                                                                                                                          { return tsp.qfn(p); },
                                                                                                                          0.0, std::array<DualContouring::Point3D, 2>{{{-1.1, -1.1, -1.1}, {1.1, 1.1, 1.1}}}, std::array<size_t, 3>{100, 100, 100}));
