@@ -146,7 +146,7 @@ void main_window::generate_support()
     support_obj = std::make_shared<support>(*(cutable_obj.get()));
     slicer slicer(support_obj);
     sliced_support = std::make_shared<sliced_object>(slicer.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, [this](int v)
-                                                                          { this->cb_slice_progressed(v); }));
+                                                                          { this->cb_slice_progressed(v); },true));
 
     whole_obj = std::make_shared<sliced_object>(*sliced_obj, *sliced_support);
 

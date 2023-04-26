@@ -21,9 +21,9 @@ class slicer
 
     sliced_object create_test_slices(unsigned int inner_shell_count, double inner_shell_distance) const;
 
+    sliced_object::layer_data slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance,bool slice_as_support) const;
 public:
     slicer(std::shared_ptr<frep_object> _cutable_obj);
 
-    sliced_object::layer_data slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance) const;
-    sliced_object create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)>) const;
+    sliced_object create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)>, bool slice_as_support = false) const;
 };

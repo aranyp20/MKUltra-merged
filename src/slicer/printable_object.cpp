@@ -55,6 +55,11 @@ const std::vector<qgl_vertex> &sliced_object::get_colored_level(unsigned int lev
     return data[level].combined_colored;
 }
 
+const std::vector<qgl_vertex> &sliced_object::get_colored_separated_level(unsigned int level) const
+{
+    return data[level].combined_colored_separated;
+}
+
 const std::vector<qgl_vertex> sliced_object::get_colored() const
 {
     std::vector<qgl_vertex> result;
@@ -125,7 +130,19 @@ void sliced_object::layer_data::combine_coloreds()
     combined_colored = result;
 }
 
-sliced_object::layer_data::layer_data(const polylines &_outer, const polylines &_inner, const polylines &_infill, const bounding_box &_bb)
+void sliced_object::layer_data::combine_coloreds_separated()
+{
+    std::vector<qgl_vertex> result;
+
+    for (int i = 0; i < parts.size(); i++)
+    {
+        result.insert(result.end(), parts[i].colored_separated.begin(), parts[i].colored_separated.end());
+    }
+
+    combined_colored_separated = result;
+}
+
+sliced_object::layer_data::layer_data(const polylines &_outer, const polylines &_inner, const polylines &_infill, const bounding_box &_bb, bool is_support)
 {
     parts[part_type::INNER].poly = _inner;
     parts[part_type::INNER].org = transfer(_inner, _bb);
@@ -139,8 +156,22 @@ sliced_object::layer_data::layer_data(const polylines &_outer, const polylines &
     parts[part_type::INFILL].org = transfer(_infill, _bb);
     parts[part_type::INFILL].colored = colorize(parts[part_type::INFILL].org, vec3(1, 1, 0));
 
+    if(is_support)
+    {
+        parts[part_type::INNER].colored_separated = colorize(parts[part_type::INNER].org, vec3(1, 0, 0));
+        parts[part_type::OUTER].colored_separated = colorize(parts[part_type::OUTER].org, vec3(1, 0, 0));
+        parts[part_type::INFILL].colored_separated = colorize(parts[part_type::INFILL].org, vec3(1, 0, 0));
+    }else 
+    {
+        parts[part_type::INNER].colored_separated = colorize(parts[part_type::INNER].org, vec3(0, 1, 0));
+        parts[part_type::OUTER].colored_separated = colorize(parts[part_type::OUTER].org, vec3(0, 1, 0));
+        parts[part_type::INFILL].colored_separated = colorize(parts[part_type::INFILL].org, vec3(0, 1, 0));
+    }
+
+
     combine_orgs();
     combine_coloreds();
+    combine_coloreds_separated();
 }
 
 std::vector<float> sliced_object::layer_data::transfer(const polylines &_data, const bounding_box &_bb) const
@@ -221,7 +252,10 @@ void sliced_object::layer_data::eat(const layer_data &other)
         parts[i].poly.add_together(other.parts[i].poly);
         parts[i].org.insert(parts[i].org.end(), other.parts[i].org.begin(), other.parts[i].org.end());
         parts[i].colored.insert(parts[i].colored.end(), other.parts[i].colored.begin(), other.parts[i].colored.end());
+        parts[i].colored_separated.insert(parts[i].colored_separated.end(), other.parts[i].colored_separated.begin(), other.parts[i].colored_separated.end());    
     }
     combine_orgs();
     combine_coloreds();
+    combine_coloreds_separated();
+
 }

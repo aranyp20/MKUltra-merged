@@ -42,7 +42,7 @@ slicer::slicer(std::shared_ptr<frep_object> _cutable_obj) : cutable_obj(_cutable
 {
 }
 
-sliced_object::layer_data slicer::slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance) const
+sliced_object::layer_data slicer::slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance,bool slice_as_support) const
 {
     double h = my_bounding_box.floor.first.z + h_per_max * my_bounding_box.height;
 
@@ -56,7 +56,7 @@ sliced_object::layer_data slicer::slice(double h_per_max, unsigned int inner_she
         polylines inner_l = inner_generator.generate_one(outer, inner_shell_distance * i);
         inner.add_together(inner_l);
     }
-    return sliced_object::layer_data(outer, inner, infill, my_bounding_box);
+    return sliced_object::layer_data(outer, inner, infill, my_bounding_box,slice_as_support);
 }
 
 sliced_object slicer::create_test_slices(unsigned int inner_shell_count, double inner_shell_distance) const
@@ -65,23 +65,21 @@ sliced_object slicer::create_test_slices(unsigned int inner_shell_count, double 
 
     for (int i = 0; i < 3; i++)
     {
-        sliced_object::layer_data level = slice(0.45 + i * 0.05, inner_shell_count, inner_shell_distance);
+        sliced_object::layer_data level = slice(0.45 + i * 0.05, inner_shell_count, inner_shell_distance,false);
         result.push_back(level);
     }
 
     return sliced_object(result, my_bounding_box);
 }
 
-sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)> cb) const
+sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)> cb, bool slice_as_support) const
 {
-
-    // return create_test_slices(inner_shell_count, inner_shell_distance);
 
     std::vector<sliced_object::layer_data> result;
 
     for (int i = 0; i < level_count; i++)
     {
-        sliced_object::layer_data level = slice(i / (double)level_count /*floor to one lvl below ceiling*/, inner_shell_count, inner_shell_distance);
+        sliced_object::layer_data level = slice(i / (double)level_count /*floor to one lvl below ceiling*/, inner_shell_count, inner_shell_distance,slice_as_support);
         result.push_back(level);
         cb((i + 1) * 100 / level_count);
     }

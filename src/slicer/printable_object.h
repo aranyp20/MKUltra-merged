@@ -29,15 +29,18 @@ public:
             polylines poly;
             std::vector<float> org;
             std::vector<qgl_vertex> colored;
+            std::vector<qgl_vertex> colored_separated;
         };
 
         std::array<part, 3> parts;
         std::vector<float> combined_org;
         std::vector<qgl_vertex> combined_colored;
+        std::vector<qgl_vertex> combined_colored_separated;
         void combine_orgs();
         void combine_coloreds();
+        void combine_coloreds_separated();
 
-        layer_data(const polylines &_outer, const polylines &_inner, const polylines &_infill, const bounding_box &_bb);
+        layer_data(const polylines &_outer, const polylines &_inner, const polylines &_infill, const bounding_box &_bb, bool is_suport = false);
 
         void normalize_for_gl(vec3 &, const bounding_box &) const;
         std::vector<float> transfer(const polylines &_data, const bounding_box &_bb = bounding_box(vec3(-1, -1, -1), 2, 2)) const;
@@ -66,6 +69,8 @@ public:
     const std::vector<float> &get_org_level(unsigned int) const;
     const std::vector<float> &get_org_level(unsigned int, const layer_data::part_type &) const;
     const std::vector<qgl_vertex> &get_colored_level(unsigned int) const;
+    const std::vector<qgl_vertex> &get_colored_separated_level(unsigned int) const;
+
 
     const std::vector<qgl_vertex> get_colored() const;
 
