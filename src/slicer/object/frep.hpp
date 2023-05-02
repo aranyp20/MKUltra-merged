@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <functional>
+#include "dc.hh"
 
 #include "interval.h"
 #include "settings.h"
@@ -59,6 +60,11 @@ public:
     vec3 grad(const vec3 &p) const
     {
         return vec3(fn(dnum(p.x, 1), dnum(p.y, 0), dnum(p.z, 0)).der_val, fn(dnum(p.x, 0), dnum(p.y, 1), dnum(p.z, 0)).der_val, fn(dnum(p.x, 0), dnum(p.y, 0), dnum(p.z, 1)).der_val);
+    }
+
+    double qfn(const DualContouring::Point3D &p) const
+    {
+        return fn(vec3(p.data[0], p.data[1], p.data[2]));
     }
 
     bool inside(const vec3 &p) const

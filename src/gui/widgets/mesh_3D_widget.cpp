@@ -55,7 +55,6 @@ void mesh_3D_widget::initializeGL()
 
                                 "vec3 V = normalize(eye-position);\n"
                                 "vec3 N = normalize(position);\n"
-                                "if(dot(N,V)<0){N = -N;}\n"
                                 "vec3 L = normalize(lightPos-position);\n"
 
                                 "fragColor = vec3(0.1,0.2,0.2) + vec3(0.5,0.5,0.5)*max(dot(N,L),0);\n"

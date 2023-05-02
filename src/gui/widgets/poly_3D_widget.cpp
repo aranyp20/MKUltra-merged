@@ -94,12 +94,10 @@ void poly_3D_widget::paintGL()
     glDrawArrays(GL_LINES, 0, pp.size());
 }
 
-void poly_3D_widget::set_obj(std::shared_ptr<sliced_object>* _obj)
+void poly_3D_widget::set_obj(std::shared_ptr<sliced_object> *_obj)
 {
     // TODO: delete previus vaos, vbos
     obj = _obj;
-
-
 
     update();
 }
@@ -153,6 +151,13 @@ void poly_3D_widget::mouseMoveEvent(QMouseEvent *event)
         mp_handler.register_pos();
         update();
     }
+}
+
+void poly_3D_widget::zoom_camera(int n)
+{
+    vec3 move_axis = normalize(cam.get_eye() - cam.get_lookat());
+    cam.replace_eye(cam.get_lookat() + move_axis * (4.0f - n / 40.0f));
+    update();
 }
 
 void poly_3D_widget::rotate_camera()

@@ -35,7 +35,6 @@ class poly_3D_widget : public QOpenGLWidget
     QOpenGLVertexArrayObject vao;
     QOpenGLShaderProgram *sp;
 
-
     unsigned int printable_level = 0;
 
     camera cam;
@@ -47,10 +46,10 @@ class poly_3D_widget : public QOpenGLWidget
     void rotate_camera();
 
 public:
-    std::shared_ptr<sliced_object>* obj;
+    std::shared_ptr<sliced_object> *obj;
     poly_3D_widget(QWidget *parent);
 
-    void set_obj(std::shared_ptr<sliced_object>*);
+    void set_obj(std::shared_ptr<sliced_object> *);
 
     ~poly_3D_widget();
 
@@ -68,4 +67,5 @@ protected:
 public slots:
 
     void slot_layer_changed(int l);
+    void zoom_camera(int n);
 };

@@ -41,6 +41,9 @@ main_window::main_window(QWidget *parent)
 
     QObject::connect(ui->support_gen_button, &QPushButton::pressed, this, &main_window::generate_support);
 
+    QObject::connect(ui->zoom_scrollbar, &QScrollBar::valueChanged, ui->widget_2, &poly_3D_widget::zoom_camera);
+    ui->zoom_scrollbar->valueChanged(0);
+
     main_window::slice_bar = ui->slice_bar;
     ui->slice_bar->setValue(0);
     ui->surface_selector_box->addItem("Chmutov", QVariant(surface_type::CHMUTOV));
@@ -83,13 +86,6 @@ void main_window::update_sliced_views()
 void main_window::load_object()
 {
 
-    sphere tsp(vec3(0.0, 0.0, 0.0));
-    std::shared_ptr<DualContouring::QuadMesh> qm = std::make_shared<DualContouring::QuadMesh>(DualContouring::isosurface([&tsp](const DualContouring::Point3D &p)
-                                                                                                                         { return tsp.qfn(p); },
-                                                                                                                         0.0, std::array<DualContouring::Point3D, 2>{{{-1.1, -1.1, -1.1}, {1.1, 1.1, 1.1}}}, std::array<size_t, 3>{100, 100, 100}));
-
-    ui->widget_3->set_obj(qm);
-
     switch (settings::s_type)
     {
     case surface_type::CHMUTOV:
@@ -108,6 +104,11 @@ void main_window::load_object()
     default:
         break;
     }
+
+    std::shared_ptr<DualContouring::QuadMesh> qm = std::make_shared<DualContouring::QuadMesh>(DualContouring::isosurface([this](const DualContouring::Point3D &p)
+                                                                                                                         { return cutable_obj->qfn(p); },
+                                                                                                                         0.0, std::array<DualContouring::Point3D, 2>{{{-1.1, -1.1, -1.1}, {1.1, 1.1, 1.1}}}, std::array<size_t, 3>{100, 100, 100}));
+    ui->widget_3->set_obj(qm);
 
     cutable_obj->set_prefered_settings();
     set_values_from_settings();
@@ -145,8 +146,10 @@ void main_window::generate_support()
 
     support_obj = std::make_shared<support>(*(cutable_obj.get()));
     slicer slicer(support_obj);
-    sliced_support = std::make_shared<sliced_object>(slicer.create_slices(settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, [this](int v)
-                                                                          { this->cb_slice_progressed(v); },true));
+    sliced_support = std::make_shared<sliced_object>(slicer.create_slices(
+        settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, [this](int v)
+        { this->cb_slice_progressed(v); },
+        true));
 
     whole_obj = std::make_shared<sliced_object>(*sliced_obj, *sliced_support);
 
