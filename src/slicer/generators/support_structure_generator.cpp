@@ -21,6 +21,27 @@ polylines support_sctructure_generator::create_colors_from_wieghts(const weighte
     return result;
 }
 
+std::vector<support_column_template> support_sctructure_generator::find_column_spaces_onz(const vec2 &p) const
+{
+    return std::vector<support_column_template>();
+}
+
+std::vector<support_column_template> support_sctructure_generator::find_column_spaces(const double distance_between) const
+{
+    std::vector<support_column_template> result;
+
+    for (double x = distance_between / 2; x < 2; x += distance_between)
+    {
+        for (double y = distance_between / 2; y < 2; y += distance_between)
+        {
+            std::vector<support_column_template> on_this_point = find_column_spaces_onz(vec2(x, y));
+            result.insert(result.end(), on_this_point.begin(), on_this_point.end());
+        }
+    }
+
+    return result;
+}
+
 support_sctructure_generator::support_sctructure_generator(std::shared_ptr<frep_object> _surface) : surface(_surface)
 {
 }

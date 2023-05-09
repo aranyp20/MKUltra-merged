@@ -52,6 +52,7 @@ src/slicer/object/RBF/FunctionCreator.cpp
 src/slicer/object/RBF/NormalCreator.cpp
 src/slicer/generators/infill_generator.cpp
 src/slicer/generators/gentools/plane.cpp
+src/slicer/generators/gentools/support_column_template.cpp
 src/slicer/printable_object.cpp
 src/settings.cpp
 src/slicer/object/bounding_box.cpp

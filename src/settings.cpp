@@ -6,3 +6,4 @@ double settings::inner_shell_distance = 0.05;
 int settings::s_type = surface_type::CHMUTOV;
 double settings::infill_space_between = 0.1;
 int settings::infill_number_rot = 3;
+double settings::support_space_between = 0.5;

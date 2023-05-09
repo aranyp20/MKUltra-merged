@@ -14,6 +14,7 @@
 #include "periodic_columns.hpp"
 #include "support.hpp"
 #include "cylinder_section.hpp"
+#include "rbf_surface.hpp"
 
 QProgressBar *main_window::slice_bar = nullptr;
 
@@ -75,6 +76,7 @@ void main_window::set_values_from_settings()
     ui->inner_shell_distance_box->setValue(settings::inner_shell_distance);
     ui->infill_number_box->setValue(settings::infill_number_rot);
     ui->infill_space_between_box->setValue(settings::infill_space_between);
+    ui->support_space_between_box->setValue(settings::support_space_between);
 }
 
 void main_window::update_sliced_views()
@@ -94,7 +96,7 @@ void main_window::load_object()
         break;
 
     case surface_type::GYROID:
-        cutable_obj = std::make_shared<cylinder_section>();
+        cutable_obj = std::make_shared<RBF_surface>();
         break;
     case surface_type::SPHERE:
         cutable_obj = std::make_shared<sphere>();
@@ -129,6 +131,11 @@ void main_window::slice_object()
     whole_obj = sliced_obj;
 
     show_support(ui->support_checkbox->isChecked());
+
+    for (double i = -1; i < 1; i += 0.1)
+    {
+        std::cout << cutable_obj->fn(vec3(i, 0, 0)) << std::endl;
+    }
 
     ui->verticalScrollBar->setMaximum(settings::level_count - 1);
     ui->verticalScrollBar->setValue(settings::level_count - 1);

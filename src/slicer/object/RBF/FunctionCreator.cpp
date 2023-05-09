@@ -10,7 +10,7 @@
 FunctionCreator::FunctionCreator()
 {
 
-    NormalCreator n1("../slicer/object/RBF/sphere.obj");
+    NormalCreator n1("/home/peti/Downloads/sphere.obj");
 
     FillNodes(n1);
 
@@ -81,13 +81,14 @@ double FunctionCreator::KernelFunction(const vec3 &p1, const vec3 &p2) const
 
 double FunctionCreator::Create(const vec3 &p) const
 {
+
     double result = 0;
     for (int i = 0; i < nodes.size(); i++)
     {
         result += nodes[i].coefficient * KernelFunction(p, nodes[i].pos);
     }
 
-    return result;
+    return -result;
 }
 ///////////////////////////////interval////////////////////////
 

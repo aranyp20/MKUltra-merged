@@ -82,7 +82,7 @@ polylines infill_generator::fit_polylines_to_marked_points(const std::vector<mar
 
     for (int i = 1; i < v.size(); i++)
     {
-        // itt mas lehetosegek is lehetnek
+        //  itt mas lehetosegek is lehetnek
         if (v[i - 1].enters && !v[i].enters)
         {
             result.eat(std::vector<vec3>{v[i - 1], v[i]});

@@ -19,6 +19,7 @@ public:
     static int s_type;
     static double infill_space_between;
     static int infill_number_rot;
+    static double support_space_between;
 };
 
 #endif

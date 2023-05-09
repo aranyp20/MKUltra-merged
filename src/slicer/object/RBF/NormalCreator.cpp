@@ -11,7 +11,6 @@ NormalCreator::NormalCreator(const std::string &filename)
 
     try
     {
-
         file.open(filename.c_str());
     }
     catch (std::exception)
@@ -30,6 +29,7 @@ NormalCreator::NormalCreator(const std::string &filename)
 
         if (word.compare("v") == 0)
         {
+
             is.Init(InputState::VERT);
         }
         else if (word.compare("f") == 0)
@@ -51,7 +51,7 @@ NormalCreator::NormalCreator(const std::string &filename)
 
         if (cVert.size() == 3)
         {
-            vertices.push_back(vec3(cVert[0], cVert[1], cVert[2]));
+            vertices.push_back(vec3(cVert[0] / 100, cVert[1] / 100, cVert[2] / 100));
             std::vector<unsigned int> tv;
             influencedBy.insert({vertices.size() - 1, tv});
             cVert.clear();
@@ -65,6 +65,7 @@ NormalCreator::NormalCreator(const std::string &filename)
             cFace.clear();
         }
     }
+
     CreateNormals();
 }
 
