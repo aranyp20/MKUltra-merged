@@ -4,13 +4,14 @@
 #include "frep_blend.hpp"
 #include "frep_substract.hpp"
 #include "frep_onion.hpp"
+#include "cylinder_section.hpp"
 
 #include "periodic_columns.hpp"
 
 class support : public frep_object
 {
 
-    cylinder m_cylinder;
+    cylinder_section m_cylinder;
 
     frep_scale m_sphere_scaled;
 

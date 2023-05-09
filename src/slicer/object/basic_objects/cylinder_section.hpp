@@ -1,28 +1,30 @@
 #pragma once
 
 #include "frep.hpp"
-#include "frep_scale.hpp"
-#include "cylinder.hpp"
 
-class sphere : public frep_object
+class cylinder_section : public frep_object
 {
-
-    vec3 center;
-    double radius = 1.0;
+    vec3 fix1 = vec3(0, 0, -0.9);
+    vec3 fix2 = vec3(0, 0, 0);
+    double radius = 0.2;
 
     template <typename T, typename H, typename ARRAY = vec3_t<T>>
     T common_fn(const T &x, const T &y, const H &h) const
     {
         ARRAY p(x, y, T(h));
-        ARRAY q(T(center.x), T(center.y), T(center.z));
-        T s1 = (p - q).length() - T(radius);
+        ARRAY p1(T(fix1.x), T(fix1.y), T(fix1.z));
+        ARRAY p2(T(fix2.x), T(fix2.y), T(fix2.z));
 
-        return s1;
+        ARRAY d = (p2 - p1) / (p2 - p1).length();
+
+        if (p2.z < p.z || p.z < p1.z)
+        {
+            return T(1);
+        }
+        return (p1 - p - d * (dot((p1 - p), d))).length() - T(radius);
     }
 
 public:
-    sphere(const vec3 &_center = vec3(0.0, 0.0, 0.5)) : center(_center) {}
-
     interval fn(const interval &X, const interval &Y, double h) const override
     {
         return common_fn(X, Y, h);

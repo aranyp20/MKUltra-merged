@@ -25,6 +25,11 @@ dnum dnum::operator/(dnum d) const
     return dnum(val / d.val, (der_val * d.val - val * d.der_val) / (d.val * d.val));
 }
 
+bool dnum::operator<(dnum d) const
+{
+    return this->val < d.val;
+}
+
 dnum pow(const dnum &d, double n)
 {
     return dnum(pow(d.val, n), n * pow(d.val, n - 1) * d.der_val);

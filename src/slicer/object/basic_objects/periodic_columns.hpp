@@ -34,7 +34,7 @@ class periodic_columns : public frep_object
         ARRAY c3(T(period / 2), T(period / 2), T(h));
         ARRAY c4(T(-period / 2), T(period / 2), T(h));
 
-        return std::min({(p - c1).length(), (p - c2).length(), (p - c3).length(), (p - c4).length()}) - T(radius);
+        return (std::min({(p - c1).length(), (p - c2).length(), (p - c3).length(), (p - c4).length()}) - T(radius)) * T(-1);
     }
 
 public:

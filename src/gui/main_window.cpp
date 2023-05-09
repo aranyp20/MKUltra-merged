@@ -13,6 +13,7 @@
 #include "cylinder.hpp"
 #include "periodic_columns.hpp"
 #include "support.hpp"
+#include "cylinder_section.hpp"
 
 QProgressBar *main_window::slice_bar = nullptr;
 
@@ -93,7 +94,7 @@ void main_window::load_object()
         break;
 
     case surface_type::GYROID:
-        cutable_obj = std::make_shared<gyroid>();
+        cutable_obj = std::make_shared<cylinder_section>();
         break;
     case surface_type::SPHERE:
         cutable_obj = std::make_shared<sphere>();

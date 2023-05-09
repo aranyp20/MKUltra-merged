@@ -7,7 +7,6 @@
 
 #include "mymath_templ.hpp"
 
-
 interval::interval(double _start, double _end) : start(std::min(_start, _end)), end(std::max(_start, _end))
 {
 }
@@ -42,6 +41,12 @@ interval operator/(const interval &lhs, const interval &rhs)
         throw std::exception();
 
     return interval(std::min({lhs.start / rhs.start, lhs.start / rhs.end, lhs.end / rhs.start, lhs.end / rhs.end}), std::max({lhs.start / rhs.start, lhs.start / rhs.end, lhs.end / rhs.start, lhs.end / rhs.end}));
+}
+
+bool operator<(const interval &lhs, const interval &rhs)
+{
+    return false;
+    return lhs.end < rhs.end;
 }
 
 interval pow(const interval &inter, unsigned int power)
@@ -106,8 +111,8 @@ std::ostream &operator<<(std::ostream &os, const interval &i)
     return os;
 }
 
-template<>
+template <>
 interval vec3_t<interval>::length() const
 {
-    return sqrt(std::max(interval(0), dot(*this,*this)));
+    return sqrt(std::max(interval(0), dot(*this, *this)));
 };

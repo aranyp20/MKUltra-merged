@@ -21,6 +21,7 @@ interval operator+(const interval &lhs, const interval &rhs);
 interval operator-(const interval &lhs, const interval &rhs);
 interval operator*(const interval &lhs, const interval &rhs);
 interval operator/(const interval &lhs, const interval &rhs);
+bool operator<(const interval &lhs, const interval &rhs);
 
 interval sqrt(const interval &inter);
 interval sin(const interval &inter);
@@ -33,7 +34,5 @@ namespace std
 
 std::ostream &operator<<(std::ostream &, const interval &);
 
-template<>
+template <>
 interval vec3_t<interval>::length() const;
-
-

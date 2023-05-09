@@ -13,6 +13,7 @@ struct dnum
     dnum operator-(dnum d) const;
     dnum operator*(dnum d) const;
     dnum operator/(dnum d) const;
+    bool operator<(dnum d) const;
 };
 
 dnum pow(const dnum &d, double n);
