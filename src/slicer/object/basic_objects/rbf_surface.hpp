@@ -15,6 +15,7 @@ public:
     }
     interval fn(const interval &X, const interval &Y, double h) const override
     {
+        return interval(-1,1);
         return fc.Create_interval(X, Y, h);
     }
     /*

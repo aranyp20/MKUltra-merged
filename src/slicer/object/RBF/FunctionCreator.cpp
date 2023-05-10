@@ -59,7 +59,7 @@ void FunctionCreator::CalculateCoefficients()
 
 void FunctionCreator::AddNodeHelper(const vec3 &_pos, const vec3 &_normal)
 {
-    const double currentH = 20;
+    const double currentH = 0.2;
     nodes.push_back(Node(_pos, 0));
     nodes.push_back(Node(_pos + _normal * currentH, currentH));
     nodes.push_back(Node(_pos - _normal * currentH, -currentH));
@@ -73,6 +73,12 @@ FunctionCreator::Node::Node(const vec3 &p, double _value) : pos(p), value(_value
 
 double FunctionCreator::KernelFunction(const vec3 &p1, const vec3 &p2) const
 {
+    double influenceZone = 0.3;
+    double normalizedDistance = (p1-p2).length() / influenceZone;
+    if(normalizedDistance<0 || normalizedDistance>1) return 0;
+    return pow(1-normalizedDistance,4) * (4 * normalizedDistance + 1);
+
+////////
     double preferableConstant = 50.0f;
     double distance = (p1 - p2).length();
 
@@ -88,7 +94,7 @@ double FunctionCreator::Create(const vec3 &p) const
         result += nodes[i].coefficient * KernelFunction(p, nodes[i].pos);
     }
 
-    return -result;
+    return result;
 }
 ///////////////////////////////interval////////////////////////
 
@@ -96,6 +102,16 @@ interval FunctionCreator::KernelFunction_interval(const interval &xi, const inte
 {
     interval distance(std::min({(vec3(xi.start, yi.start, h) - p).length(), (vec3(xi.end, yi.start, h) - p).length(), (vec3(xi.start, yi.end, h) - p).length(), (vec3(xi.end, yi.end, h) - p).length()}), std::max({(vec3(xi.start, yi.start, h) - p).length(), (vec3(xi.end, yi.start, h) - p).length(), (vec3(xi.start, yi.end, h) - p).length(), (vec3(xi.end, yi.end, h) - p).length()}));
 
+    interval influenceZone(0.2);
+    interval normalizedDistance = distance / influenceZone;
+    
+
+    if(interval(1)<normalizedDistance) return interval(0);
+    
+
+    return pow(interval(1)-normalizedDistance,4) * (interval(4) * normalizedDistance + interval(1));
+
+///
     return sqrt(distance * distance + interval(preferableConstant) * interval(preferableConstant));
 }
 

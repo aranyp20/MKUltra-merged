@@ -51,7 +51,7 @@ NormalCreator::NormalCreator(const std::string &filename)
 
         if (cVert.size() == 3)
         {
-            vertices.push_back(vec3(cVert[0] / 100, cVert[1] / 100, cVert[2] / 100));
+            vertices.push_back(vec3(cVert[0] / 100, cVert[1] / 100, cVert[2] / 100   + 0.8));
             std::vector<unsigned int> tv;
             influencedBy.insert({vertices.size() - 1, tv});
             cVert.clear();

@@ -107,11 +107,12 @@ void main_window::load_object()
     default:
         break;
     }
-
+/*
     std::shared_ptr<DualContouring::QuadMesh> qm = std::make_shared<DualContouring::QuadMesh>(DualContouring::isosurface([this](const DualContouring::Point3D &p)
                                                                                                                          { return cutable_obj->qfn(p); },
                                                                                                                          0.0, std::array<DualContouring::Point3D, 2>{{{-1.1, -1.1, -1.1}, {1.1, 1.1, 1.1}}}, std::array<size_t, 3>{100, 100, 100}));
     ui->widget_3->set_obj(qm);
+*/
 
     cutable_obj->set_prefered_settings();
     set_values_from_settings();
@@ -152,6 +153,7 @@ void main_window::generate_support()
         return;
     }
 
+
     support_obj = std::make_shared<support>(*(cutable_obj.get()));
     slicer slicer(support_obj);
     sliced_support = std::make_shared<sliced_object>(slicer.create_slices(
@@ -160,6 +162,12 @@ void main_window::generate_support()
         true));
 
     whole_obj = std::make_shared<sliced_object>(*sliced_obj, *sliced_support);
+
+    std::shared_ptr<DualContouring::QuadMesh> qm = std::make_shared<DualContouring::QuadMesh>(DualContouring::isosurface([this](const DualContouring::Point3D &p)
+                                                                                                                         { return support_obj->qfn(p); },
+                                                                                                                         0.0, std::array<DualContouring::Point3D, 2>{{{-1.1, -1.1, -1.1}, {1.1, 1.1, 1.1}}}, std::array<size_t, 3>{100, 100, 100}));
+    ui->widget_3->set_obj(qm);
+
 
     show_support(ui->support_checkbox->isChecked());
 }

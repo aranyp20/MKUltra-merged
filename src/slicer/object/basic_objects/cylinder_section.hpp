@@ -17,11 +17,8 @@ class cylinder_section : public frep_object
 
         ARRAY d = (p2 - p1) / (p2 - p1).length();
 
-        if (p2.z < p.z || p.z < p1.z)
-        {
-            return T(1);
-        }
-        return (p1 - p - d * (dot((p1 - p), d))).length() - T(radius);
+        
+        return std::max(p.z,((p1 - p - d * (dot((p1 - p), d))).length() - T(radius)));
     }
 
 public:
