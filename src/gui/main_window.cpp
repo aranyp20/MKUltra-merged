@@ -85,7 +85,6 @@ void main_window::update_sliced_views()
     ui->widget_2->update();
 }
 
-// sliceolas nelkuli nezegetonel lesz ertelme
 void main_window::load_object()
 {
 
@@ -107,12 +106,12 @@ void main_window::load_object()
     default:
         break;
     }
-/*
-    std::shared_ptr<DualContouring::QuadMesh> qm = std::make_shared<DualContouring::QuadMesh>(DualContouring::isosurface([this](const DualContouring::Point3D &p)
-                                                                                                                         { return cutable_obj->qfn(p); },
-                                                                                                                         0.0, std::array<DualContouring::Point3D, 2>{{{-1.1, -1.1, -1.1}, {1.1, 1.1, 1.1}}}, std::array<size_t, 3>{100, 100, 100}));
-    ui->widget_3->set_obj(qm);
-*/
+    /*
+        std::shared_ptr<DualContouring::QuadMesh> qm = std::make_shared<DualContouring::QuadMesh>(DualContouring::isosurface([this](const DualContouring::Point3D &p)
+                                                                                                                             { return cutable_obj->qfn(p); },
+                                                                                                                             0.0, std::array<DualContouring::Point3D, 2>{{{-1.1, -1.1, -1.1}, {1.1, 1.1, 1.1}}}, std::array<size_t, 3>{100, 100, 100}));
+        ui->widget_3->set_obj(qm);
+    */
 
     cutable_obj->set_prefered_settings();
     set_values_from_settings();
@@ -133,11 +132,6 @@ void main_window::slice_object()
 
     show_support(ui->support_checkbox->isChecked());
 
-    for (double i = -1; i < 1; i += 0.1)
-    {
-        std::cout << cutable_obj->fn(vec3(i, 0, 0)) << std::endl;
-    }
-
     ui->verticalScrollBar->setMaximum(settings::level_count - 1);
     ui->verticalScrollBar->setValue(settings::level_count - 1);
 }
@@ -153,7 +147,6 @@ void main_window::generate_support()
         return;
     }
 
-
     support_obj = std::make_shared<support>(*(cutable_obj.get()));
     slicer slicer(support_obj);
     sliced_support = std::make_shared<sliced_object>(slicer.create_slices(
@@ -167,7 +160,6 @@ void main_window::generate_support()
                                                                                                                          { return support_obj->qfn(p); },
                                                                                                                          0.0, std::array<DualContouring::Point3D, 2>{{{-1.1, -1.1, -1.1}, {1.1, 1.1, 1.1}}}, std::array<size_t, 3>{100, 100, 100}));
     ui->widget_3->set_obj(qm);
-
 
     show_support(ui->support_checkbox->isChecked());
 }

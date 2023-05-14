@@ -6,16 +6,14 @@ std::vector<qgl_vertex> mesh_3D_widget::obj_to_printable() const
 
     for (const auto &a : obj->quads)
     {
-        vec3 normal = cross(vec3(obj->points[a[1]-1][0], obj->points[a[1]-1][1], obj->points[a[1]-1][2]) - vec3(obj->points[a[0]-1][0], obj->points[a[0]-1][1], obj->points[a[0]-1][2]), vec3(obj->points[a[2]-1][0], obj->points[a[2]-1][1], obj->points[a[2]-1][2]) - vec3(obj->points[a[0]-1][0], obj->points[a[0]-1][1], obj->points[a[0]-1][2]));
-        result.push_back({QVector3D{obj->points[a[0]-1][0], obj->points[a[0]-1][1], obj->points[a[0]-1][2]}, QVector3D{normal.x, normal.y, normal.z}});
-        result.push_back({QVector3D{obj->points[a[1]-1][0], obj->points[a[1]-1][1], obj->points[a[1]-1][2]}, QVector3D{normal.x, normal.y, normal.z}});
-        result.push_back({QVector3D{obj->points[a[2]-1][0], obj->points[a[2]-1][1], obj->points[a[2]-1][2]}, QVector3D{normal.x, normal.y, normal.z}});
-        result.push_back({QVector3D{obj->points[a[0]-1][0], obj->points[a[0]-1][1], obj->points[a[0]-1][2]}, QVector3D{normal.x, normal.y, normal.z}});
-        result.push_back({QVector3D{obj->points[a[2]-1][0], obj->points[a[2]-1][1], obj->points[a[2]-1][2]}, QVector3D{normal.x, normal.y, normal.z}});
-        result.push_back({QVector3D{obj->points[a[3]-1][0], obj->points[a[3]-1][1], obj->points[a[3]-1][2]}, QVector3D{normal.x, normal.y, normal.z}});
+        vec3 normal = cross(vec3(obj->points[a[1] - 1][0], obj->points[a[1] - 1][1], obj->points[a[1] - 1][2]) - vec3(obj->points[a[0] - 1][0], obj->points[a[0] - 1][1], obj->points[a[0] - 1][2]), vec3(obj->points[a[2] - 1][0], obj->points[a[2] - 1][1], obj->points[a[2] - 1][2]) - vec3(obj->points[a[0] - 1][0], obj->points[a[0] - 1][1], obj->points[a[0] - 1][2]));
+        result.push_back({QVector3D{obj->points[a[0] - 1][0], obj->points[a[0] - 1][1], obj->points[a[0] - 1][2]}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[1] - 1][0], obj->points[a[1] - 1][1], obj->points[a[1] - 1][2]}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[2] - 1][0], obj->points[a[2] - 1][1], obj->points[a[2] - 1][2]}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[0] - 1][0], obj->points[a[0] - 1][1], obj->points[a[0] - 1][2]}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[2] - 1][0], obj->points[a[2] - 1][1], obj->points[a[2] - 1][2]}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[3] - 1][0], obj->points[a[3] - 1][1], obj->points[a[3] - 1][2]}, QVector3D{normal.x, normal.y, normal.z}});
     }
-
-
 
     return result;
 }
@@ -48,8 +46,21 @@ void mesh_3D_widget::initializeGL()
                                 "in vec3 normal;\n"
                                 "out vec3 fragColor;\n"
 
+                                "struct light{\n"
+                                "vec3 pos;\n"
+                                "};\n"
+                                "int light_count = 8;\n"
+                                "light lights[8];\n"
+
                                 "void main(){\n"
-                                "vec3 lightPos = vec3(-3.0,-1.0,-1.0);\n"
+                                "lights[0].pos = vec3(-2,-2,-2);\n"
+                                "lights[1].pos = vec3(-2,-2,2);\n"
+                                "lights[2].pos = vec3(-2,2,-2);\n"
+                                "lights[3].pos = vec3(2,-2,-2);\n"
+                                "lights[4].pos = vec3(-2,2,2);\n"
+                                "lights[5].pos = vec3(2,2,-2);\n"
+                                "lights[6].pos = vec3(2,-2,2);\n"
+                                "lights[7].pos = vec3(2,2,2);\n"
 
                                 "vec4 pos = vec4(position,1);\n"
                                 "vec4 norm = vec4(normal,0);\n"
@@ -57,9 +68,15 @@ void mesh_3D_widget::initializeGL()
 
                                 "vec3 V = normalize(eye-position);\n"
                                 "vec3 N = normalize(position);\n"
-                                "vec3 L = normalize(lightPos-position);\n"
 
-                                "fragColor = vec3(0.1,0.2,0.2) + vec3(0.5,0.5,0.5)*max(dot(N,L),0);\n"
+                                "vec3 frag_result = vec3(0,0,0);\n"
+
+                                "for(int i=0;i<light_count;i++){\n"
+                                " vec3 L = normalize(lights[i].pos-position);\n"
+                                "frag_result += vec3(0.2,0.2,0.2)*max(dot(N,L),0);\n"
+                                "}\n"
+
+                                "fragColor = vec3(0.1,0.2,0.2) + frag_result;\n"
                                 "}");
     sp->addShaderFromSourceCode(QOpenGLShader::Fragment,
                                 "#version 450\n"
