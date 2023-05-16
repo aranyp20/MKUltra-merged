@@ -1,6 +1,6 @@
 #include "support_structure_generator.h"
 
-polylines support_sctructure_generator::create_colors_from_wieghts(const weighted_polylines &wp) const
+polylines support_structure_generator::create_colors_from_wieghts(const weighted_polylines &wp) const
 {
     polylines result;
 
@@ -21,12 +21,53 @@ polylines support_sctructure_generator::create_colors_from_wieghts(const weighte
     return result;
 }
 
-std::vector<support_column_template> support_sctructure_generator::find_column_spaces_onz(const vec2 &p) const
+void support_structure_generator::colorize_points_by_neccessity(sliced_object &obj) const
 {
-    return std::vector<support_column_template>();
+    auto weighed = [&](const vec3 &p, std::shared_ptr<frep_object> surf) -> double
+    {
+        return dot(vec3(0.0, 0.0, -1.0), normalize(surf->grad(p)));
+    };
+
+    for (int level = 0; level < obj.get_slice_count(); level++)
+    {
+        weighted_polylines weighted(obj.get_poly_level(level, sliced_object::layer_data::part_type::OUTER), weighed, surface);
+
+        obj.set_level_color(create_colors_from_wieghts(weighted), level, sliced_object::layer_data::part_type::OUTER);
+    }
 }
 
-std::vector<support_column_template> support_sctructure_generator::find_column_spaces(const double distance_between) const
+std::vector<support_column_template> support_structure_generator::find_column_spaces_onz(const vec2 &p) const
+{
+    std::vector<support_column_template> result;
+
+    const double step_distance = 0.01;
+
+    double pz = -1;
+    double last_leave = pz;
+    double last_enter = pz;
+    bool last_was_in = surface->inside(vec3(p.x, p.y, pz));
+
+    for (pz += step_distance; pz <= 1; pz += step_distance)
+    {
+        bool this_is_in = surface->inside(vec3(p.x, p.y, pz));
+
+        if (this_is_in && !last_was_in)
+        {
+            result.push_back({last_leave, vec3(p.x, p.y, pz)});
+            last_enter = pz;
+        }
+        else if (!this_is_in && last_was_in)
+        {
+            last_leave = pz;
+        }
+
+        last_was_in = this_is_in;
+    }
+
+    return result;
+}
+
+std::vector<support_column_template> support_structure_generator::find_column_spaces(const double distance_between) const
 {
     std::vector<support_column_template> result;
 
@@ -42,21 +83,11 @@ std::vector<support_column_template> support_sctructure_generator::find_column_s
     return result;
 }
 
-support_sctructure_generator::support_sctructure_generator(std::shared_ptr<frep_object> _surface) : surface(_surface)
+support_structure_generator::support_structure_generator(std::shared_ptr<frep_object> _surface) : surface(_surface)
 {
 }
 
-void support_sctructure_generator::generate_to(sliced_object &obj) const
+support support_structure_generator::generate_to(const frep_object &obj) const
 {
-    auto weighed = [&](const vec3 &p, std::shared_ptr<frep_object> surf) -> double
-    {
-        return dot(vec3(0.0, 0.0, -1.0), normalize(surf->grad(p)));
-    };
-
-    for (int level = 0; level < obj.get_slice_count(); level++)
-    {
-        weighted_polylines weighted(obj.get_poly_level(level, sliced_object::layer_data::part_type::OUTER), weighed, surface);
-
-        obj.set_level_color(create_colors_from_wieghts(weighted), level, sliced_object::layer_data::part_type::OUTER);
-    }
+    return support(obj);
 }

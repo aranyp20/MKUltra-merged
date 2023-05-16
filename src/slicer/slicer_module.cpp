@@ -85,7 +85,12 @@ sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner
     }
     sliced_object obj(result, my_bounding_box);
 
-    support_generator.generate_to(obj);
-
     return obj;
+}
+
+sliced_object slicer::generate_support(const sliced_object &base_sliced, unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)> cb) const
+{
+    slicer sub_slicer(std::make_shared<support>(support_generator.generate_to(*cutable_obj)));
+
+    return sliced_object(base_sliced, sub_slicer.create_slices(level_count, inner_shell_count, inner_shell_distance, cb, true));
 }

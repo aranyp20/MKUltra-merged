@@ -32,10 +32,10 @@ private:
     Ui::MainWindow *ui;
 
     std::shared_ptr<frep_object> cutable_obj;
-    std::shared_ptr<support> support_obj;
+    // std::shared_ptr<support> support_obj;
 
     std::shared_ptr<sliced_object> sliced_obj;
-    std::shared_ptr<sliced_object> sliced_support;
+    // std::shared_ptr<sliced_object> sliced_support;
     std::shared_ptr<sliced_object> whole_obj;
     std::shared_ptr<sliced_object> printable;
 
