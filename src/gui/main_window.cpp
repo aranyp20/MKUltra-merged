@@ -156,7 +156,7 @@ void main_window::generate_support()
         true));
     */
 
-    whole_obj = std::make_shared<sliced_object>(slicer.generate_support(*sliced_obj, settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, [this](int v)
+    whole_obj = std::make_shared<sliced_object>(slicer.generate_support(*sliced_obj, settings::support_space_between, settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, [this](int v)
                                                                         { this->cb_slice_progressed(v); }));
 
     std::shared_ptr<DualContouring::QuadMesh> qm = std::make_shared<DualContouring::QuadMesh>(DualContouring::isosurface([this](const DualContouring::Point3D &p)

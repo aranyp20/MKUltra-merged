@@ -27,5 +27,5 @@ public:
     slicer(std::shared_ptr<frep_object> _cutable_obj);
 
     sliced_object create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)>, bool slice_as_support = false) const;
-    sliced_object generate_support(const sliced_object &base_sliced, unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)> cb) const;
+    sliced_object generate_support(const sliced_object &base_sliced, const double distance_between, unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)> cb) const;
 };

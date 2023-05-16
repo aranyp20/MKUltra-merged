@@ -4,9 +4,8 @@
 
 class cylinder_section : public frep_object
 {
-    vec3 fix1 = vec3(0, 0, -0.9);
-    vec3 fix2 = vec3(0, 0, 0);
-    double radius = 0.2;
+    vec3 fix1, fix2;
+    double radius = 0.1;
 
     template <typename T, typename H, typename ARRAY = vec3_t<T>>
     T common_fn(const T &x, const T &y, const H &h) const
@@ -17,11 +16,12 @@ class cylinder_section : public frep_object
 
         ARRAY d = (p2 - p1) / (p2 - p1).length();
 
-        
-        return std::max(p.z,((p1 - p - d * (dot((p1 - p), d))).length() - T(radius)));
+        return std::max(std::max(p1.z - p.z, p.z - p2.z), ((p1 - p - d * (dot((p1 - p), d))).length() - T(radius)));
     }
 
 public:
+    cylinder_section(const vec3 &_fix1, const vec3 &_fix2) : fix1(_fix1), fix2(_fix2) {}
+
     interval fn(const interval &X, const interval &Y, double h) const override
     {
         return common_fn(X, Y, h);

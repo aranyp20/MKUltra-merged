@@ -27,21 +27,22 @@ class support : public frep_object
 
     frep_intersect m_c_ready;
 
-    frep_onion ready;
+    frep_scale ready;
 
 public:
-    support(const frep_object &to) : m_sphere_scaled(to, 0.15), m_sphere_m_cylinder_blended(to, 0.8, m_cylinder, 0.71), m_substract(m_sphere_m_cylinder_blended, m_sphere_scaled), m_c_substract(m_sphere_m_cylinder_blended, to), m_c_holder(m_c_substract, m_sphere_scaled), m_c_ready(m_c_holder, m_c_pattern), ready(m_c_ready, m_substract) {}
+    support(const frep_object &to, const vec3 &ground_point, const vec3 &hold_point) : m_cylinder(ground_point, hold_point), m_sphere_scaled(to, 0.15), m_sphere_m_cylinder_blended(to, 0.8, m_cylinder, 0.71), m_substract(m_sphere_m_cylinder_blended, m_sphere_scaled), m_c_substract(m_sphere_m_cylinder_blended, to), m_c_holder(m_c_substract, m_sphere_scaled), m_c_ready(m_c_holder, m_c_pattern), ready(m_cylinder, 0) {} // ready(m_c_ready, m_substract) {}
 
     interval fn(const interval &X, const interval &Y, double h) const override
     {
-        return ready.fn(X, Y, h);
+        return m_cylinder.fn(X, Y, h);
     }
     double fn(const vec3 &p) const override
     {
-        return ready.fn(p);
+
+        return m_cylinder.fn(p);
     }
     dnum fn(const dnum &X, const dnum &Y, const dnum &h) const override
     {
-        return ready.fn(X, Y, h);
+        return m_cylinder.fn(X, Y, h);
     }
 };

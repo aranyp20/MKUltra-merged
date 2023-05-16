@@ -156,18 +156,18 @@ sliced_object::layer_data::layer_data(const polylines &_outer, const polylines &
     parts[part_type::INFILL].org = transfer(_infill, _bb);
     parts[part_type::INFILL].colored = colorize(parts[part_type::INFILL].org, vec3(1, 1, 0));
 
-    if(is_support)
+    if (is_support)
     {
         parts[part_type::INNER].colored_separated = colorize(parts[part_type::INNER].org, vec3(1, 0, 0));
         parts[part_type::OUTER].colored_separated = colorize(parts[part_type::OUTER].org, vec3(1, 0, 0));
         parts[part_type::INFILL].colored_separated = colorize(parts[part_type::INFILL].org, vec3(1, 0, 0));
-    }else 
+    }
+    else
     {
         parts[part_type::INNER].colored_separated = colorize(parts[part_type::INNER].org, vec3(0, 1, 0));
         parts[part_type::OUTER].colored_separated = colorize(parts[part_type::OUTER].org, vec3(0, 1, 0));
         parts[part_type::INFILL].colored_separated = colorize(parts[part_type::INFILL].org, vec3(0, 1, 0));
     }
-
 
     combine_orgs();
     combine_coloreds();
@@ -252,10 +252,9 @@ void sliced_object::layer_data::eat(const layer_data &other)
         parts[i].poly.add_together(other.parts[i].poly);
         parts[i].org.insert(parts[i].org.end(), other.parts[i].org.begin(), other.parts[i].org.end());
         parts[i].colored.insert(parts[i].colored.end(), other.parts[i].colored.begin(), other.parts[i].colored.end());
-        parts[i].colored_separated.insert(parts[i].colored_separated.end(), other.parts[i].colored_separated.begin(), other.parts[i].colored_separated.end());    
+        parts[i].colored_separated.insert(parts[i].colored_separated.end(), other.parts[i].colored_separated.begin(), other.parts[i].colored_separated.end());
     }
     combine_orgs();
     combine_coloreds();
     combine_coloreds_separated();
-
 }

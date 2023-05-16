@@ -38,7 +38,7 @@ void print(const std::vector<polylines> &d)
 }
 */
 
-slicer::slicer(std::shared_ptr<frep_object> _cutable_obj) : cutable_obj(_cutable_obj), my_bounding_box(_cutable_obj->get_prefered_box()), outer_generator(outer_shell_generator(_cutable_obj)), inner_generator(inner_shell_generator(cutable_obj)), inf_generator(infill_generator(cutable_obj)), support_generator(_cutable_obj)
+slicer::slicer(std::shared_ptr<frep_object> _cutable_obj) : cutable_obj(_cutable_obj), my_bounding_box(_cutable_obj->get_prefered_box()), outer_generator(outer_shell_generator(_cutable_obj)), inner_generator(inner_shell_generator(cutable_obj)), inf_generator(infill_generator(cutable_obj)), support_generator(support_structure_generator(_cutable_obj))
 {
 }
 
@@ -48,6 +48,7 @@ sliced_object::layer_data slicer::slice(double h_per_max, unsigned int inner_she
 
     polylines inner;
     polylines infill;
+
     polylines outer = outer_generator.generate(std::pair<vec2, double>(my_bounding_box.floor), h, 3);
 
     infill.add_together(inf_generator.generate(std::pair<vec2, double>(my_bounding_box.floor), h, M_PI / settings::infill_number_rot, settings::infill_space_between, inner_shell_count * inner_shell_distance));
@@ -74,7 +75,6 @@ sliced_object slicer::create_test_slices(unsigned int inner_shell_count, double 
 
 sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)> cb, bool slice_as_support) const
 {
-
     std::vector<sliced_object::layer_data> result;
 
     for (int i = 0; i < level_count; i++)
@@ -88,9 +88,7 @@ sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner
     return obj;
 }
 
-sliced_object slicer::generate_support(const sliced_object &base_sliced, unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)> cb) const
+sliced_object slicer::generate_support(const sliced_object &base_sliced, const double distance_between, unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)> cb) const
 {
-    slicer sub_slicer(std::make_shared<support>(support_generator.generate_to(*cutable_obj)));
-
-    return sliced_object(base_sliced, sub_slicer.create_slices(level_count, inner_shell_count, inner_shell_distance, cb, true));
+    return support_generator.generate_to(base_sliced, distance_between, level_count, inner_shell_count, inner_shell_distance, cb);
 }

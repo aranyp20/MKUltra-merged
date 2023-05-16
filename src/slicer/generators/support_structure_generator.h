@@ -17,8 +17,10 @@ class support_structure_generator
     std::vector<support_column_template> find_column_spaces_onz(const vec2 &p) const;
     std::vector<support_column_template> find_column_spaces(const double distance_between) const;
 
+    std::vector<support> generate_from_templates(const frep_object &obj, const std::vector<support_column_template> &wheres) const;
+
 public:
     support_structure_generator(std::shared_ptr<frep_object>);
 
-    support generate_to(const frep_object &) const;
+    sliced_object generate_to(const sliced_object &, const double distance_between, unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)>) const;
 };

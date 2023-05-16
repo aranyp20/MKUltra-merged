@@ -1,4 +1,5 @@
 #include "support_structure_generator.h"
+#include "slicer_module.h"
 
 polylines support_structure_generator::create_colors_from_wieghts(const weighted_polylines &wp) const
 {
@@ -47,13 +48,13 @@ std::vector<support_column_template> support_structure_generator::find_column_sp
     double last_enter = pz;
     bool last_was_in = surface->inside(vec3(p.x, p.y, pz));
 
-    for (pz += step_distance; pz <= 1; pz += step_distance)
+    for (pz = step_distance - 1; pz <= 1; pz += step_distance)
     {
         bool this_is_in = surface->inside(vec3(p.x, p.y, pz));
 
         if (this_is_in && !last_was_in)
         {
-            result.push_back({last_leave, vec3(p.x, p.y, pz)});
+            result.push_back({vec3(p.x, p.y, last_leave), vec3(p.x, p.y, pz)});
             last_enter = pz;
         }
         else if (!this_is_in && last_was_in)
@@ -71,9 +72,9 @@ std::vector<support_column_template> support_structure_generator::find_column_sp
 {
     std::vector<support_column_template> result;
 
-    for (double x = distance_between / 2; x < 2; x += distance_between)
+    for (double x = -1 + distance_between / 2; x < 1; x += distance_between)
     {
-        for (double y = distance_between / 2; y < 2; y += distance_between)
+        for (double y = -1 + distance_between / 2; y < 1; y += distance_between)
         {
             std::vector<support_column_template> on_this_point = find_column_spaces_onz(vec2(x, y));
             result.insert(result.end(), on_this_point.begin(), on_this_point.end());
@@ -87,7 +88,29 @@ support_structure_generator::support_structure_generator(std::shared_ptr<frep_ob
 {
 }
 
-support support_structure_generator::generate_to(const frep_object &obj) const
+std::vector<support> support_structure_generator::generate_from_templates(const frep_object &obj, const std::vector<support_column_template> &wheres) const
 {
-    return support(obj);
+    std::vector<support> result;
+
+    for (const auto &a : wheres)
+    {
+        result.push_back(support(*surface, a.ground_point, a.hold_point));
+    }
+
+    return result;
+}
+
+sliced_object support_structure_generator::generate_to(const sliced_object &obj, const double distance_between, unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)> cb) const
+{
+    sliced_object result = obj;
+
+    std::vector<support> slicable_columns = generate_from_templates(*surface, find_column_spaces(distance_between));
+
+    for (const auto &a : slicable_columns)
+    {
+        slicer t_slicer(std::make_shared<support>(a));
+        result = sliced_object(result, t_slicer.create_slices(level_count, inner_shell_count, inner_shell_distance, cb, true));
+    }
+
+    return result;
 }

@@ -78,6 +78,7 @@ outer_shell_generator::square::square(const vec2 &_start, double _size) : start(
 
 polylines outer_shell_generator::generate(const plane &plane, double h, unsigned int resolution) const
 {
+
     std::vector<square> leaves = rejection_testing(square(plane.get_corner(), plane.get_size()), h, resolution);
     std::vector<id_section> sections = generate_contour(leaves, h);
 
@@ -88,6 +89,7 @@ polylines outer_shell_generator::generate(const plane &plane, double h, unsigned
 
 void outer_shell_generator::rejection_testing_square(std::vector<square> &leaves, const square &testable, double h, unsigned int resolution) const
 {
+
     if (rejection_test(testable, h))
     {
         if (resolution == 0)
