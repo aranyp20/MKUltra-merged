@@ -90,5 +90,6 @@ sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner
 
 sliced_object slicer::generate_support(const sliced_object &base_sliced, const double distance_between, unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)> cb) const
 {
+
     return support_generator.generate_to(base_sliced, distance_between, level_count, inner_shell_count, inner_shell_distance, cb);
 }

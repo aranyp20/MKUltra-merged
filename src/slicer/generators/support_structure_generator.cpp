@@ -88,14 +88,16 @@ support_structure_generator::support_structure_generator(std::shared_ptr<frep_ob
 {
 }
 
-std::vector<support> support_structure_generator::generate_from_templates(const frep_object &obj, const std::vector<support_column_template> &wheres) const
+std::vector<std::shared_ptr<support>> support_structure_generator::generate_from_templates( const std::vector<support_column_template> &wheres) const
 {
-    std::vector<support> result;
+    std::vector<std::shared_ptr<support>> result;
 
     for (const auto &a : wheres)
     {
-        result.push_back(support(*surface, a.ground_point, a.hold_point));
+        result.push_back(std::make_shared<support>(surface, a.ground_point, a.hold_point));
     }
+
+    //return std::vector<std::shared_ptr<support>>{std::make_shared<support>(surface, vec3(-0.8,0,-1), vec3(-0.8,0,1))};
 
     return result;
 }
@@ -104,13 +106,14 @@ sliced_object support_structure_generator::generate_to(const sliced_object &obj,
 {
     sliced_object result = obj;
 
-    std::vector<support> slicable_columns = generate_from_templates(*surface, find_column_spaces(distance_between));
+    std::vector<std::shared_ptr<support>> slicable_columns = generate_from_templates(find_column_spaces(distance_between));
 
     for (const auto &a : slicable_columns)
     {
-        slicer t_slicer(std::make_shared<support>(a));
+        slicer t_slicer(a);  
         result = sliced_object(result, t_slicer.create_slices(level_count, inner_shell_count, inner_shell_distance, cb, true));
     }
+    
 
     return result;
 }

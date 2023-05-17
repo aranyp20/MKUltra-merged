@@ -9,7 +9,6 @@
 class support_structure_generator
 {
 
-    std::shared_ptr<frep_object> surface;
 
     polylines create_colors_from_wieghts(const weighted_polylines &) const;
     void colorize_points_by_neccessity(sliced_object &) const;
@@ -17,9 +16,10 @@ class support_structure_generator
     std::vector<support_column_template> find_column_spaces_onz(const vec2 &p) const;
     std::vector<support_column_template> find_column_spaces(const double distance_between) const;
 
-    std::vector<support> generate_from_templates(const frep_object &obj, const std::vector<support_column_template> &wheres) const;
+    std::vector<std::shared_ptr<support>> generate_from_templates(const std::vector<support_column_template> &wheres) const;
 
 public:
+    std::shared_ptr<frep_object> surface;
     support_structure_generator(std::shared_ptr<frep_object>);
 
     sliced_object generate_to(const sliced_object &, const double distance_between, unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)>) const;
