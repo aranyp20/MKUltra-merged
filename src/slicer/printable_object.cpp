@@ -144,17 +144,34 @@ void sliced_object::layer_data::combine_coloreds_separated()
 
 sliced_object::layer_data::layer_data(const polylines &_outer, const polylines &_inner, const polylines &_infill, const bounding_box &_bb, bool is_support)
 {
-    parts[part_type::INNER].poly = _inner;
-    parts[part_type::INNER].org = transfer(_inner, _bb);
-    parts[part_type::INNER].colored = colorize(parts[part_type::INNER].org, vec3(0, 0, 1));
+    if (!is_support)
+    {
+        parts[part_type::INNER].poly = _inner;
+        parts[part_type::INNER].org = transfer(_inner, _bb);
+        parts[part_type::INNER].colored = colorize(parts[part_type::INNER].org, vec3(0, 0, 1));
 
-    parts[part_type::OUTER].poly = _outer;
-    parts[part_type::OUTER].org = transfer(_outer, _bb);
-    parts[part_type::OUTER].colored = colorize(parts[part_type::OUTER].org, vec3(1, 1, 1));
+        parts[part_type::OUTER].poly = _outer;
+        parts[part_type::OUTER].org = transfer(_outer, _bb);
+        parts[part_type::OUTER].colored = colorize(parts[part_type::OUTER].org, vec3(0, 0, 0));
 
-    parts[part_type::INFILL].poly = _infill;
-    parts[part_type::INFILL].org = transfer(_infill, _bb);
-    parts[part_type::INFILL].colored = colorize(parts[part_type::INFILL].org, vec3(1, 1, 0));
+        parts[part_type::INFILL].poly = _infill;
+        parts[part_type::INFILL].org = transfer(_infill, _bb);
+        parts[part_type::INFILL].colored = colorize(parts[part_type::INFILL].org, vec3(1, 1, 0));
+    }
+    else
+    {
+        parts[part_type::INNER].poly = _inner;
+        parts[part_type::INNER].org = transfer(_inner, _bb);
+        parts[part_type::INNER].colored = colorize(parts[part_type::INNER].org, vec3(1, 0, 1));
+
+        parts[part_type::OUTER].poly = _outer;
+        parts[part_type::OUTER].org = transfer(_outer, _bb);
+        parts[part_type::OUTER].colored = colorize(parts[part_type::OUTER].org, vec3(1, 0, 1));
+
+        parts[part_type::INFILL].poly = _infill;
+        parts[part_type::INFILL].org = transfer(_infill, _bb);
+        parts[part_type::INFILL].colored = colorize(parts[part_type::INFILL].org, vec3(1, 0, 1));
+    }
 
     if (is_support)
     {

@@ -7,7 +7,6 @@ enum surface_type
     GYROID = 1,
     SPHERE = 2,
     CYLINDER = 3
-
 };
 
 class settings

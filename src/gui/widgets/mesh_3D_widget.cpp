@@ -96,6 +96,9 @@ void mesh_3D_widget::initializeGL()
     vbo.release();
 
     glEnable(GL_DEPTH_TEST);
+
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void mesh_3D_widget::resizeGL(int w, int h)
@@ -138,7 +141,7 @@ void mesh_3D_widget::paintGL()
     sp->setAttributeBuffer(0, GL_FLOAT, offsetof(qgl_vertex, position), 3, sizeof(qgl_vertex));
     sp->setAttributeBuffer(1, GL_FLOAT, offsetof(qgl_vertex, color), 3, sizeof(qgl_vertex));
 
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glDrawArrays(GL_TRIANGLES, 0, pp.size());

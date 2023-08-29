@@ -37,18 +37,17 @@ class chmutov : public frep_object
 public:
     interval fn(const interval &X, const interval &Y, double h) const override
     {
-        return common_fn(X, Y, h);
-    }
-    
-    dnum fn(const dnum &X, const dnum& Y, const dnum& h) const override
-    {
-        return common_fn(X,Y,h);
+        return common_fn(X, Y, h - 0.7);
     }
 
+    dnum fn(const dnum &X, const dnum &Y, const dnum &h) const override
+    {
+        return common_fn(X, Y, h - 0.7);
+    }
 
     double fn(const vec3 &p) const override
     {
-        return common_fn(p.x, p.y, p.z);
+        return common_fn(p.x, p.y, p.z - 0.7);
     }
 
     void set_prefered_settings() override

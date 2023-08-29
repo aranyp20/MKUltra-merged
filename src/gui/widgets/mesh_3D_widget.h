@@ -24,7 +24,6 @@ class mesh_3D_widget : public QOpenGLWidget
 
 public:
     mesh_3D_widget(QWidget *parent);
-
     void set_obj(std::shared_ptr<DualContouring::QuadMesh>);
 
     ~mesh_3D_widget();

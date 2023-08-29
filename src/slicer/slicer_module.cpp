@@ -48,9 +48,7 @@ sliced_object::layer_data slicer::slice(double h_per_max, unsigned int inner_she
 
     polylines inner;
     polylines infill;
-
     polylines outer = outer_generator.generate(std::pair<vec2, double>(my_bounding_box.floor), h, 3);
-
     infill.add_together(inf_generator.generate(std::pair<vec2, double>(my_bounding_box.floor), h, M_PI / settings::infill_number_rot, settings::infill_space_between, inner_shell_count * inner_shell_distance));
     for (int i = 1; i <= inner_shell_count; i++)
     {
@@ -90,6 +88,5 @@ sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner
 
 sliced_object slicer::generate_support(const sliced_object &base_sliced, const double distance_between, unsigned int level_count, unsigned int inner_shell_count, double inner_shell_distance, std::function<void(int)> cb) const
 {
-
     return support_generator.generate_to(base_sliced, distance_between, level_count, inner_shell_count, inner_shell_distance, cb);
 }

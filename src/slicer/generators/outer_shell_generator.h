@@ -13,11 +13,11 @@ class outer_shell_generator
     struct square
     {
 
-        //       0
+        //      0
         //    0-----1
-        //  3 |     | 1
+        //  3 |    | 1
         //    3-----2
-        //       2
+        //      2
         vec2 start; // upper-left pos
         double size;
 

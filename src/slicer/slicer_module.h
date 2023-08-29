@@ -13,7 +13,6 @@ class slicer
 {
     std::shared_ptr<frep_object> cutable_obj;
     bounding_box my_bounding_box;
-
     outer_shell_generator outer_generator;
     inner_shell_generator inner_generator;
     infill_generator inf_generator;

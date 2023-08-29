@@ -39,6 +39,9 @@ void poly_2D_widget::initializeGL()
 
     vao.release();
     vbo.release();
+
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void poly_2D_widget::resizeGL(int w, int h)
@@ -54,7 +57,6 @@ void poly_2D_widget::paintGL()
     sp->bind();
     vao.bind();
     vbo.bind();
-    
 
     std::vector<qgl_vertex> pp = (*obj)->get_colored_separated_level(printable_level);
     const void *printable_data = pp.data();
@@ -67,8 +69,7 @@ void poly_2D_widget::paintGL()
     sp->setAttributeBuffer(0, GL_FLOAT, offsetof(qgl_vertex, position), 3, sizeof(qgl_vertex));
     sp->setAttributeBuffer(1, GL_FLOAT, offsetof(qgl_vertex, color), 3, sizeof(qgl_vertex));
 
-
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glDrawArrays(GL_LINES, 0, pp.size());
