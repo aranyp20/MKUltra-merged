@@ -9,6 +9,7 @@ class frep_substract : public frep_object
     const frep_object &parent1;
     const frep_object &parent2;
 
+    // TODO: why I need this intersect??
     frep_intersect m_intersect;
     frep_invert m_invert;
 

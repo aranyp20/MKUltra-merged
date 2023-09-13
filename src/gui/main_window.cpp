@@ -15,6 +15,7 @@
 #include "support.hpp"
 #include "cylinder_section.hpp"
 #include "rbf_surface.hpp"
+#include "gcode_writer.h"
 
 QProgressBar *main_window::slice_bar = nullptr;
 
@@ -134,6 +135,9 @@ void main_window::slice_object()
 
     ui->verticalScrollBar->setMaximum(settings::level_count - 1);
     ui->verticalScrollBar->setValue(settings::level_count - 1);
+
+    gcode_writer gw("output.obj");
+    gw.write_gcode(sliced_obj.get());
 }
 
 void main_window::generate_support()
