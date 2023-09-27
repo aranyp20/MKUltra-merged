@@ -21,7 +21,7 @@ class sphere : public frep_object
     }
 
 public:
-    sphere(const vec3 &_center = vec3(0.0, 0.0, 1.1)) : center(_center) {}
+    sphere(const vec3 &_center = vec3(0.0, 0.0, -1.1)) : center(_center) {}
 
     interval fn(const interval &X, const interval &Y, double h) const override
     {

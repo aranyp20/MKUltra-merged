@@ -136,7 +136,7 @@ void main_window::slice_object()
     ui->verticalScrollBar->setMaximum(settings::level_count - 1);
     ui->verticalScrollBar->setValue(settings::level_count - 1);
 
-    gcode_writer gw("output.obj");
+    gcode_writer gw("output.gcode");
     gw.write_gcode(sliced_obj.get());
 }
 
