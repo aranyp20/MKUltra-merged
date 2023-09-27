@@ -1,6 +1,7 @@
 #include "FunctionCreator.h"
 #include "slicer_module.h"
 #include "settings.h"
+#include "fdm_obj.hpp"
 
 /*
 void print(const std::vector<polylines> &d)
@@ -42,9 +43,24 @@ slicer::slicer(std::shared_ptr<frep_object> _cutable_obj) : cutable_obj(_cutable
 {
 }
 
+sliced_object::layer_data slicer::slice_fdm(double h_per_max, double offset) const
+{
+    const double h = my_bounding_box.floor.first.z + h_per_max * my_bounding_box.height;
+
+    std::shared_ptr<fdm_obj> cuttable_fdm = std::make_shared<fdm_obj>(cutable_obj, offset);
+
+    outer_shell_generator outer_2(cuttable_fdm);
+
+    polylines inner;
+    polylines infill;
+    polylines outer = outer_2.generate(std::pair<vec2, double>(my_bounding_box.floor), h, 3);
+
+    return sliced_object::layer_data(outer, inner, infill, my_bounding_box, false);
+}
+
 sliced_object::layer_data slicer::slice(double h_per_max, unsigned int inner_shell_count, double inner_shell_distance, bool slice_as_support) const
 {
-    double h = my_bounding_box.floor.first.z + h_per_max * my_bounding_box.height;
+    const double h = my_bounding_box.floor.first.z + h_per_max * my_bounding_box.height;
 
     polylines inner;
     polylines infill;
@@ -77,7 +93,15 @@ sliced_object slicer::create_slices(unsigned int level_count, unsigned int inner
 
     for (int i = 0; i < level_count; i++)
     {
-        sliced_object::layer_data level = slice(i / (double)level_count /*floor to one lvl below ceiling*/, inner_shell_count, inner_shell_distance, slice_as_support);
+        sliced_object::layer_data level;
+        if (settings::as_fdm)
+        {
+            level = slice_fdm(i / (double)level_count, inner_shell_distance);
+        }
+        else
+        {
+            level = slice(i / (double)level_count /*floor to one lvl below ceiling*/, inner_shell_count, inner_shell_distance, slice_as_support);
+        }
         result.push_back(level);
         cb((i + 1) * 100 / level_count);
     }

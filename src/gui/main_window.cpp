@@ -16,6 +16,7 @@
 #include "cylinder_section.hpp"
 #include "rbf_surface.hpp"
 #include "gcode_writer.h"
+#include "fdm_obj.hpp"
 
 QProgressBar *main_window::slice_bar = nullptr;
 

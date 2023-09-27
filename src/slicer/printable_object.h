@@ -40,6 +40,7 @@ public:
         void combine_coloreds();
         void combine_coloreds_separated();
 
+        layer_data() = default;
         layer_data(const polylines &_outer, const polylines &_inner, const polylines &_infill, const bounding_box &_bb, bool is_suport = false);
 
         void normalize_for_gl(vec3 &, const bounding_box &) const;
@@ -70,7 +71,6 @@ public:
     const std::vector<float> &get_org_level(unsigned int, const layer_data::part_type &) const;
     const std::vector<qgl_vertex> &get_colored_level(unsigned int) const;
     const std::vector<qgl_vertex> &get_colored_separated_level(unsigned int) const;
-
 
     const std::vector<qgl_vertex> get_colored() const;
 
