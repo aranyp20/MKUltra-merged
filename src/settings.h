@@ -20,6 +20,7 @@ public:
     static int infill_number_rot;
     static double support_space_between;
     static bool as_fdm;
+    static double fdm_fullfill_distance;
 };
 
 #endif

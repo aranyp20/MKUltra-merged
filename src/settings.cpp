@@ -8,3 +8,4 @@ double settings::infill_space_between = 0.1;
 int settings::infill_number_rot = 3;
 double settings::support_space_between = 0.5;
 bool settings::as_fdm = true;
+double settings::fdm_fullfill_distance = 0.01;

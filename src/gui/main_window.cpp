@@ -97,7 +97,7 @@ void main_window::load_object()
         break;
 
     case surface_type::GYROID:
-        cutable_obj = std::make_shared<RBF_surface>();
+        cutable_obj = std::make_shared<gyroid>();
         break;
     case surface_type::SPHERE:
         cutable_obj = std::make_shared<sphere>();

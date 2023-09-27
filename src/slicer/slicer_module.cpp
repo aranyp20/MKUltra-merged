@@ -2,6 +2,7 @@
 #include "slicer_module.h"
 #include "settings.h"
 #include "fdm_obj.hpp"
+#include "gyroid.hpp"
 
 /*
 void print(const std::vector<polylines> &d)
@@ -47,13 +48,15 @@ sliced_object::layer_data slicer::slice_fdm(double h_per_max, double offset) con
 {
     const double h = my_bounding_box.floor.first.z + h_per_max * my_bounding_box.height;
 
-    std::shared_ptr<fdm_obj> cuttable_fdm = std::make_shared<fdm_obj>(cutable_obj, offset);
+    std::shared_ptr<gyroid> infill_pat = std::make_shared<gyroid>();
+    std::shared_ptr<fdm_obj> cuttable_fdm = std::make_shared<fdm_obj>(cutable_obj, infill_pat, offset);
 
     outer_shell_generator outer_2(cuttable_fdm);
+    infill_generator infill_2(cuttable_fdm);
 
     polylines inner;
-    polylines infill;
     polylines outer = outer_2.generate(std::pair<vec2, double>(my_bounding_box.floor), h, 3);
+    polylines infill; // = infill_2.generate(std::pair<vec2, double>(my_bounding_box.floor), h, 1, settings::fdm_fullfill_distance, 0);
 
     return sliced_object::layer_data(outer, inner, infill, my_bounding_box, false);
 }
