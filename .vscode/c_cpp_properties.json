@@ -18,7 +18,8 @@
                 "${workspaceFolder}/src/slicer/global",
                 "${workspaceFolder}/src",
                 "${workspaceFolder}/src/slicer/object/basic_objects",
-                "${workspaceFolder}/dependencies"
+                "${workspaceFolder}/dependencies",
+                "${workspaceFolder}/src/slicer/object/operations"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang-14",
