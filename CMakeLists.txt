@@ -75,9 +75,11 @@ ${CMAKE_CURRENT_SOURCE_DIR}/src
 ${CMAKE_CURRENT_SOURCE_DIR}/src/gui/widgets)
 
 target_include_directories(${PROJECT_NAME} PUBLIC 
-${CMAKE_CURRENT_SOURCE_DIR}/dependencies
+${CMAKE_CURRENT_SOURCE_DIR}/dependencies/dual_contouring
+${CMAKE_CURRENT_SOURCE_DIR}/dependencies/libgeom
+${CMAKE_CURRENT_SOURCE_DIR}/dependencies/ipia
 )
 
 link_directories(dependencies)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL Qt5::Widgets ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/build/libdualcontour.a)
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL Qt5::Widgets ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/dual_contouring/build/libdualcontour.a ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/ipia/build/libipia.a ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/libgeom/build/libgeom.a)

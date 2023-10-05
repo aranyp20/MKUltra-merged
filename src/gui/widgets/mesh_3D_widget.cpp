@@ -3,16 +3,18 @@
 std::vector<qgl_vertex> mesh_3D_widget::obj_to_printable() const
 {
     std::vector<qgl_vertex> result;
+    std::cout<<"in_alpha"<<std::endl;
 
     for (const auto &a : obj->quads)
     {
+        std::cout<<obj->points[a[0] - 1][0]<<std::endl;
         vec3 normal = cross(vec3(obj->points[a[1] - 1][0], obj->points[a[1] - 1][1], obj->points[a[1] - 1][2]) - vec3(obj->points[a[0] - 1][0], obj->points[a[0] - 1][1], obj->points[a[0] - 1][2]), vec3(obj->points[a[2] - 1][0], obj->points[a[2] - 1][1], obj->points[a[2] - 1][2]) - vec3(obj->points[a[0] - 1][0], obj->points[a[0] - 1][1], obj->points[a[0] - 1][2]));
-        result.push_back({QVector3D{obj->points[a[0] - 1][0], obj->points[a[0] - 1][1], obj->points[a[0] - 1][2]}, QVector3D{normal.x, normal.y, normal.z}});
-        result.push_back({QVector3D{obj->points[a[1] - 1][0], obj->points[a[1] - 1][1], obj->points[a[1] - 1][2]}, QVector3D{normal.x, normal.y, normal.z}});
-        result.push_back({QVector3D{obj->points[a[2] - 1][0], obj->points[a[2] - 1][1], obj->points[a[2] - 1][2]}, QVector3D{normal.x, normal.y, normal.z}});
-        result.push_back({QVector3D{obj->points[a[0] - 1][0], obj->points[a[0] - 1][1], obj->points[a[0] - 1][2]}, QVector3D{normal.x, normal.y, normal.z}});
-        result.push_back({QVector3D{obj->points[a[2] - 1][0], obj->points[a[2] - 1][1], obj->points[a[2] - 1][2]}, QVector3D{normal.x, normal.y, normal.z}});
-        result.push_back({QVector3D{obj->points[a[3] - 1][0], obj->points[a[3] - 1][1], obj->points[a[3] - 1][2]}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[0] - 1][0] /120, obj->points[a[0] - 1][1] /120, obj->points[a[0] - 1][2] /120}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[1] - 1][0] /120, obj->points[a[1] - 1][1] /120, obj->points[a[1] - 1][2] /120}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[2] - 1][0] /120, obj->points[a[2] - 1][1] /120, obj->points[a[2] - 1][2] /120}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[0] - 1][0] /120, obj->points[a[0] - 1][1] /120, obj->points[a[0] - 1][2] /120}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[2] - 1][0] /120, obj->points[a[2] - 1][1] /120, obj->points[a[2] - 1][2] /120}, QVector3D{normal.x, normal.y, normal.z}});
+        result.push_back({QVector3D{obj->points[a[3] - 1][0] /120, obj->points[a[3] - 1][1] /120, obj->points[a[3] - 1][2] /120}, QVector3D{normal.x, normal.y, normal.z}});
     }
 
     return result;

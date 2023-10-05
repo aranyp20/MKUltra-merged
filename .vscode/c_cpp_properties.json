@@ -19,7 +19,9 @@
                 "${workspaceFolder}/src",
                 "${workspaceFolder}/src/slicer/object/basic_objects",
                 "${workspaceFolder}/dependencies",
-                "${workspaceFolder}/src/slicer/object/operations"
+                "${workspaceFolder}/src/slicer/object/operations",
+                "${workspaceFolder}/dependencies/dual_contouring",
+                "${workspaceFolder}/dependencies/libgeom"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang-14",
