@@ -139,12 +139,12 @@ void approximateNormals(std::vector<IPIA::PointNormal> &pns,
 void main_window::load_object()
 {
 
-    auto mesh = Geometry::TriMesh::readOBJ("sphere1.obj");
+    auto mesh = Geometry::TriMesh::readOBJ("stanford-bunny.obj");
 
     auto bbox = boundingBox(mesh);
-    size_t control = 10;
+    size_t control = 50;
     auto size = computeResolution(bbox, control);
-    size_t res = 10;
+    size_t res = 20;
     auto dc_res = computeResolution(bbox, res);
     IPIA surface(3, bbox, size);
 
@@ -157,8 +157,8 @@ void main_window::load_object()
     approximateNormals(samples, mesh.triangles());
   
     double step = 0.001;
-    size_t iterations = 10;
-    double tol = 0.1;
+    size_t iterations = 20;
+    double tol = 0.00001;
     size_t done_iterations = surface.fit(samples, step, iterations, tol);
 
     auto eval = [&](const DualContouring::Point3D &p) { return surface({ p[0], p[1], p[2] }); };
