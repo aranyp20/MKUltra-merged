@@ -21,7 +21,8 @@
                 "${workspaceFolder}/dependencies",
                 "${workspaceFolder}/src/slicer/object/operations",
                 "${workspaceFolder}/dependencies/dual_contouring",
-                "${workspaceFolder}/dependencies/libgeom"
+                "${workspaceFolder}/dependencies/libgeom",
+                "${workspaceFolder}/dependencies/ipia"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang-14",

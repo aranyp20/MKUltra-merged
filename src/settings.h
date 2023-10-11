@@ -1,12 +1,13 @@
 #ifndef _SETTINGS_
 #define _SETTINGS_
 
-enum surface_type
+enum class surface_type
 {
     CHMUTOV = 0,
     GYROID = 1,
     SPHERE = 2,
-    CYLINDER = 3
+    CYLINDER = 3,
+    IPIA = 4
 };
 
 class settings
@@ -15,7 +16,7 @@ public:
     static unsigned int level_count;
     static unsigned int inner_shell_count;
     static double inner_shell_distance;
-    static int s_type;
+    static surface_type s_type;
     static double infill_space_between;
     static int infill_number_rot;
     static double support_space_between;
