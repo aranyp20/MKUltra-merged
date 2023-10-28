@@ -4,6 +4,8 @@
 #include "fdm_obj.hpp"
 #include "gyroid.hpp"
 
+#define SQUARE_DEPTH 5
+
 /*
 void print(const std::vector<polylines> &d)
 {
@@ -55,7 +57,7 @@ sliced_object::layer_data slicer::slice_fdm(double h_per_max, double offset) con
     infill_generator infill_2(cuttable_fdm);
 
     polylines inner;
-    polylines outer = outer_2.generate(std::pair<vec2, double>(my_bounding_box.floor), h, 3);
+    polylines outer = outer_2.generate(std::pair<vec2, double>(my_bounding_box.floor), h, SQUARE_DEPTH);
     polylines infill; // = infill_2.generate(std::pair<vec2, double>(my_bounding_box.floor), h, 1, settings::fdm_fullfill_distance, 0);
 
     return sliced_object::layer_data(outer, inner, infill, my_bounding_box, false);
@@ -67,7 +69,7 @@ sliced_object::layer_data slicer::slice(double h_per_max, unsigned int inner_she
 
     polylines inner;
     polylines infill;
-    polylines outer = outer_generator.generate(std::pair<vec2, double>(my_bounding_box.floor), h, 3);
+    polylines outer = outer_generator.generate(std::pair<vec2, double>(my_bounding_box.floor), h, SQUARE_DEPTH);
     infill.add_together(inf_generator.generate(std::pair<vec2, double>(my_bounding_box.floor), h, M_PI / settings::infill_number_rot, settings::infill_space_between, inner_shell_count * inner_shell_distance));
     for (int i = 1; i <= inner_shell_count; i++)
     {

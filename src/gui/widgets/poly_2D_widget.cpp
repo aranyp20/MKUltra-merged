@@ -58,7 +58,7 @@ void poly_2D_widget::paintGL()
     vao.bind();
     vbo.bind();
 
-    std::vector<qgl_vertex> pp = (*obj)->get_colored_separated_level(printable_level);
+    std::vector<qgl_vertex> pp = (*obj)->get_colored_level(printable_level);
     const void *printable_data = pp.data();
 
     vbo.allocate(printable_data, sizeof(qgl_vertex) * pp.size());

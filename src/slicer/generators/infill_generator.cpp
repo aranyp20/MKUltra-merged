@@ -1,5 +1,7 @@
 #include "infill_generator.h"
 
+#include "frep_scale.hpp"
+
 infill_generator::infill_generator(std::shared_ptr<frep_object> _surface) : surface(_surface)
 {
 }
@@ -30,7 +32,7 @@ polylines infill_generator::generate_one(const plane &plane, double h, double an
 
     for (int i = 0; i < relevants.size(); i++)
     {
-        result.add_together(trace_section(relevants[i], plane.get_size() / 100, h));
+        result.add_together(trace_section(relevants[i], plane.get_size() / 100, h, wall_thickness));
 
         // result.eat(std::vector<vec3>{vec3(relevants[i].p1.x, relevants[i].p1.y, h), vec3(relevants[i].p2.x, relevants[i].p2.y, h)});
     }
@@ -92,28 +94,40 @@ polylines infill_generator::fit_polylines_to_marked_points(const std::vector<mar
     return result;
 }
 
-polylines infill_generator::trace_section(const section &s, double step_distance, double h) const
+polylines infill_generator::trace_section(const section &s, double step_distance, double h, double wall_thickness) const
 {
 
-    std::vector<infill_generator::marked_point> zero_points = find_sign_changes(s, step_distance, h);
+    std::vector<infill_generator::marked_point> zero_points = find_sign_changes(s, step_distance, h, wall_thickness);
 
     return fit_polylines_to_marked_points(zero_points);
 }
 
-std::vector<infill_generator::marked_point> infill_generator::find_sign_changes(const section &s, double step_distance, double h) const
+bool infill_generator::inside_advanced(const vec3 &p, double wall_thickness) const
+{
+    bool use_scale = false;
+    if (!use_scale)
+    {
+        return surface->inside(p);
+    }
+
+    frep_scale scaled_down(*surface, -3 * wall_thickness);
+    return scaled_down.inside(p);
+}
+
+std::vector<infill_generator::marked_point> infill_generator::find_sign_changes(const section &s, double step_distance, double h, double wall_thickness) const
 {
     std::vector<infill_generator::marked_point> result;
 
     double step_count = (s.p1 - s.p2).length() / step_distance;
 
     vec3 last_pos(s.p2.x, s.p2.y, h);
-    bool last_was_in = surface->inside(last_pos);
+    bool last_was_in = inside_advanced(last_pos, wall_thickness);
 
     for (int i = 1; i < step_count; i++)
     {
         vec2 current_pos_tmp = (s.p1 * (i / step_count) + s.p2 * (1 - i / step_count));
         vec3 current_pos(current_pos_tmp.x, current_pos_tmp.y, h);
-        bool this_is_in = surface->inside(current_pos);
+        bool this_is_in = inside_advanced(current_pos, wall_thickness);
 
         if (this_is_in != last_was_in)
         {

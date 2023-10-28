@@ -1,5 +1,7 @@
 #include "outer_shell_generator.h"
 
+#define BINARY_STEP 5
+
 std::map<std::vector<bool>, std::vector<std::array<unsigned int, 2>>> outer_shell_generator::LUT::table = {
     {{false, false, false, false}, {}},
     {{false, false, false, true}, {{2, 3}}},
@@ -169,7 +171,7 @@ vec2 outer_shell_generator::find_zero_value_point(const std::array<vec2, 2> &bet
 
     vec2 mid = (ip + op) / 2;
 
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < BINARY_STEP; i++)
     {
         if (!surface->inside(vec3(mid.x, mid.y, h)))
         {

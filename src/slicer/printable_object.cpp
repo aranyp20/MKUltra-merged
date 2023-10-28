@@ -156,7 +156,7 @@ sliced_object::layer_data::layer_data(const polylines &_outer, const polylines &
 
         parts[part_type::INFILL].poly = _infill;
         parts[part_type::INFILL].org = transfer(_infill, _bb);
-        parts[part_type::INFILL].colored = colorize(parts[part_type::INFILL].org, vec3(1, 1, 0));
+        parts[part_type::INFILL].colored = colorize(parts[part_type::INFILL].org, vec3(0, 1, 0));
     }
     else
     {
