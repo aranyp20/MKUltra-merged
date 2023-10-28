@@ -58,7 +58,7 @@ sliced_object::layer_data slicer::slice_fdm(double h_per_max, double offset) con
 
     polylines inner;
     polylines outer = outer_2.generate(std::pair<vec2, double>(my_bounding_box.floor), h, SQUARE_DEPTH);
-    polylines infill; // = infill_2.generate(std::pair<vec2, double>(my_bounding_box.floor), h, 1, settings::fdm_fullfill_distance, 0);
+    polylines infill = infill_2.generate(std::pair<vec2, double>(my_bounding_box.floor), h, 1, settings::fdm_fullfill_distance, 0);
 
     return sliced_object::layer_data(outer, inner, infill, my_bounding_box, false);
 }
