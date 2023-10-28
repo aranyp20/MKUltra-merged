@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1118</width>
-    <height>1096</height>
+    <width>2184</width>
+    <height>984</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -20,42 +20,23 @@
    <string>MKUltra</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>40</y>
-      <width>21</width>
-      <height>501</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QScrollBar" name="verticalScrollBar">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <widget class="poly_2D_widget" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>40</y>
-      <width>500</width>
-      <height>500</height>
+      <x>1370</x>
+      <y>70</y>
+      <width>800</width>
+      <height>800</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="surface_loader_button">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>580</y>
-      <width>201</width>
-      <height>21</height>
+      <x>20</x>
+      <y>910</y>
+      <width>111</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -65,10 +46,10 @@
    <widget class="QPushButton" name="slice_button">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>820</y>
-      <width>241</width>
-      <height>31</height>
+      <x>180</x>
+      <y>850</y>
+      <width>121</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -78,9 +59,9 @@
    <widget class="QSpinBox" name="layer_count_box">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>690</y>
-      <width>101</width>
+      <x>130</x>
+      <y>590</y>
+      <width>81</width>
       <height>41</height>
      </rect>
     </property>
@@ -88,8 +69,8 @@
    <widget class="QComboBox" name="surface_selector_box">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>610</y>
+      <x>30</x>
+      <y>860</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -98,8 +79,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>670</y>
+      <x>30</x>
+      <y>600</y>
       <width>91</width>
       <height>17</height>
      </rect>
@@ -111,8 +92,8 @@
    <widget class="QSpinBox" name="inner_shell_count_box">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>880</y>
+      <x>130</x>
+      <y>690</y>
       <width>81</width>
       <height>41</height>
      </rect>
@@ -121,8 +102,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>840</y>
+      <x>10</x>
+      <y>690</y>
       <width>121</width>
       <height>31</height>
      </rect>
@@ -134,8 +115,8 @@
    <widget class="QDoubleSpinBox" name="inner_shell_distance_box">
     <property name="geometry">
      <rect>
-      <x>250</x>
-      <y>940</y>
+      <x>420</x>
+      <y>690</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -144,8 +125,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>910</y>
+      <x>270</x>
+      <y>690</y>
       <width>141</width>
       <height>21</height>
      </rect>
@@ -157,9 +138,9 @@
    <widget class="QDoubleSpinBox" name="infill_space_between_box">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>750</y>
-      <width>161</width>
+      <x>420</x>
+      <y>590</y>
+      <width>91</width>
       <height>41</height>
      </rect>
     </property>
@@ -167,8 +148,8 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>760</y>
+      <x>270</x>
+      <y>600</y>
       <width>141</width>
       <height>21</height>
      </rect>
@@ -180,8 +161,8 @@
    <widget class="QSpinBox" name="infill_number_box">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>680</y>
+      <x>140</x>
+      <y>780</y>
       <width>51</width>
       <height>41</height>
      </rect>
@@ -190,8 +171,8 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>640</y>
+      <x>10</x>
+      <y>780</y>
       <width>141</width>
       <height>41</height>
      </rect>
@@ -203,19 +184,19 @@
    <widget class="poly_3D_widget" name="widget_2" native="true">
     <property name="geometry">
      <rect>
-      <x>590</x>
-      <y>40</y>
-      <width>500</width>
-      <height>500</height>
+      <x>550</x>
+      <y>70</y>
+      <width>800</width>
+      <height>800</height>
      </rect>
     </property>
    </widget>
    <widget class="QProgressBar" name="slice_bar">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>970</y>
-      <width>231</width>
+      <x>150</x>
+      <y>920</y>
+      <width>161</width>
       <height>31</height>
      </rect>
     </property>
@@ -226,8 +207,8 @@
    <widget class="QCheckBox" name="support_checkbox">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>570</y>
+      <x>340</x>
+      <y>920</y>
       <width>151</width>
       <height>51</height>
      </rect>
@@ -239,10 +220,10 @@
    <widget class="QPushButton" name="support_gen_button">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>860</y>
-      <width>231</width>
-      <height>31</height>
+      <x>350</x>
+      <y>850</y>
+      <width>151</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -252,20 +233,20 @@
    <widget class="mesh_3D_widget" name="widget_3" native="true">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>550</y>
-      <width>431</width>
-      <height>431</height>
+      <x>30</x>
+      <y>70</y>
+      <width>500</width>
+      <height>500</height>
      </rect>
     </property>
    </widget>
    <widget class="QScrollBar" name="zoom_scrollbar">
     <property name="geometry">
      <rect>
-      <x>590</x>
-      <y>20</y>
-      <width>501</width>
-      <height>16</height>
+      <x>550</x>
+      <y>30</y>
+      <width>801</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="orientation">
@@ -275,9 +256,9 @@
    <widget class="QDoubleSpinBox" name="support_space_between_box">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>780</y>
-      <width>111</width>
+      <x>430</x>
+      <y>770</y>
+      <width>91</width>
       <height>51</height>
      </rect>
     </property>
@@ -285,14 +266,27 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>750</y>
+      <x>260</x>
+      <y>780</y>
       <width>171</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>Support space between:</string>
+    </property>
+   </widget>
+   <widget class="QScrollBar" name="verticalScrollBar">
+    <property name="geometry">
+     <rect>
+      <x>1370</x>
+      <y>30</y>
+      <width>801</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
     </property>
    </widget>
   </widget>
