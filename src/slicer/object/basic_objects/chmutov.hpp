@@ -29,7 +29,7 @@ class chmutov : public frep_object
     template <typename T, typename H>
     T common_fn(const T &x, const T &y, const H &h) const
     {
-        return T(8) * (pow(x, 4) + pow(y, 4) + T(pow(h, 4))) - T(8) * (pow(x, 2) + pow(y, 2) + T(pow(h, 2))) + T(3);
+        return T(8) * (pow(x, 4) + pow(y, 4) + T(pow(h, 4))) - T(8) * (pow(x, 2) + pow(y, 2) + T(pow(h, 2))) + T(3) + T(0.2);
     }
 
 #endif

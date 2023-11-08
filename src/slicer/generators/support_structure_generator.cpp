@@ -81,6 +81,7 @@ std::vector<support_column_template> support_structure_generator::find_column_sp
         }
     }
 
+    return {support_column_template{vec3(0.0, 0.0, -1.0), vec3(0.0, 0.0, 0.1)}};
     return {support_column_template{vec3(0.8, 0.8, -1.0), vec3(0.8, 0.8, -0.4)}, support_column_template{vec3(-0.8, 0.8, -1.0), vec3(-0.8, 0.8, -0.4)}, support_column_template{vec3(0.8, -0.8, -1.0), vec3(0.8, -0.8, -0.4)}, support_column_template{vec3(-0.8, -0.8, -1.0), vec3(-0.8, -0.8, -0.4)}};
     return result;
 }

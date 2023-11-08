@@ -110,7 +110,7 @@ bool infill_generator::inside_advanced(const vec3 &p, double wall_thickness) con
         return surface->inside(p);
     }
 
-    frep_scale scaled_down(*surface, -3 * wall_thickness);
+    frep_scale scaled_down(*surface, -0.3 * wall_thickness);
     return scaled_down.inside(p);
 }
 
