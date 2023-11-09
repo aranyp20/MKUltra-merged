@@ -42,7 +42,7 @@ class support : public frep_object
     }
 
 public:
-    support(std::shared_ptr<frep_object> to, const vec3 &ground_point, const vec3 &hold_point) : pto(to), m_cylinder_bot(ground_point, calc_sep_point(ground_point, hold_point)), m_cylinder_top(calc_sep_point(ground_point, hold_point), hold_point), m_sphere_scaled(*pto, 0.15), m_sphere_m_cylinder_blended(*pto, 0.5, m_cylinder_top, 0.6), m_substract(m_sphere_m_cylinder_blended, m_sphere_scaled), m_c_substract(m_sphere_m_cylinder_blended, *pto), m_c_holder(m_c_substract, m_sphere_scaled), m_c_ready(m_c_holder, m_c_pattern), ready(m_c_ready, m_substract), done(m_cylinder_bot, ready) {}
+    support(std::shared_ptr<frep_object> to, const vec3 &ground_point, const vec3 &hold_point) : pto(to), m_cylinder_bot(ground_point, calc_sep_point(ground_point, hold_point)), m_cylinder_top(calc_sep_point(ground_point, hold_point), hold_point), m_sphere_scaled(*pto, 0.15), m_sphere_m_cylinder_blended(*pto, 0.7, m_cylinder_top, 0.6), m_substract(m_sphere_m_cylinder_blended, m_sphere_scaled), m_c_substract(m_sphere_m_cylinder_blended, *pto), m_c_holder(m_c_substract, m_sphere_scaled), m_c_ready(m_c_holder, m_c_pattern), ready(m_c_ready, m_substract), done(m_cylinder_bot, ready) {}
 
     interval fn(const interval &X, const interval &Y, double h) const override
     {
