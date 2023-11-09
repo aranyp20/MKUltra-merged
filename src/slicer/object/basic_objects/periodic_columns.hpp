@@ -4,8 +4,8 @@
 
 class periodic_columns : public frep_object
 {
-    double period = 0.2f;
-    double radius = 0.05f;
+    double period;
+    double radius;
 
     template <typename T>
     T put_in_four(const T &v) const
@@ -38,6 +38,10 @@ class periodic_columns : public frep_object
     }
 
 public:
+
+    periodic_columns():period(0.2f), radius(0.05f){}
+    periodic_columns(float _period, float _radius) : period(_period), radius(_radius){}
+
     interval fn(const interval &X, const interval &Y, double h) const override
     {
         return interval(-radius, sqrt(2) * period);
