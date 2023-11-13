@@ -14,9 +14,10 @@
 #include "cylinder.hpp"
 #include "sphere.hpp"
 
+#include "iostream"
+
 int main(int argc, char *argv[])
 {
-
     DualContouring::QuadMesh tst;
 
     QApplication a(argc, argv);

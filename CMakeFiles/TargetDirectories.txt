@@ -1,0 +1,4 @@
+/home/peti/projs/MKUltra-merged/CMakeFiles/mkultra.dir
+/home/peti/projs/MKUltra-merged/CMakeFiles/edit_cache.dir
+/home/peti/projs/MKUltra-merged/CMakeFiles/rebuild_cache.dir
+/home/peti/projs/MKUltra-merged/CMakeFiles/mkultra_autogen.dir

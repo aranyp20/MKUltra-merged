@@ -178,16 +178,16 @@ void main_window::generate_support()
         true));
     */
 
-   std::shared_ptr<support> sup = std::make_shared<support>(cutable_obj, vec3(0.0, 0.0, -1.0), vec3(0.0, 0.0, 0.1));
+    std::shared_ptr<support> sup = std::make_shared<support>(cutable_obj, vec3(0.0, 0.0, -1.0), vec3(0.0, 0.0, 0.1));
 
     std::shared_ptr<frep_onion> sup2 = std::make_shared<frep_onion>(*sup, *cutable_obj);
-    auto shelp3 = std::make_shared<periodic_support>();
+    auto shelp3 = std::make_shared<periodic_support>(cutable_obj);
     std::shared_ptr<frep_onion> sup3 = std::make_shared<frep_onion>(*shelp3, *cutable_obj);
 
     whole_obj = std::make_shared<sliced_object>(slicer.generate_support(*sliced_obj, settings::support_space_between, settings::level_count, settings::inner_shell_count, settings::inner_shell_distance, [this](int v)
                                                                         { this->cb_slice_progressed(v); }));
 
-    std::shared_ptr<DualContouring::QuadMesh> qm = std::make_shared<DualContouring::QuadMesh>(DualContouring::isosurface([this,sup3](const DualContouring::Point3D &p)
+    std::shared_ptr<DualContouring::QuadMesh> qm = std::make_shared<DualContouring::QuadMesh>(DualContouring::isosurface([this, sup3](const DualContouring::Point3D &p)
                                                                                                                          { return sup3->qfn(p); },
                                                                                                                          0.0, std::array<DualContouring::Point3D, 2>{{{-1.1, -1.1, -1.1}, {1.1, 1.1, 1.1}}}, std::array<size_t, 3>{100, 100, 100}));
     ui->widget_3->set_obj(qm);

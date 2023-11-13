@@ -1,0 +1,404 @@
+{
+	"BUILD_DIR" : "/home/peti/projs/MKUltra-merged/mkultra_autogen",
+	"CMAKE_BINARY_DIR" : "/home/peti/projs/MKUltra-merged",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/peti/projs/MKUltra-merged",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/peti/projs/MKUltra-merged",
+	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/home/peti/projs/MKUltra-merged/CMakeLists.txt",
+		"/home/peti/projs/MKUltra-merged/CMakeFiles/3.22.1/CMakeSystem.cmake",
+		"/usr/share/cmake-3.22/Modules/CMakeSystemSpecificInitialize.cmake",
+		"/home/peti/projs/MKUltra-merged/CMakeFiles/3.22.1/CMakeCCompiler.cmake",
+		"/home/peti/projs/MKUltra-merged/CMakeFiles/3.22.1/CMakeCXXCompiler.cmake",
+		"/usr/share/cmake-3.22/Modules/CMakeSystemSpecificInformation.cmake",
+		"/usr/share/cmake-3.22/Modules/CMakeGenericSystem.cmake",
+		"/usr/share/cmake-3.22/Modules/CMakeInitializeConfigs.cmake",
+		"/usr/share/cmake-3.22/Modules/Platform/Linux.cmake",
+		"/usr/share/cmake-3.22/Modules/Platform/UnixPaths.cmake",
+		"/usr/share/cmake-3.22/Modules/CMakeCInformation.cmake",
+		"/usr/share/cmake-3.22/Modules/CMakeLanguageInformation.cmake",
+		"/usr/share/cmake-3.22/Modules/Compiler/GNU-C.cmake",
+		"/usr/share/cmake-3.22/Modules/Compiler/GNU.cmake",
+		"/usr/share/cmake-3.22/Modules/Compiler/CMakeCommonCompilerMacros.cmake",
+		"/usr/share/cmake-3.22/Modules/Platform/Linux-GNU-C.cmake",
+		"/usr/share/cmake-3.22/Modules/Platform/Linux-GNU.cmake",
+		"/usr/share/cmake-3.22/Modules/CMakeCommonLanguageInclude.cmake",
+		"/usr/share/cmake-3.22/Modules/CMakeCXXInformation.cmake",
+		"/usr/share/cmake-3.22/Modules/CMakeLanguageInformation.cmake",
+		"/usr/share/cmake-3.22/Modules/Compiler/GNU-CXX.cmake",
+		"/usr/share/cmake-3.22/Modules/Compiler/GNU.cmake",
+		"/usr/share/cmake-3.22/Modules/Platform/Linux-GNU-CXX.cmake",
+		"/usr/share/cmake-3.22/Modules/Platform/Linux-GNU.cmake",
+		"/usr/share/cmake-3.22/Modules/CMakeCommonLanguageInclude.cmake",
+		"/usr/share/cmake-3.22/Modules/FindOpenGL.cmake",
+		"/usr/share/cmake-3.22/Modules/FindPackageHandleStandardArgs.cmake",
+		"/usr/share/cmake-3.22/Modules/FindPackageMessage.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5ConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5Config.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5ModuleLocation.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfig.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfig.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtras.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreMacros.cmake",
+		"/usr/share/cmake-3.22/Modules/CMakeParseArguments.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QComposePlatformInputContextPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSEmulatorIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSKmsEglDeviceIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSKmsGbmIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSX11IntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevKeyboardPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevMousePlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTabletPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTouchScreenPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QIbusPlatformInputContextPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QLibInputPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QLinuxFbIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QMinimalEglIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QVncIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbEglIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbGlxIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake",
+		"/usr/share/cmake-3.22/Modules/CMakeParseArguments.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5OpenGL/Qt5OpenGLConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5OpenGL/Qt5OpenGLConfig.cmake"
+	],
+	"CMAKE_SOURCE_DIR" : "/home/peti/projs/MKUltra-merged",
+	"DEP_FILE" : "",
+	"DEP_FILE_RULE_NAME" : "",
+	"HEADERS" : 
+	[
+		[
+			"/home/peti/projs/MKUltra-merged/src/gcode_writer.h",
+			"MU",
+			"UVLADIE3JM/moc_gcode_writer.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/gui/main_window.h",
+			"MU",
+			"MXUWEOXILK/moc_main_window.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/gui/widgets/camera.h",
+			"MU",
+			"5LFZYOI4EH/moc_camera.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/gui/widgets/mesh_3D_widget.h",
+			"MU",
+			"5LFZYOI4EH/moc_mesh_3D_widget.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/gui/widgets/poly_2D_widget.h",
+			"MU",
+			"5LFZYOI4EH/moc_poly_2D_widget.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/gui/widgets/poly_3D_widget.h",
+			"MU",
+			"5LFZYOI4EH/moc_poly_3D_widget.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/settings.h",
+			"MU",
+			"UVLADIE3JM/moc_settings.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/gentools/interval.h",
+			"MU",
+			"BIKX6EIKLU/moc_interval.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/gentools/plane.h",
+			"MU",
+			"BIKX6EIKLU/moc_plane.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/gentools/polylines.h",
+			"MU",
+			"BIKX6EIKLU/moc_polylines.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/gentools/section_organiser.h",
+			"MU",
+			"BIKX6EIKLU/moc_section_organiser.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/gentools/support_column_template.h",
+			"MU",
+			"BIKX6EIKLU/moc_support_column_template.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/infill_generator.h",
+			"MU",
+			"L52O5SQ7FP/moc_infill_generator.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/inner_shell_generator.h",
+			"MU",
+			"L52O5SQ7FP/moc_inner_shell_generator.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/outer_shell_generator.h",
+			"MU",
+			"L52O5SQ7FP/moc_outer_shell_generator.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/support_structure_generator.h",
+			"MU",
+			"L52O5SQ7FP/moc_support_structure_generator.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/global/dual_num.h",
+			"MU",
+			"346LU2TL33/moc_dual_num.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/global/section.h",
+			"MU",
+			"346LU2TL33/moc_section.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/object/RBF/FunctionCreator.h",
+			"MU",
+			"6M7Q7LEQ7L/moc_FunctionCreator.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/object/RBF/NormalCreator.h",
+			"MU",
+			"6M7Q7LEQ7L/moc_NormalCreator.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/object/bounding_box.h",
+			"MU",
+			"2NLJVLMYDK/moc_bounding_box.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/printable_object.h",
+			"MU",
+			"E6KVZ7JZIC/moc_printable_object.cpp",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/slicer_module.h",
+			"MU",
+			"E6KVZ7JZIC/moc_slicer_module.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/peti/projs/MKUltra-merged/mkultra_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/peti/projs/MKUltra-merged/mkultra_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_NO_DEBUG", "QT_WIDGETS_LIB" ],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/peti/projs/MKUltra-merged",
+		"/home/peti/projs/MKUltra-merged/src/slicer/global",
+		"/home/peti/projs/MKUltra-merged/src/slicer/generators",
+		"/home/peti/projs/MKUltra-merged/src/slicer/generators/gentools",
+		"/home/peti/projs/MKUltra-merged/src/slicer/object",
+		"/home/peti/projs/MKUltra-merged/src/slicer/object/basic_objects",
+		"/home/peti/projs/MKUltra-merged/src/slicer/object/RBF",
+		"/home/peti/projs/MKUltra-merged/src/slicer/object/operations",
+		"/home/peti/projs/MKUltra-merged/src/slicer",
+		"/home/peti/projs/MKUltra-merged/src/gui",
+		"/home/peti/projs/MKUltra-merged/src",
+		"/home/peti/projs/MKUltra-merged/src/gui/widgets",
+		"/home/peti/projs/MKUltra-merged/dependencies/dual_contouring",
+		"/home/peti/projs/MKUltra-merged/dependencies/libgeom",
+		"/home/peti/projs/MKUltra-merged/dependencies/ipia",
+		"/usr/include/x86_64-linux-gnu/qt5",
+		"/usr/include/x86_64-linux-gnu/qt5/QtWidgets",
+		"/usr/include/x86_64-linux-gnu/qt5/QtGui",
+		"/usr/include/x86_64-linux-gnu/qt5/QtCore",
+		"/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++",
+		"/usr/include",
+		"/usr/include/c++/11",
+		"/usr/include/x86_64-linux-gnu/c++/11",
+		"/usr/include/c++/11/backward",
+		"/usr/lib/gcc/x86_64-linux-gnu/11/include",
+		"/usr/local/include",
+		"/usr/include/x86_64-linux-gnu"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/share/cmake-3.22/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/peti/projs/MKUltra-merged/mkultra_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [ "/home/peti/projs/MKUltra-merged/ui_main_window.h" ],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 8,
+	"PARSE_CACHE_FILE" : "/home/peti/projs/MKUltra-merged/CMakeFiles/mkultra_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/lib/qt5/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/usr/lib/qt5/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"QT_VERSION_MINOR" : 15,
+	"SETTINGS_FILE" : "/home/peti/projs/MKUltra-merged/CMakeFiles/mkultra_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[ "/home/peti/projs/MKUltra-merged/src/gcode_writer.cpp", "MU", null ],
+		[ "/home/peti/projs/MKUltra-merged/src/gui/main.cpp", "MU", null ],
+		[ "/home/peti/projs/MKUltra-merged/src/gui/main_window.cpp", "MU", null ],
+		[
+			"/home/peti/projs/MKUltra-merged/src/gui/widgets/camera.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/gui/widgets/mesh_3D_widget.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/gui/widgets/poly_2D_widget.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/gui/widgets/poly_3D_widget.cpp",
+			"MU",
+			null
+		],
+		[ "/home/peti/projs/MKUltra-merged/src/settings.cpp", "MU", null ],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/gentools/interval.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/gentools/plane.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/gentools/polylines.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/gentools/section_organiser.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/gentools/support_column_template.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/infill_generator.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/inner_shell_generator.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/outer_shell_generator.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/generators/support_structure_generator.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/global/dual_num.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/global/section.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/object/RBF/FunctionCreator.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/object/RBF/NormalCreator.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/object/bounding_box.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/printable_object.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/peti/projs/MKUltra-merged/src/slicer/slicer_module.cpp",
+			"MU",
+			null
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : 
+	[
+		"/home/peti/projs/MKUltra-merged/src/gui/main_window.ui",
+		"/home/peti/projs/MKUltra-merged/ui_main_window.h"
+	],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}
